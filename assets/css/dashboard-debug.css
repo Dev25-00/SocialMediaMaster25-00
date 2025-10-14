@@ -1,0 +1,74 @@
+/* DEBUG CSS - DASHBOARD LARGEUR COMPLETE */
+
+/* FORCE MAXIMUM WIDTH USAGE - ULTRA IMPORTANT */
+body {
+    margin: 0 !important;
+    padding: 0 !important;
+    box-sizing: border-box !important;
+}
+
+.main-content {
+    width: calc(100vw - 260px) !important;
+    margin-left: 260px !important;
+    padding: 0 !important;
+    min-height: 100vh !important;
+    background: #f8f9fa !important;
+    box-sizing: border-box !important;
+}
+
+.main-content .container,
+.main-content .container-fluid {
+    width: 100% !important;
+    max-width: none !important;
+    margin: 0 !important;
+    padding: 2rem !important;
+    box-sizing: border-box !important;
+    left: 0px !important;
+}
+
+/* FORCE GRIDS TO USE FULL WIDTH */
+.stats-grid,
+.quick-actions-grid,
+.tips-section,
+.dashboard-grid {
+    width: 100% !important;
+    max-width: none !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+}
+
+/* FORCE CARDS AND ELEMENTS */
+.main-content .card,
+.main-content .stat-card,
+.main-content .action-card,
+.main-content .tip-card {
+    width: 100% !important;
+    max-width: none !important;
+    box-sizing: border-box !important;
+}
+
+/* TABLES AND RESPONSIVE ELEMENTS */
+.main-content .table-responsive,
+.main-content table {
+    width: 100% !important;
+    max-width: none !important;
+}
+
+/* REMOVE ANY CENTERING */
+.main-content>* {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+}
+
+/* DEBUG BORDER TO SEE ACTUAL WIDTH */
+.main-content {
+    border: 2px solid red !important;
+}
+
+.container-fluid {
+    border: 2px solid blue !important;
+}
+
+.stats-grid {
+    border: 2px solid green !important;
+}

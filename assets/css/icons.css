@@ -1,0 +1,487 @@
+/**
+ * STYLES POUR ICÔNES PROFESSIONNELLES
+ * Font Awesome 6 avec animations brillance/glow
+ */
+
+/* ============================================
+   TAILLES D'ICÔNES
+============================================ */
+.icon-sm {
+    font-size: 0.875rem;
+}
+
+.icon-md {
+    font-size: 1.125rem;
+}
+
+.icon-lg {
+    font-size: 1.5rem;
+}
+
+.icon-xl {
+    font-size: 2rem;
+}
+
+/* ============================================
+   ANIMATIONS BRILLANCE (SHINE)
+============================================ */
+@keyframes shine {
+    0% {
+        filter: brightness(1);
+        text-shadow: 0 0 5px rgba(255, 255, 255, 0);
+    }
+    50% {
+        filter: brightness(1.3);
+        text-shadow: 0 0 15px rgba(255, 255, 255, 0.6);
+    }
+    100% {
+        filter: brightness(1);
+        text-shadow: 0 0 5px rgba(255, 255, 255, 0);
+    }
+}
+
+.icon-shine {
+    animation: shine 2s ease-in-out infinite;
+}
+
+/* Animation au hover */
+i:hover {
+    transform: scale(1.1);
+    transition: transform 0.2s ease;
+}
+
+/* ============================================
+   ICÔNES PAR CONTEXTE - TIERS
+============================================ */
+.icon-budget {
+    color: #10b981;
+    filter: drop-shadow(0 0 3px rgba(16, 185, 129, 0.3));
+}
+
+.icon-standard {
+    color: #3b82f6;
+    filter: drop-shadow(0 0 3px rgba(59, 130, 246, 0.3));
+}
+
+.icon-premium {
+    color: #8b5cf6;
+    filter: drop-shadow(0 0 3px rgba(139, 92, 246, 0.3));
+}
+
+.icon-ultimate {
+    color: #f59e0b;
+    filter: drop-shadow(0 0 5px rgba(245, 158, 11, 0.5));
+}
+
+/* ============================================
+   BADGES TIERS
+============================================ */
+.tier-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.375rem 0.875rem;
+    border-radius: 9999px;
+    font-size: 0.875rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.tier-budget {
+    background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%);
+    color: #065f46;
+    border: 1px solid #10b981;
+}
+
+.tier-standard {
+    background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%);
+    color: #1e40af;
+    border: 1px solid #3b82f6;
+}
+
+.tier-premium {
+    background: linear-gradient(135deg, #ede9fe 0%, #ddd6fe 100%);
+    color: #5b21b6;
+    border: 1px solid #8b5cf6;
+}
+
+.tier-ultimate {
+    background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+    color: #92400e;
+    border: 1px solid #f59e0b;
+    box-shadow: 0 0 15px rgba(245, 158, 11, 0.3);
+}
+
+.tier-badge:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* ============================================
+   ICÔNES DE STATUT
+============================================ */
+.icon-success {
+    color: #10b981;
+}
+
+.icon-error {
+    color: #ef4444;
+}
+
+.icon-warning {
+    color: #f59e0b;
+}
+
+.icon-info {
+    color: #3b82f6;
+}
+
+.icon-pending {
+    color: #f59e0b;
+    animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.5;
+    }
+}
+
+/* ============================================
+   BADGES DE STATUT
+============================================ */
+.status-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+    padding: 0.25rem 0.75rem;
+    border-radius: 9999px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.025em;
+}
+
+.status-pending {
+    background-color: #fef3c7;
+    color: #92400e;
+    border: 1px solid #f59e0b;
+}
+
+.status-processing {
+    background-color: #dbeafe;
+    color: #1e40af;
+    border: 1px solid #3b82f6;
+}
+
+.status-completed {
+    background-color: #d1fae5;
+    color: #065f46;
+    border: 1px solid #10b981;
+}
+
+.status-partial {
+    background-color: #fed7aa;
+    color: #92400e;
+    border: 1px solid #f97316;
+}
+
+.status-canceled {
+    background-color: #f3f4f6;
+    color: #374151;
+    border: 1px solid #9ca3af;
+}
+
+.status-refunded {
+    background-color: #fee2e2;
+    color: #991b1b;
+    border: 1px solid #ef4444;
+}
+
+/* ============================================
+   ICÔNES NAVIGATION
+============================================ */
+.icon-nav {
+    color: #6b7280;
+    transition: all 0.3s ease;
+}
+
+.icon-nav:hover,
+.active .icon-nav {
+    color: #2563eb;
+    filter: drop-shadow(0 0 5px rgba(37, 99, 235, 0.4));
+}
+
+/* ============================================
+   ICÔNES RÉSEAUX SOCIAUX
+============================================ */
+.icon-social {
+    font-size: 1.25rem;
+    transition: all 0.3s ease;
+}
+
+.platform-icon {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.platform-icon:hover i {
+    transform: scale(1.2) rotate(5deg);
+    filter: brightness(1.2);
+}
+
+/* ============================================
+   ICÔNES MÉTRIQUES
+============================================ */
+.icon-metric {
+    color: #6b7280;
+    margin-right: 0.375rem;
+}
+
+/* ============================================
+   ICÔNES FINANCES/PAIEMENT
+============================================ */
+.icon-money {
+    color: #10b981;
+}
+
+.icon-payment {
+    font-size: 1.5rem;
+    transition: all 0.3s ease;
+}
+
+.icon-payment:hover {
+    transform: scale(1.1);
+}
+
+/* ============================================
+   ICÔNES ACTIONS
+============================================ */
+.icon-add {
+    color: #10b981;
+}
+
+.icon-edit {
+    color: #3b82f6;
+}
+
+.icon-delete {
+    color: #ef4444;
+}
+
+.icon-view {
+    color: #6b7280;
+}
+
+.icon-download,
+.icon-upload {
+    color: #8b5cf6;
+}
+
+/* ============================================
+   ICÔNES SPÉCIALES
+============================================ */
+.icon-rocket {
+    color: #f59e0b;
+    animation: rocketPulse 3s ease-in-out infinite;
+}
+
+@keyframes rocketPulse {
+    0%, 100% {
+        transform: translateY(0) rotate(0deg);
+    }
+    50% {
+        transform: translateY(-5px) rotate(-10deg);
+    }
+}
+
+.icon-bell {
+    color: #ef4444;
+}
+
+.icon-bell.has-notification {
+    animation: bellRing 1s ease-in-out infinite;
+}
+
+@keyframes bellRing {
+    0%, 100% {
+        transform: rotate(0deg);
+    }
+    25% {
+        transform: rotate(15deg);
+    }
+    75% {
+        transform: rotate(-15deg);
+    }
+}
+
+.icon-chart {
+    color: #8b5cf6;
+}
+
+.icon-shield {
+    color: #10b981;
+}
+
+.icon-lock {
+    color: #6b7280;
+}
+
+/* ============================================
+   BOUTONS AVEC ICÔNES
+============================================ */
+.btn-with-icon {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.btn-with-icon i {
+    transition: transform 0.3s ease;
+}
+
+.btn-with-icon:hover i {
+    transform: translateX(3px);
+}
+
+/* ============================================
+   CARDS AVEC ICÔNES
+============================================ */
+.icon-card {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1.5rem;
+    background: white;
+    border-radius: 0.75rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+.icon-card:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    transform: translateY(-2px);
+}
+
+.icon-card-icon {
+    flex-shrink: 0;
+    width: 3rem;
+    height: 3rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0.5rem;
+    font-size: 1.5rem;
+}
+
+.icon-card-icon.success {
+    background: linear-gradient(135deg, #d1fae5, #a7f3d0);
+    color: #065f46;
+}
+
+.icon-card-icon.info {
+    background: linear-gradient(135deg, #dbeafe, #bfdbfe);
+    color: #1e40af;
+}
+
+.icon-card-icon.warning {
+    background: linear-gradient(135deg, #fef3c7, #fde68a);
+    color: #92400e;
+}
+
+.icon-card-icon.danger {
+    background: linear-gradient(135deg, #fee2e2, #fecaca);
+    color: #991b1b;
+}
+
+/* ============================================
+   RESPONSIVE
+============================================ */
+@media (max-width: 768px) {
+    .icon-xl {
+        font-size: 1.5rem;
+    }
+    
+    .icon-lg {
+        font-size: 1.25rem;
+    }
+    
+    .tier-badge,
+    .status-badge {
+        font-size: 0.75rem;
+        padding: 0.25rem 0.625rem;
+    }
+    
+    .platform-icon {
+        font-size: 1rem;
+    }
+}
+
+/* ============================================
+   DARK MODE SUPPORT (Optionnel)
+============================================ */
+@media (prefers-color-scheme: dark) {
+    .icon-nav {
+        color: #9ca3af;
+    }
+    
+    .icon-nav:hover,
+    .active .icon-nav {
+        color: #60a5fa;
+    }
+    
+    .icon-card {
+        background: #1f2937;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+    }
+}
+
+/* ============================================
+   LOADING SPINNER AVEC ICÔNE
+============================================ */
+.icon-loading {
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* ============================================
+   TOOLTIPS SUR ICÔNES
+============================================ */
+.icon-tooltip {
+    position: relative;
+    cursor: help;
+}
+
+.icon-tooltip::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-8px);
+    padding: 0.5rem 0.75rem;
+    background: #1f2937;
+    color: white;
+    font-size: 0.75rem;
+    border-radius: 0.375rem;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+    z-index: 1000;
+}
+
+.icon-tooltip:hover::after {
+    opacity: 1;
+}

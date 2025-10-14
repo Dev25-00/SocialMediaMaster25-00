@@ -1,0 +1,104 @@
+# SMM Mastery Project - GitHub Copilot Instructions
+
+## Project Context
+- **Name:** SMM Mastery
+- **Type:** Social Media Management Platform
+- **Stack:** PHP 8+, MySQL, JavaScript, CSS, HTML
+- **Integrations:** PayPal, Stripe, SMMFollows API
+- **Environment:** WAMP64 (Windows)
+
+## Documentation Structure
+- **Root:** DOCS_DEV_TO_PROD/
+- **Guides:** 04_DEVELOPMENT_GUIDES/
+- **Fixes:** 05_FIXES_PATCHES/
+- **Database:** 02_DATABASE/ 
+- **Progress:** 01_PROJECT_MANAGEMENT/progress/
+
+## Code Standards
+
+### PHP
+- Use PHP 8+ features
+- Always sanitize inputs: htmlspecialchars(), filter_var()
+- Use prepared statements for database queries
+- Include proper error handling with try-catch
+- Add comprehensive docblocks with @param, @return, @throws
+- Follow existing authentication patterns from auth/ folder
+
+### CSS
+- Mobile-first responsive design
+- Always include fixes.css for responsive corrections
+- Use existing CSS classes from main.css
+- Follow BEM naming convention where applicable
+- Support for IE11+ (legacy browser support)
+
+### JavaScript  
+- ES6+ syntax preferred
+- Always include mobile-menu.js on pages with navigation
+- Use vanilla JavaScript (no external libraries unless specified)
+- Add event listeners after DOM content loaded
+- Include proper error handling
+
+### HTML
+- Semantic HTML5 structure
+- Include proper meta tags for responsive design
+- Use existing header/footer includes: includes/public-header.php, includes/public-footer.php
+- Maintain accessibility standards (alt tags, proper heading hierarchy)
+
+## Security Requirements
+- CSRF protection on all forms
+- SQL injection prevention with prepared statements  
+- XSS prevention with proper output encoding
+- Session management following existing patterns
+- Input validation on both client and server side
+
+## File Structure Patterns
+- **Public pages:** Root directory (index.php, etc.)
+- **Authentication:** auth/ folder
+- **Dashboard:** dashboard/ folder  
+- **Admin:** admin/ folder
+- **API endpoints:** api/ folder
+- **Assets:** assets/css/, assets/js/, assets/images/
+- **Includes:** includes/ folder for reusable components
+
+## Database Patterns
+- Use existing PDO connection from config.php
+- Follow naming convention: snake_case for tables and columns
+- Always use transactions for multi-table operations
+- Include proper error logging with error_log()
+
+## Documentation Requirements
+- Update progress files in 01_PROJECT_MANAGEMENT/progress/ after significant changes
+- Document new features in appropriate 04_DEVELOPMENT_GUIDES/ subfolder
+- Record bug fixes in 05_FIXES_PATCHES/ with detailed explanations
+- Include inline comments for complex business logic
+
+## Responsive Design Rules
+- Mobile breakpoint: 320px-767px
+- Tablet breakpoint: 768px-1023px  
+- Desktop breakpoint: 1024px+
+- Always test on mobile devices
+- Ensure touch-friendly interface (44px minimum touch targets)
+
+## Integration Guidelines
+- **PayPal:** Use sandbox for development, document in 04_DEVELOPMENT_GUIDES/payment/
+- **Stripe:** Follow existing patterns, include proper webhooks
+- **SMMFollows API:** Document API calls, handle rate limiting
+- **Email:** Use existing EmailManager.php class
+
+## Multi-Language System (NEW - October 2025)
+- **Widget:** includes/google-translate-widget.php (50+ languages)
+- **Integration:** Auto-included in public-header.php and dashboard-top-bar.php
+- **DO NOT:** Duplicate widget inclusion - it's already in headers
+- **DO NOT:** Modify .smm-translate-* CSS classes without consulting docs
+- **DO NOT:** Change position: fixed on dropdown or z-index values
+- **Testing:** Always test translation works (EN, ES, AR minimum)
+- **Documentation:** DOCS_DEV_TO_PROD/PHASE14_MULTILANGUAGE_SYSTEM_COMPLETE.md
+- **Snippets:** Use `smm-multilang` trigger for widget inclusion
+- **Debug:** Use google-translate-widget-debug.php temporarily, restore normal after
+- **New Pages:** Widget auto-included via headers, no manual inclusion needed
+
+For detailed multi-language instructions, see:
+- COPILOT_INSTRUCTIONS_MULTILANG.md
+- PHASE14_VALIDATION_TRADUCTION.md (testing guide)
+
+Remember: Always maintain consistency with existing code patterns and update documentation when adding new features.

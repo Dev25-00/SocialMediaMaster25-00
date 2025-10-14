@@ -1,0 +1,72 @@
+# SMM Mastery - Git Ignore File
+
+# Configuration files with sensitive data
+config.php
+
+# Installation script (after first install)
+install.php
+
+# Logs
+logs/
+*.log
+
+# Uploads
+uploads/
+
+# Backups
+backups/
+*.sql
+*.sql.gz
+*.tar.gz
+*.zip
+
+# OS Files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IDE Files
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# Temporary files
+*.tmp
+*.temp
+*.swp
+*.swo
+*~
+
+# Cache
+cache/
+*.cache
+
+# Node modules (if using npm)
+node_modules/
+package-lock.json
+
+# Composer (if using)
+vendor/
+composer.lock
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# Database dumps
+*.dump
+
+# Archives
+*.rar
+*.7z
+
+# Private keys
+*.pem
+*.key
+*.crt
+
+# Error reporting
+error_log
+php_errors.log

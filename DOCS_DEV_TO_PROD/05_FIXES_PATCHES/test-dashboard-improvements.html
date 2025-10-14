@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test des Améliorations Dashboard</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f5f5f5;
+            padding: 40px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        h1 {
+            color: #1a1a1a;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        
+        .test-section {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .test-section h2 {
+            color: #2563eb;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .test-item {
+            padding: 15px;
+            background: #f9fafb;
+            border-left: 4px solid #10b981;
+            margin-bottom: 15px;
+            border-radius: 4px;
+        }
+        
+        .test-item.warning {
+            border-left-color: #f59e0b;
+        }
+        
+        .test-item.error {
+            border-left-color: #ef4444;
+        }
+        
+        .test-item h3 {
+            color: #1f2937;
+            font-size: 16px;
+            margin-bottom: 8px;
+        }
+        
+        .test-item p {
+            color: #6b7280;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+        
+        .test-link {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 8px 16px;
+            background: #2563eb;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+        
+        .test-link:hover {
+            background: #1d4ed8;
+        }
+        
+        .checklist {
+            list-style: none;
+            padding-left: 0;
+        }
+        
+        .checklist li {
+            padding: 10px 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-bottom: 1px solid #e5e7eb;
+        }
+        
+        .checklist li:last-child {
+            border-bottom: none;
+        }
+        
+        .checklist li::before {
+            content: '☐';
+            font-size: 20px;
+            color: #9ca3af;
+        }
+        
+        .status {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+        }
+        
+        .status.success {
+            background: #d1fae5;
+            color: #065f46;
+        }
+        
+        .status.pending {
+            background: #fef3c7;
+            color: #92400e;
+        }
+        
+        code {
+            background: #1f2937;
+            color: #10b981;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 13px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🧪 Test des Améliorations du Dashboard Utilisateur</h1>
+        
+        <!-- Section 1: Menu de Navigation -->
+        <div class="test-section">
+            <h2>✅ 1. Menu de Navigation</h2>
+            
+            <div class="test-item">
+                <h3>Test: Suppression de "Suivi"</h3>
+                <p>Vérifiez que l'entrée "Suivi" n'apparaît plus dans le menu de gauche.</p>
+                <a href="../dashboard/index.php" class="test-link">Ouvrir Dashboard</a>
+            </div>
+            
+            <div class="test-item">
+                <h3>Test: Icônes dans le menu</h3>
+                <p>Vérifiez que tous les emojis ont été remplacés par des icônes Font Awesome.</p>
+                <p><strong>Icônes à vérifier:</strong></p>
+                <ul style="margin-top: 10px; margin-left: 20px;">
+                    <li>Dashboard → <code>fa-tachometer-alt</code></li>
+                    <li>Services → <code>fa-shopping-bag</code></li>
+                    <li>Nouvelle Commande → <code>fa-plus-circle</code></li>
+                    <li>Mes Commandes → <code>fa-shopping-cart</code></li>
+                    <li>Mon Solde → <code>fa-wallet</code></li>
+                    <li>Support → <code>fa-headset</code></li>
+                    <li>Mon Profil → <code>fa-user</code></li>
+                    <li>Administration → <code>fa-cog</code> (si admin)</li>
+                    <li>Déconnexion → <code>fa-sign-out-alt</code></li>
+                </ul>
+            </div>
+            
+            <div class="test-item">
+                <h3>Test: État actif du menu</h3>
+                <p>Vérifiez que "Mes Commandes" est actif sur <code>history.php</code> ET <code>tracking.php</code></p>
+                <a href="../orders/history.php" class="test-link">Historique</a>
+                <a href="../orders/tracking.php" class="test-link" style="margin-left: 10px;">Suivi</a>
+            </div>
+        </div>
+        
+        <!-- Section 2: Génération API Key -->
+        <div class="test-section">
+            <h2>🔑 2. Gestion des Clés API</h2>
+            
+            <div class="test-item">
+                <h3>Test: Affichage de la section API</h3>
+                <p>Vérifiez que la section "Clé API pour développeurs" est présente dans le profil.</p>
+                <a href="../dashboard/profile.php" class="test-link">Ouvrir Profil</a>
+            </div>
+            
+            <div class="test-item">
+                <h3>Test: Génération d'une clé</h3>
+                <p>Étapes:</p>
+                <ol style="margin-left: 20px; margin-top: 10px; color: #6b7280;">
+                    <li>Cliquez sur "Générer une clé API"</li>
+                    <li>Vérifiez que la clé s'affiche (64 caractères hexadécimaux)</li>
+                    <li>Cliquez sur le bouton "Copier"</li>
+                    <li>Vérifiez que le feedback "Copié !" s'affiche</li>
+                    <li>Collez dans un éditeur pour vérifier</li>
+                </ol>
+            </div>
+            
+            <div class="test-item">
+                <h3>Test: Régénération</h3>
+                <p>Étapes:</p>
+                <ol style="margin-left: 20px; margin-top: 10px; color: #6b7280;">
+                    <li>Copiez la clé actuelle</li>
+                    <li>Cliquez sur "Régénérer"</li>
+                    <li>Confirmez dans le popup</li>
+                    <li>Vérifiez que la nouvelle clé est différente</li>
+                    <li>Vérifiez que l'ancienne clé ne fonctionne plus (test API)</li>
+                </ol>
+            </div>
+            
+            <div class="test-item">
+                <h3>Test: Suppression</h3>
+                <p>Étapes:</p>
+                <ol style="margin-left: 20px; margin-top: 10px; color: #6b7280;">
+                    <li>Cliquez sur "Supprimer"</li>
+                    <li>Confirmez dans le popup</li>
+                    <li>Vérifiez que le message "Vous n'avez pas encore de clé API" s'affiche</li>
+                    <li>Vérifiez que le bouton "Générer une clé API" est présent</li>
+                </ol>
+            </div>
+        </div>
+        
+        <!-- Section 3: Accès Admin -->
+        <div class="test-section">
+            <h2>🔐 3. Conditionnement Accès Admin</h2>
+            
+            <div class="test-item">
+                <h3>Test: Utilisateur normal</h3>
+                <p>Connectez-vous avec un compte utilisateur normal et vérifiez:</p>
+                <ul style="margin-left: 20px; margin-top: 10px; color: #6b7280;">
+                    <li>Le lien "Administration" n'est PAS visible dans le sidebar</li>
+                    <li>Le lien "Administration" n'est PAS visible dans les liens rapides du profil</li>
+                    <li>Le badge de rôle affiche "Utilisateur"</li>
+                </ul>
+            </div>
+            
+            <div class="test-item">
+                <h3>Test: Administrateur</h3>
+                <p>Connectez-vous avec un compte admin et vérifiez:</p>
+                <ul style="margin-left: 20px; margin-top: 10px; color: #6b7280;">
+                    <li>Le lien "Administration" est visible dans le sidebar</li>
+                    <li>Le lien "Administration" est visible dans les liens rapides du profil</li>
+                    <li>Le badge de rôle affiche "Administrateur" avec l'icône shield</li>
+                </ul>
+            </div>
+        </div>
+        
+        <!-- Section 4: Tests Responsive -->
+        <div class="test-section">
+            <h2>📱 4. Tests Responsive</h2>
+            
+            <div class="test-item">
+                <h3>Test: Mobile (< 768px)</h3>
+                <p>Ouvrir les DevTools (F12) et tester en mode mobile:</p>
+                <ul style="margin-left: 20px; margin-top: 10px; color: #6b7280;">
+                    <li>Le sidebar doit être collapsible/masqué</li>
+                    <li>Le profil doit passer en layout vertical</li>
+                    <li>Les icônes doivent rester visibles et lisibles</li>
+                    <li>La section API doit être scrollable</li>
+                </ul>
+            </div>
+            
+            <div class="test-item">
+                <h3>Test: Tablette (768px - 1024px)</h3>
+                <p>Vérifier l'affichage sur tablette:</p>
+                <ul style="margin-left: 20px; margin-top: 10px; color: #6b7280;">
+                    <li>Le layout reste fonctionnel</li>
+                    <li>Les boutons sont cliquables facilement</li>
+                    <li>Aucun débordement horizontal</li>
+                </ul>
+            </div>
+        </div>
+        
+        <!-- Section 5: Checklist de Validation -->
+        <div class="test-section">
+            <h2>📋 5. Checklist de Validation Complète</h2>
+            
+            <ul class="checklist">
+                <li>Menu "Suivi" supprimé du sidebar</li>
+                <li>Tous les emojis remplacés par des icônes</li>
+                <li>"Mes Commandes" actif sur history.php et tracking.php</li>
+                <li>Section API key visible dans le profil</li>
+                <li>Génération d'API key fonctionne</li>
+                <li>Copie de clé dans le presse-papier fonctionne</li>
+                <li>Feedback "Copié !" s'affiche pendant 2s</li>
+                <li>Régénération demande confirmation</li>
+                <li>Régénération crée une nouvelle clé unique</li>
+                <li>Suppression demande confirmation</li>
+                <li>Suppression retire la clé de la base</li>
+                <li>Lien admin visible uniquement pour les admins</li>
+                <li>Badge de rôle correct selon le type d'utilisateur</li>
+                <li>Responsive fonctionne sur mobile</li>
+                <li>Responsive fonctionne sur tablette</li>
+                <li>Aucune erreur dans la console navigateur</li>
+                <li>Aucune erreur PHP dans les logs</li>
+                <li>Protection CSRF active sur tous les formulaires</li>
+                <li>Messages de succès/erreur s'affichent correctement</li>
+                <li>Documentation inline claire et utile</li>
+            </ul>
+        </div>
+        
+        <!-- Section 6: Base de données -->
+        <div class="test-section">
+            <h2>💾 6. Vérification Base de Données</h2>
+            
+            <div class="test-item">
+                <h3>Test: Champ api_key</h3>
+                <p>Exécutez cette requête SQL pour vérifier:</p>
+                <code style="display: block; margin-top: 10px; padding: 15px; white-space: pre;">
+SELECT 
+    id, 
+    username, 
+    email, 
+    role,
+    api_key,
+    LENGTH(api_key) as key_length
+FROM users
+WHERE api_key IS NOT NULL;
+                </code>
+                <p style="margin-top: 10px;">Vérifiez que:</p>
+                <ul style="margin-left: 20px; margin-top: 10px; color: #6b7280;">
+                    <li>Les clés API font bien 64 caractères</li>
+                    <li>Chaque clé est unique (pas de doublons)</li>
+                    <li>Les clés contiennent uniquement des caractères hexadécimaux (0-9, a-f)</li>
+                </ul>
+            </div>
+        </div>
+        
+        <!-- Section 7: Sécurité -->
+        <div class="test-section">
+            <h2>🔒 7. Tests de Sécurité</h2>
+            
+            <div class="test-item warning">
+                <h3>Test: Protection CSRF</h3>
+                <p>Essayez de soumettre un formulaire sans token CSRF valide</p>
+                <p style="margin-top: 10px;"><strong>Résultat attendu:</strong> Message d'erreur "Token de sécurité invalide"</p>
+            </div>
+            
+            <div class="test-item warning">
+                <h3>Test: Accès direct aux actions</h3>
+                <p>Essayez d'accéder directement à une action via POST sans être connecté</p>
+                <p style="margin-top: 10px;"><strong>Résultat attendu:</strong> Redirection vers la page de login</p>
+            </div>
+            
+            <div class="test-item warning">
+                <h3>Test: Unicité des clés API</h3>
+                <p>Essayez de générer plusieurs clés rapidement</p>
+                <p style="margin-top: 10px;"><strong>Résultat attendu:</strong> Chaque clé doit être unique (vérifier en base)</p>
+            </div>
+        </div>
+        
+        <!-- Section 8: Statut -->
+        <div class="test-section">
+            <h2>📊 Statut des Modifications</h2>
+            
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin-top: 20px;">
+                <div style="padding: 20px; background: #d1fae5; border-radius: 8px; text-align: center;">
+                    <div style="font-size: 32px; margin-bottom: 10px;">✅</div>
+                    <div style="font-weight: 600; color: #065f46;">Sidebar</div>
+                    <div style="font-size: 13px; color: #047857; margin-top: 5px;">Complété</div>
+                </div>
+                
+                <div style="padding: 20px; background: #d1fae5; border-radius: 8px; text-align: center;">
+                    <div style="font-size: 32px; margin-bottom: 10px;">✅</div>
+                    <div style="font-weight: 600; color: #065f46;">Icônes</div>
+                    <div style="font-size: 13px; color: #047857; margin-top: 5px;">Complété</div>
+                </div>
+                
+                <div style="padding: 20px; background: #d1fae5; border-radius: 8px; text-align: center;">
+                    <div style="font-size: 32px; margin-bottom: 10px;">✅</div>
+                    <div style="font-weight: 600; color: #065f46;">API Key</div>
+                    <div style="font-size: 13px; color: #047857; margin-top: 5px;">Complété</div>
+                </div>
+                
+                <div style="padding: 20px; background: #d1fae5; border-radius: 8px; text-align: center;">
+                    <div style="font-size: 32px; margin-bottom: 10px;">✅</div>
+                    <div style="font-weight: 600; color: #065f46;">Accès Admin</div>
+                    <div style="font-size: 13px; color: #047857; margin-top: 5px;">Vérifié</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Section 9: Fichiers Modifiés -->
+        <div class="test-section">
+            <h2>📁 Fichiers Modifiés</h2>
+            
+            <div style="background: #1f2937; color: #10b981; padding: 20px; border-radius: 8px; font-family: 'Courier New', monospace; font-size: 13px;">
+                <div>✏️ includes/dashboard-sidebar.php</div>
+                <div style="margin-left: 20px; color: #9ca3af;">- Suppression menu "Suivi"</div>
+                <div style="margin-left: 20px; color: #9ca3af;">- Remplacement emojis → icônes</div>
+                <div style="margin-left: 20px; color: #9ca3af;">- Mise à jour détection état actif</div>
+                <br>
+                <div>✏️ dashboard/profile.php</div>
+                <div style="margin-left: 20px; color: #9ca3af;">- Actions API key (generate/delete)</div>
+                <div style="margin-left: 20px; color: #9ca3af;">- Section HTML gestion clé</div>
+                <div style="margin-left: 20px; color: #9ca3af;">- JavaScript copyApiKey()</div>
+                <div style="margin-left: 20px; color: #9ca3af;">- Styles CSS</div>
+                <br>
+                <div>✏️ includes/icons-config.php</div>
+                <div style="margin-left: 20px; color: #9ca3af;">- Ajout 'wallet' icône</div>
+                <div style="margin-left: 20px; color: #9ca3af;">- Ajout 'star' icône</div>
+                <br>
+                <div>📄 DOCS_DEV_TO_PROD/05_FIXES_PATCHES/DASHBOARD_USER_IMPROVEMENTS.md</div>
+                <div style="margin-left: 20px; color: #9ca3af;">- Documentation complète</div>
+            </div>
+        </div>
+        
+    </div>
+    
+    <div style="text-align: center; padding: 40px 0; color: #6b7280;">
+        <p style="font-size: 14px;">🧪 Page de test générée automatiquement</p>
+        <p style="font-size: 12px; margin-top: 5px;">Dashboard User Improvements - Version 2.1</p>
+    </div>
+</body>
+</html>

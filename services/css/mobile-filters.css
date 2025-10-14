@@ -1,0 +1,566 @@
+/* ========================================
+   MOBILE RESPONSIVE - ULTRA COMPACT
+   Style inspiré desktop mais optimisé mobile
+   ======================================== */
+
+@media (max-width: 599px) {
+
+    /* Container général - Plus compact */
+    .services-filters-multiline {
+        padding: 5px 3px 5px 3px;
+        gap: 3px;
+        position: -webkit-sticky !important;
+        position: sticky !important;
+        top: 55px !important;
+        z-index: 998 !important;
+        transition: all 0.3s ease;
+        margin-bottom: 0;
+        /* Fond légèrement visible pour différenciation */
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+    }
+
+    /* Bouton toggle collapse - Languette en bas à droite, COLLÉE au container */
+    .filters-toggle-mobile {
+        position: absolute;
+        bottom: 0;
+        right: 10px;
+        width: 40px;
+        height: 20px;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        border: 2px solid rgba(255, 255, 255, 0.2);
+        border-radius: 0 0 12px 12px;
+        border-top: none;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        z-index: 1001;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+        transform: translateY(100%);
+        /* Dépasse en dessous du container */
+    }
+
+    .filters-toggle-mobile:hover {
+        background: linear-gradient(135deg, #5568d3 0%, #6a3f8f 100%);
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+    }
+
+    .filters-toggle-mobile:active {
+        transform: translateY(100%) scale(0.95);
+    }
+
+    .filters-toggle-mobile i,
+    .filters-toggle-mobile svg {
+        font-size: 16px;
+        color: white;
+        transition: transform 0.3s ease;
+    }
+
+    /* État collapsed - Afficher SEULEMENT les platforms */
+    .services-filters-multiline.filters-collapsed {
+        max-height: none;
+        /* Pas de limite, juste masquer certains éléments */
+        overflow: visible;
+    }
+
+    /* Rotation de l'icône quand collapsed */
+    .services-filters-multiline.filters-collapsed .filters-toggle-mobile i,
+    .services-filters-multiline.filters-collapsed .filters-toggle-mobile svg {
+        transform: rotate(180deg);
+    }
+
+    /* Masquer SEULEMENT les lignes 2 et 3 en mode collapsed */
+    .services-filters-multiline.filters-collapsed .filters-row-primary>.filter-group-multiline:nth-child(3),
+    .services-filters-multiline.filters-collapsed .filter-actions-drop-group,
+    .services-filters-multiline.filters-collapsed .filters-row-secondary {
+        display: none !important;
+    }
+
+    /* GARDER les platforms visibles en mode collapsed */
+    .services-filters-multiline.filters-collapsed .filters-row-primary>.filter-group-multiline:nth-child(1) {
+        opacity: 1 !important;
+        pointer-events: auto !important;
+        display: flex !important;
+    }
+
+    .filter-stats-info {
+        display: none !important;
+    }
+
+    .filter-divider-multiline {
+        display: none !important;
+    }
+
+    .services-grid-modern {
+        grid-template-columns: 1fr;
+    }
+
+    /* ========== LIGNE 1 : Platforms + Tiers + Actions/Drop ========== */
+    .filters-row-primary {
+        display: flex !important;
+        flex-wrap: wrap !important;
+        gap: 3px !important;
+    }
+
+    /* Platforms - Full width, ligne 1 */
+    .filters-row-primary>.filter-group-multiline:nth-child(1) {
+        flex: 1 1 100% !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        background: rgba(245, 245, 245, 0.15) !important;
+        /* Whitesmoke légèrement visible */
+        padding: 3px 2px !important;
+        border-radius: 8px;
+        order: 1;
+        margin: 0 !important;
+        box-sizing: border-box !important;
+        backdrop-filter: blur(5px);
+    }
+
+    .filters-row-primary>.filter-group-multiline:nth-child(1) .filter-label-multiline,
+    .filters-row-primary>.filter-group-multiline:nth-child(1) .filter-label-clickable {
+        display: none !important;
+    }
+
+    .platform-filters-multiline {
+        display: flex !important;
+        flex-wrap: nowrap !important;
+        gap: 3px !important;
+        overflow-x: auto !important;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+        padding: 2px 0 !important;
+        margin: 0 !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        box-sizing: border-box !important;
+    }
+
+    .platform-filters-multiline::-webkit-scrollbar {
+        display: none;
+    }
+
+    .platform-btn-multiline {
+        width: 32px !important;
+        height: 32px !important;
+        min-width: 32px !important;
+        flex-shrink: 0;
+        padding: 0 !important;
+        border-radius: 7px !important;
+    }
+
+    .platform-btn-multiline i {
+        font-size: 14px !important;
+    }
+
+    /* Tiers - Ligne 2, gauche - MODE HORIZONTAL COMPACT */
+    .filters-row-primary>.filter-group-multiline:nth-child(3) {
+        flex: 0 0 auto !important;
+        order: 2;
+        background: rgba(245, 245, 245, 0.12) !important;
+        border-radius: 7px;
+        padding: 3px !important;
+        backdrop-filter: blur(5px);
+        display: flex !important;
+        flex-direction: row !important;
+        /* Horizontal */
+        gap: 2px !important;
+        align-items: center !important;
+    }
+
+    /* Bouton "Toutes les qualités" (étoile) - GAUCHE, COMPACT */
+    .filters-row-primary>.filter-group-multiline:nth-child(3)>.filter-label-clickable {
+        display: flex !important;
+        width: 24px !important;
+        /* Plus petit */
+        height: 28px !important;
+        padding: 0 !important;
+        background: rgba(255, 255, 255, 0.2) !important;
+        border-radius: 6px;
+        align-items: center !important;
+        justify-content: center !important;
+        font-size: 0 !important;
+        /* Cache le texte */
+        flex-shrink: 0;
+    }
+
+    .filters-row-primary>.filter-group-multiline:nth-child(3)>.filter-label-clickable i {
+        font-size: 12px !important;
+        /* Icône plus petite */
+    }
+
+    /* Container des 4 tiers - À droite de l'étoile */
+    .tier-filters-multiline {
+        display: flex !important;
+        gap: 2px !important;
+        background: transparent !important;
+        /* Pas de fond supplémentaire */
+        padding: 0 !important;
+        border-radius: 0;
+    }
+
+    /* Boutons tiers - Plus compacts */
+    .tier-btn-multiline {
+        width: 24px !important;
+        /* Réduit de 26px */
+        height: 28px !important;
+        /* Réduit de 32px */
+        padding: 0 !important;
+        border-radius: 6px !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+    }
+
+    /* Garder les icônes réelles, pas d'emojis */
+    .tier-btn-multiline i,
+    .tier-btn-multiline svg {
+        font-size: 11px !important;
+        /* Plus petit */
+    }
+
+    /* Masquer le texte seulement, pas les icônes */
+    .tier-btn-multiline {
+        font-size: 0 !important;
+    }
+
+    .tier-btn-multiline i,
+    .tier-btn-multiline svg {
+        font-size: 11px !important;
+    }
+
+    /* Supprimer les emojis ::before pour garder les vraies icônes */
+    .tier-budget::before,
+    .tier-standard::before,
+    .tier-premium::before,
+    .tier-ultimate::before {
+        content: none !important;
+    }
+
+    /* Actions/Drop - Ligne 2, droite - PLUS COMPACT */
+    .filter-actions-drop-group {
+        flex: 1 !important;
+        order: 3;
+        display: flex !important;
+        gap: 2px !important;
+    }
+
+    .filter-subgroup-multiline {
+        flex: 1 !important;
+        display: flex !important;
+        align-items: center !important;
+        gap: 2px !important;
+        background: rgba(245, 245, 245, 0.12) !important;
+        /* Whitesmoke */
+        padding: 3px;
+        border-radius: 7px;
+        backdrop-filter: blur(5px);
+    }
+
+    .filter-subgroup-multiline:last-child {
+        background: rgba(245, 245, 245, 0.12) !important;
+        /* Même fond */
+    }
+
+    .filter-subgroup-multiline .filter-label-multiline {
+        width: 16px !important;
+        /* Réduit de 18px */
+        height: 16px !important;
+        flex-shrink: 0;
+    }
+
+    .filter-subgroup-multiline .filter-label-multiline i {
+        font-size: 11px !important;
+        /* Plus petit */
+    }
+
+    .filter-subgroup-multiline .filter-select-multiline {
+        flex: 1 !important;
+        height: 24px !important;
+        /* Réduit de 26px */
+        font-size: 9px !important;
+        padding: 0 16px 0 3px !important;
+        min-width: 0;
+    }
+
+    /* ========== LIGNE 3 : Refill + Prix + Tri + Reset + Count ========== */
+    .filters-row-secondary {
+        display: flex !important;
+        flex-wrap: wrap !important;
+        gap: 3px !important;
+    }
+
+    /* Refill - 40% */
+    .filters-row-secondary>.filter-group-multiline:nth-child(1) {
+        flex: 0 0 calc(40% - 2px) !important;
+        display: flex !important;
+        align-items: center !important;
+        gap: 2px !important;
+        background: rgba(245, 245, 245, 0.12) !important;
+        /* Whitesmoke */
+        padding: 3px;
+        border-radius: 7px;
+        backdrop-filter: blur(5px);
+    }
+
+    .filters-row-secondary>.filter-group-multiline:nth-child(1) .filter-label-multiline {
+        width: 18px !important;
+        height: 18px !important;
+    }
+
+    .filters-row-secondary>.filter-group-multiline:nth-child(1) .filter-select-multiline {
+        flex: 1 !important;
+        height: 26px !important;
+        font-size: 9px !important;
+        padding: 0 18px 0 3px !important;
+    }
+
+    /* Prix - 60% */
+    .price-range-multiline {
+        flex: 0 0 calc(60% - 2px) !important;
+        display: flex !important;
+        align-items: center !important;
+        gap: 2px !important;
+        background: rgba(245, 245, 245, 0.12) !important;
+        /* Whitesmoke */
+        padding: 3px;
+        border-radius: 7px;
+        backdrop-filter: blur(5px);
+    }
+
+    .price-range-multiline .filter-label-multiline {
+        width: 18px !important;
+        height: 18px !important;
+    }
+
+    .price-input-multiline {
+        flex: 1 !important;
+        height: 26px !important;
+        font-size: 9px !important;
+        padding: 0 4px !important;
+        border-radius: 5px;
+        min-width: 0;
+    }
+
+    .price-separator-multiline {
+        font-size: 9px;
+        color: rgba(255, 255, 255, 0.4);
+        margin: 0 -2px;
+    }
+
+    /* Tri - Flexible */
+    .filters-row-secondary>.filter-group-multiline:nth-child(5) {
+        flex: 1 !important;
+        display: flex !important;
+        align-items: center !important;
+        gap: 2px !important;
+        background: rgba(245, 245, 245, 0.12) !important;
+        /* Whitesmoke */
+        padding: 3px;
+        border-radius: 7px;
+        min-width: 100px;
+        backdrop-filter: blur(5px);
+    }
+
+    .filters-row-secondary>.filter-group-multiline:nth-child(5) .filter-label-multiline {
+        width: 18px !important;
+        height: 18px !important;
+    }
+
+    #sortSelect {
+        flex: 1 !important;
+        height: 26px !important;
+        font-size: 9px !important;
+        padding: 0 18px 0 3px !important;
+    }
+
+    /* Recherche par ID - Compact Mobile */
+    .filter-search-id-group {
+        flex: 0 0 auto !important;
+        display: flex !important;
+        align-items: center !important;
+        gap: 2px !important;
+        background: rgba(245, 245, 245, 0.12) !important;
+        padding: 3px;
+        border-radius: 7px;
+        backdrop-filter: blur(5px);
+        min-width: 80px !important;
+    }
+
+    .filter-search-id-group .filter-label-multiline {
+        width: 18px !important;
+        height: 18px !important;
+    }
+
+    .filter-search-id-input {
+        width: 60px !important;
+        height: 26px !important;
+        font-size: 9px !important;
+        padding: 0 24px 0 3px !important;
+        border-radius: 5px !important;
+    }
+
+    .filter-search-id-input:focus {
+        width: 75px !important;
+    }
+
+    .filter-search-id-input::placeholder {
+        font-size: 8px !important;
+    }
+
+    .filter-search-id-clear {
+        width: 18px !important;
+        height: 18px !important;
+        right: 3px !important;
+    }
+
+    .filter-search-id-clear i {
+        font-size: 8px !important;
+    }
+
+    /* Reset - Compact */
+    .filter-reset-btn-multiline {
+        width: 32px !important;
+        height: 32px !important;
+        flex-shrink: 0;
+        background: rgba(239, 68, 68, 0.2) !important;
+        border-radius: 7px;
+        backdrop-filter: blur(5px);
+    }
+
+    .filter-reset-btn-multiline i {
+        font-size: 13px !important;
+    }
+
+    /* Count - Inline */
+    .filter-results-multiline {
+        flex-shrink: 0;
+        padding: 4px 10px !important;
+        font-size: 9px !important;
+        background: rgba(245, 245, 245, 0.15) !important;
+        /* Whitesmoke */
+        border-radius: 7px;
+        display: flex;
+        align-items: center;
+        gap: 3px;
+        backdrop-filter: blur(5px);
+    }
+
+    #resultsCount {
+        font-size: 12px !important;
+        font-weight: 700;
+    }
+
+    .results-label {
+        font-size: 9px !important;
+    }
+
+    /* Optimisations globales */
+    .filter-select-multiline {
+        background-size: 9px !important;
+        background-position: right 3px center !important;
+    }
+
+    /* Toutes les transitions fluides */
+    .platform-btn-multiline,
+    .tier-btn-multiline,
+    .filter-select-multiline,
+    .filter-reset-btn-multiline {
+        transition: all 0.2s ease !important;
+    }
+
+    /* ========================================
+       CORRECTION CARDS MOBILE - PRIX & BOUTON
+       ======================================== */
+
+    /**
+     * FIX: Prix et bouton Buy décalés à droite et à peine visibles
+     * 
+     * PROBLÈME: Le layout flex avec body (80%) + footer (20%) écrase
+     *           le prix et le bouton sur le côté droit en mobile
+     * 
+     * SOLUTION: Passer en layout vertical (column) pour mobile
+     *           avec footer en pleine largeur en dessous du titre
+     */
+
+    /* Forcer layout vertical pour les cards en mobile */
+    .service-card-body {
+        flex-direction: column !important;
+        align-items: stretch !important;
+        gap: 8px !important;
+    }
+
+    /* Titre prend toute la largeur */
+    .service-card-title {
+        flex: 1 !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        text-align: left !important;
+    }
+
+    /* Footer prend toute la largeur et s'aligne horizontalement */
+    .service-card-footer {
+        flex: none !important;
+        width: 100% !important;
+        display: flex !important;
+        flex-direction: row !important;
+        justify-content: space-between !important;
+        align-items: center !important;
+        gap: 10px !important;
+        padding: 8px 0 0 0 !important;
+        margin-top: 0 !important;
+        border-top: 1px solid rgba(0, 0, 0, 0.08) !important;
+    }
+
+    /* Prix visible et bien dimensionné */
+    .service-price {
+        font-size: 16px !important;
+        font-weight: 700 !important;
+        color: #2563eb !important;
+        flex-shrink: 0 !important;
+        line-height: 1.2 !important;
+    }
+
+    .service-price-unit {
+        font-size: 10px !important;
+        color: #9ca3af !important;
+    }
+
+    /* Bouton Buy bien visible et cliquable */
+    .service-order-btn {
+        padding: 8px 16px !important;
+        font-size: 11px !important;
+        font-weight: 600 !important;
+        flex-shrink: 0 !important;
+        white-space: nowrap !important;
+        min-width: 70px !important;
+        text-align: center !important;
+        background: linear-gradient(135deg, #2563eb 0%, #7c3aed 100%) !important;
+        box-shadow: 0 2px 8px rgba(37, 99, 235, 0.25) !important;
+    }
+
+    /* Supprimer la ligne HR après le body (plus nécessaire) */
+    .service-card-body::after {
+        display: none !important;
+    }
+
+    /* Ajuster l'espacement des features */
+    .service-features {
+        margin-top: 6px !important;
+        padding-top: 6px !important;
+    }
+
+    /* Pour très petits écrans (< 400px) */
+    @media (max-width: 400px) {
+        .service-price {
+            font-size: 14px !important;
+        }
+
+        .service-order-btn {
+            padding: 6px 12px !important;
+            font-size: 10px !important;
+            min-width: 60px !important;
+        }
+    }
+}

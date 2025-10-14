@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test des Icônes et Navigation - Dashboard</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f5f5f5;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        h1 {
+            color: #1f2937;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        
+        .test-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .test-card {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        .test-card h2 {
+            color: #2563eb;
+            font-size: 18px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .test-item {
+            padding: 12px;
+            background: #f9fafb;
+            border-left: 3px solid #10b981;
+            margin-bottom: 10px;
+            border-radius: 4px;
+        }
+        
+        .test-item.pending {
+            border-left-color: #f59e0b;
+        }
+        
+        .test-item.error {
+            border-left-color: #ef4444;
+        }
+        
+        .test-link {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 8px 16px;
+            background: #2563eb;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+        
+        .test-link:hover {
+            background: #1d4ed8;
+        }
+        
+        .status {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-left: 10px;
+        }
+        
+        .status.ok {
+            background: #d1fae5;
+            color: #065f46;
+        }
+        
+        .status.pending {
+            background: #fef3c7;
+            color: #92400e;
+        }
+        
+        .checklist {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        .checklist h2 {
+            color: #1f2937;
+            margin-bottom: 20px;
+        }
+        
+        .checklist-item {
+            padding: 10px;
+            border-bottom: 1px solid #e5e7eb;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .checklist-item:last-child {
+            border-bottom: none;
+        }
+        
+        input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+        }
+        
+        .instructions {
+            background: #dbeafe;
+            border-left: 4px solid #2563eb;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 4px;
+        }
+        
+        .warning {
+            background: #fef3c7;
+            border-left: 4px solid #f59e0b;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 4px;
+        }
+        
+        code {
+            background: #1f2937;
+            color: #10b981;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 13px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔍 Test des Icônes et Navigation - Dashboard</h1>
+        
+        <div class="instructions">
+            <strong>📋 Instructions:</strong> Cliquez sur chaque lien pour tester la navigation et vérifier que les icônes s'affichent correctement. Cochez la case une fois le test effectué.
+        </div>
+        
+        <div class="warning">
+            <strong>⚠️ Important:</strong> Assurez-vous d'être connecté au dashboard avant de commencer les tests.
+        </div>
+        
+        <!-- Tests de Navigation -->
+        <div class="test-grid">
+            
+            <!-- Dashboard -->
+            <div class="test-card">
+                <h2>📊 Dashboard Principal</h2>
+                <div class="test-item">
+                    <strong>Fichier:</strong> <code>dashboard/index.php</code>
+                    <br><strong>Icons-config:</strong> <span class="status ok">✓ Ajouté</span>
+                    <br><strong>À vérifier:</strong>
+                    <ul style="margin: 10px 0 0 20px; font-size: 13px;">
+                        <li>Icônes dans les cartes de stats</li>
+                        <li>Icônes dans le graphique</li>
+                        <li>Icônes dans les dernières commandes</li>
+                    </ul>
+                    <a href="../dashboard/index.php" class="test-link" target="_blank">Tester</a>
+                </div>
+            </div>
+            
+            <!-- Balance -->
+            <div class="test-card">
+                <h2>💰 Mon Solde</h2>
+                <div class="test-item">
+                    <strong>Fichier:</strong> <code>dashboard/balance.php</code>
+                    <br><strong>Icons-config:</strong> <span class="status ok">✓ Ajouté</span>
+                    <br><strong>À vérifier:</strong>
+                    <ul style="margin: 10px 0 0 20px; font-size: 13px;">
+                        <li>Icônes dans les méthodes de paiement</li>
+                        <li>Icônes dans l'historique</li>
+                        <li>Icônes dans les boutons</li>
+                    </ul>
+                    <a href="../dashboard/balance.php" class="test-link" target="_blank">Tester</a>
+                </div>
+            </div>
+            
+            <!-- Profile -->
+            <div class="test-card">
+                <h2>👤 Mon Profil</h2>
+                <div class="test-item">
+                    <strong>Fichier:</strong> <code>dashboard/profile.php</code>
+                    <br><strong>Icons-config:</strong> <span class="status ok">✓ Via header</span>
+                    <br><strong>À vérifier:</strong>
+                    <ul style="margin: 10px 0 0 20px; font-size: 13px;">
+                        <li>Icônes dans les sections</li>
+                        <li>Icône API key (shield)</li>
+                        <li>Icônes dans les liens rapides</li>
+                    </ul>
+                    <a href="../dashboard/profile.php" class="test-link" target="_blank">Tester</a>
+                </div>
+            </div>
+            
+            <!-- Nouvelle Commande -->
+            <div class="test-card">
+                <h2>➕ Nouvelle Commande</h2>
+                <div class="test-item pending">
+                    <strong>Fichier:</strong> <code>orders/new.php</code>
+                    <br><strong>Icons-config:</strong> <span class="status ok">✓ Ajouté</span>
+                    <br><strong>À vérifier:</strong>
+                    <ul style="margin: 10px 0 0 20px; font-size: 13px;">
+                        <li><strong>Le lien fonctionne (pas de 404)</strong></li>
+                        <li>Icônes dans le formulaire</li>
+                        <li>Icônes dans la sélection de service</li>
+                    </ul>
+                    <a href="../orders/new.php" class="test-link" target="_blank">⚠️ TESTER EN PRIORITÉ</a>
+                </div>
+            </div>
+            
+            <!-- Mes Commandes -->
+            <div class="test-card">
+                <h2>📦 Mes Commandes</h2>
+                <div class="test-item">
+                    <strong>Fichier:</strong> <code>orders/history.php</code>
+                    <br><strong>Icons-config:</strong> <span class="status ok">✓ Déjà OK</span>
+                    <br><strong>À vérifier:</strong>
+                    <ul style="margin: 10px 0 0 20px; font-size: 13px;">
+                        <li>Icônes de statut (pending, completed, etc.)</li>
+                        <li>Icônes des plateformes</li>
+                        <li>Icônes des boutons d'action</li>
+                    </ul>
+                    <a href="../orders/history.php" class="test-link" target="_blank">Tester</a>
+                </div>
+            </div>
+            
+            <!-- Suivi -->
+            <div class="test-card">
+                <h2>📍 Suivi Commande</h2>
+                <div class="test-item">
+                    <strong>Fichier:</strong> <code>orders/tracking.php</code>
+                    <br><strong>Icons-config:</strong> <span class="status ok">✓ Déjà OK</span>
+                    <br><strong>À vérifier:</strong>
+                    <ul style="margin: 10px 0 0 20px; font-size: 13px;">
+                        <li>Icônes dans la barre de progression</li>
+                        <li>Icônes dans la timeline</li>
+                        <li>Icônes des détails</li>
+                    </ul>
+                    <a href="../orders/tracking.php?id=1" class="test-link" target="_blank">Tester</a>
+                </div>
+            </div>
+            
+            <!-- Services -->
+            <div class="test-card">
+                <h2>🛍️ Services</h2>
+                <div class="test-item">
+                    <strong>Fichier:</strong> <code>services/index.php</code>
+                    <br><strong>Icons-config:</strong> <span class="status ok">✓ Déjà OK</span>
+                    <br><strong>À vérifier:</strong>
+                    <ul style="margin: 10px 0 0 20px; font-size: 13px;">
+                        <li>Icônes des plateformes</li>
+                        <li>Icônes des tiers (budget, premium, etc.)</li>
+                        <li>Icônes dans les cartes de service</li>
+                    </ul>
+                    <a href="../services/index.php" class="test-link" target="_blank">Tester</a>
+                </div>
+            </div>
+            
+            <!-- Support Tickets -->
+            <div class="test-card">
+                <h2>🎧 Support - Liste</h2>
+                <div class="test-item">
+                    <strong>Fichier:</strong> <code>support/tickets.php</code>
+                    <br><strong>Icons-config:</strong> <span class="status ok">✓ Déjà OK</span>
+                    <br><strong>À vérifier:</strong>
+                    <ul style="margin: 10px 0 0 20px; font-size: 13px;">
+                        <li>Icônes de statut des tickets</li>
+                        <li>Icônes de priorité</li>
+                        <li>Icônes des boutons</li>
+                    </ul>
+                    <a href="../support/tickets.php" class="test-link" target="_blank">Tester</a>
+                </div>
+            </div>
+            
+            <!-- Nouveau Ticket -->
+            <div class="test-card">
+                <h2>📝 Nouveau Ticket</h2>
+                <div class="test-item">
+                    <strong>Fichier:</strong> <code>support/new-ticket.php</code>
+                    <br><strong>Icons-config:</strong> <span class="status ok">✓ Ajouté</span>
+                    <br><strong>À vérifier:</strong>
+                    <ul style="margin: 10px 0 0 20px; font-size: 13px;">
+                        <li>Icônes dans le formulaire</li>
+                        <li>Icônes des catégories</li>
+                        <li>Icônes dans les boutons</li>
+                    </ul>
+                    <a href="../support/new-ticket.php" class="test-link" target="_blank">Tester</a>
+                </div>
+            </div>
+            
+            <!-- Voir Ticket -->
+            <div class="test-card">
+                <h2>👁️ Voir Ticket</h2>
+                <div class="test-item">
+                    <strong>Fichier:</strong> <code>support/view-ticket.php</code>
+                    <br><strong>Icons-config:</strong> <span class="status ok">✓ Ajouté</span>
+                    <br><strong>À vérifier:</strong>
+                    <ul style="margin: 10px 0 0 20px; font-size: 13px;">
+                        <li>Icônes dans les messages</li>
+                        <li>Icônes des réponses</li>
+                        <li>Icônes dans le formulaire de réponse</li>
+                    </ul>
+                    <a href="../support/view-ticket.php?id=1" class="test-link" target="_blank">Tester</a>
+                </div>
+            </div>
+            
+        </div>
+        
+        <!-- Checklist -->
+        <div class="checklist">
+            <h2>✅ Checklist de Validation</h2>
+            
+            <div class="checklist-item">
+                <input type="checkbox" id="check1">
+                <label for="check1">Dashboard principal - Toutes les icônes s'affichent</label>
+            </div>
+            
+            <div class="checklist-item">
+                <input type="checkbox" id="check2">
+                <label for="check2">Mon Solde - Icônes dans paiements et historique</label>
+            </div>
+            
+            <div class="checklist-item">
+                <input type="checkbox" id="check3">
+                <label for="check3">Mon Profil - Icônes API key et sections</label>
+            </div>
+            
+            <div class="checklist-item">
+                <input type="checkbox" id="check4">
+                <label for="check4"><strong>⚠️ Nouvelle Commande - Lien fonctionne (PAS de 404)</strong></label>
+            </div>
+            
+            <div class="checklist-item">
+                <input type="checkbox" id="check5">
+                <label for="check5">Nouvelle Commande - Icônes dans le formulaire</label>
+            </div>
+            
+            <div class="checklist-item">
+                <input type="checkbox" id="check6">
+                <label for="check6">Mes Commandes - Icônes de statut et plateformes</label>
+            </div>
+            
+            <div class="checklist-item">
+                <input type="checkbox" id="check7">
+                <label for="check7">Suivi - Icônes dans progression et timeline</label>
+            </div>
+            
+            <div class="checklist-item">
+                <input type="checkbox" id="check8">
+                <label for="check8">Services - Icônes des plateformes et tiers</label>
+            </div>
+            
+            <div class="checklist-item">
+                <input type="checkbox" id="check9">
+                <label for="check9">Support Liste - Icônes de statut et priorité</label>
+            </div>
+            
+            <div class="checklist-item">
+                <input type="checkbox" id="check10">
+                <label for="check10">Nouveau Ticket - Icônes dans le formulaire</label>
+            </div>
+            
+            <div class="checklist-item">
+                <input type="checkbox" id="check11">
+                <label for="check11">Voir Ticket - Icônes dans les messages</label>
+            </div>
+            
+            <div class="checklist-item">
+                <input type="checkbox" id="check12">
+                <label for="check12">Console navigateur - Aucune erreur d'icône manquante</label>
+            </div>
+            
+            <div class="checklist-item">
+                <input type="checkbox" id="check13">
+                <label for="check13">Font Awesome - CDN chargé correctement (DevTools Network)</label>
+            </div>
+            
+            <div class="checklist-item">
+                <input type="checkbox" id="check14">
+                <label for="check14">Sidebar - Toutes les icônes s'affichent</label>
+            </div>
+            
+            <div class="checklist-item">
+                <input type="checkbox" id="check15">
+                <label for="check15">Responsive - Icônes visibles sur mobile</label>
+            </div>
+        </div>
+        
+        <!-- Résultats -->
+        <div style="margin-top: 30px; padding: 20px; background: white; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+            <h2 style="color: #1f2937; margin-bottom: 15px;">📊 Résumé des Corrections</h2>
+            <table style="width: 100%; border-collapse: collapse;">
+                <tr style="background: #f3f4f6;">
+                    <th style="padding: 12px; text-align: left; border-bottom: 2px solid #e5e7eb;">Fichier</th>
+                    <th style="padding: 12px; text-align: left; border-bottom: 2px solid #e5e7eb;">Statut Avant</th>
+                    <th style="padding: 12px; text-align: left; border-bottom: 2px solid #e5e7eb;">Statut Après</th>
+                </tr>
+                <tr>
+                    <td style="padding: 12px; border-bottom: 1px solid #e5e7eb;"><code>dashboard/index.php</code></td>
+                    <td style="padding: 12px; border-bottom: 1px solid #e5e7eb;">❌ Manquant</td>
+                    <td style="padding: 12px; border-bottom: 1px solid #e5e7eb;">✅ Ajouté</td>
+                </tr>
+                <tr>
+                    <td style="padding: 12px; border-bottom: 1px solid #e5e7eb;"><code>dashboard/balance.php</code></td>
+                    <td style="padding: 12px; border-bottom: 1px solid #e5e7eb;">❌ Manquant</td>
+                    <td style="padding: 12px; border-bottom: 1px solid #e5e7eb;">✅ Ajouté</td>
+                </tr>
+                <tr>
+                    <td style="padding: 12px; border-bottom: 1px solid #e5e7eb;"><code>orders/new.php</code></td>
+                    <td style="padding: 12px; border-bottom: 1px solid #e5e7eb;">❌ Manquant</td>
+                    <td style="padding: 12px; border-bottom: 1px solid #e5e7eb;">✅ Ajouté</td>
+                </tr>
+                <tr>
+                    <td style="padding: 12px; border-bottom: 1px solid #e5e7eb;"><code>support/new-ticket.php</code></td>
+                    <td style="padding: 12px; border-bottom: 1px solid #e5e7eb;">❌ Manquant</td>
+                    <td style="padding: 12px; border-bottom: 1px solid #e5e7eb;">✅ Ajouté</td>
+                </tr>
+                <tr>
+                    <td style="padding: 12px;"><code>support/view-ticket.php</code></td>
+                    <td style="padding: 12px;">❌ Manquant</td>
+                    <td style="padding: 12px;">✅ Ajouté</td>
+                </tr>
+            </table>
+        </div>
+        
+        <!-- Notes -->
+        <div style="margin-top: 20px; padding: 15px; background: #dbeafe; border-radius: 8px;">
+            <strong>💡 Note:</strong> Si le lien "Nouvelle Commande" ne fonctionne toujours pas, vérifiez :
+            <ul style="margin: 10px 0 0 20px;">
+                <li>Les logs PHP dans <code>logs/errors.log</code></li>
+                <li>La console navigateur (F12) pour erreurs JavaScript</li>
+                <li>Les permissions du fichier <code>orders/new.php</code></li>
+                <li>Que vous êtes bien connecté au dashboard</li>
+            </ul>
+        </div>
+        
+    </div>
+    
+    <div style="text-align: center; padding: 40px 0; color: #6b7280;">
+        <p style="font-size: 14px;">🔍 Test des Icônes et Navigation</p>
+        <p style="font-size: 12px; margin-top: 5px;">Dashboard Revision - 12 octobre 2025</p>
+    </div>
+</body>
+</html>

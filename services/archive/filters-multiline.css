@@ -1,0 +1,706 @@
+/**
+ * SMM Mastery - Filtres Multi-lignes & Grid Responsive
+ * Date: 12 Octobre 2025
+ * Version: 2.0
+ * Documentation: DOCS_DEV_TO_PROD\05_FIXES_PATCHES\css\
+ * 
+ * STRUCTURE:
+ * - 3 lignes de filtres séparées (Plateformes+Qualité | Actions+Features+Prix | Recherche+Outils)
+ * - Grid responsive 4-5 colonnes desktop, 2 colonnes tablette, 1 colonne mobile
+ * - Résultats compacts pour consommation rapide
+ */
+
+/* ========================================
+   FILTRES MULTI-LIGNES (3 LIGNES)
+   ======================================== */
+
+.services-filters-multiline {
+    position: sticky;
+    top: 70px;
+    z-index: 998;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 16px;
+    padding: 14px 20px;
+    margin-bottom: 24px;
+    box-shadow: 0 4px 20px rgba(102, 126, 234, 0.3);
+    backdrop-filter: blur(10px);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+/* Lignes de filtres */
+.filters-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* Ligne 1: Plateformes + Qualité (prioritaire) */
+.filters-row-primary {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+    padding-bottom: 10px;
+}
+
+/* Ligne 2: Actions + Features + Prix */
+.filters-row-secondary {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+    padding-bottom: 10px;
+}
+
+/* Ligne 3: Recherche + Outils */
+.filters-row-tools {
+    flex-wrap: wrap;
+}
+
+/* ========================================
+   GROUPES DE FILTRES
+   ======================================== */
+
+.filter-group-multiline {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(255, 255, 255, 0.08);
+    padding: 4px 6px;
+    border-radius: 10px;
+}
+
+.filter-label-multiline {
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: rgba(255, 255, 255, 0.95);
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 6px;
+    flex-shrink: 0;
+}
+
+.filter-divider-multiline {
+    width: 1px;
+    height: 28px;
+    background: rgba(255, 255, 255, 0.2);
+    flex-shrink: 0;
+}
+
+/* ========================================
+   PLATEFORMES
+   ======================================== */
+
+.platform-filters-multiline {
+    display: flex;
+    gap: 4px;
+    flex-wrap: wrap;
+}
+
+.platform-btn-multiline {
+    width: 32px;
+    height: 32px;
+    padding: 0;
+    background: rgba(255, 255, 255, 0.12);
+    border: 2px solid transparent;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: rgba(255, 255, 255, 0.9);
+    flex-shrink: 0;
+}
+
+.platform-btn-multiline svg {
+    width: 14px;
+    height: 14px;
+}
+
+.platform-btn-multiline:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateY(-1px);
+}
+
+.platform-btn-multiline.active {
+    background: white;
+    color: var(--platform-color, #667eea);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+/* ========================================
+   QUALITÉ (TIERS)
+   ======================================== */
+
+.tier-filters-multiline {
+    display: flex;
+    gap: 4px;
+}
+
+.tier-btn-multiline {
+    width: 32px;
+    height: 32px;
+    padding: 0;
+    background: rgba(255, 255, 255, 0.12);
+    border: 2px solid transparent;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: rgba(255, 255, 255, 0.9);
+    flex-shrink: 0;
+}
+
+.tier-btn-multiline svg {
+    width: 13px;
+    height: 13px;
+}
+
+.tier-btn-multiline:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateY(-1px);
+}
+
+.tier-btn-multiline.active {
+    background: white;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.tier-btn-multiline.tier-budget.active {
+    color: #f59e0b;
+}
+
+.tier-btn-multiline.tier-standard.active {
+    color: #3b82f6;
+}
+
+.tier-btn-multiline.tier-premium.active {
+    color: #8b5cf6;
+}
+
+.tier-btn-multiline.tier-ultimate.active {
+    color: #ec4899;
+}
+
+/* ========================================
+   SELECTS COMPACTS
+   ======================================== */
+
+.filter-select-multiline {
+    height: 32px;
+    padding: 0 28px 0 10px;
+    background: rgba(255, 255, 255, 0.12);
+    border: 2px solid transparent;
+    border-radius: 8px;
+    color: white;
+    font-size: 12px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    min-width: 100px;
+    max-width: 140px;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 10 10'%3E%3Cpath fill='white' d='M5 7L1 3h8z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 8px center;
+}
+
+.filter-select-multiline:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+.filter-select-multiline:focus {
+    outline: none;
+    background-color: white;
+    color: #667eea;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 10 10'%3E%3Cpath fill='%23667eea' d='M5 7L1 3h8z'/%3E%3C/svg%3E");
+}
+
+.filter-select-multiline option {
+    background: white;
+    color: #374151;
+}
+
+/* ========================================
+   PRIX MIN-MAX
+   ======================================== */
+
+.price-range-multiline {
+    gap: 4px;
+}
+
+.price-input-multiline {
+    width: 65px;
+    height: 32px;
+    padding: 0 8px;
+    background: rgba(255, 255, 255, 0.12);
+    border: 2px solid transparent;
+    border-radius: 8px;
+    color: white;
+    font-size: 12px;
+    font-weight: 500;
+    text-align: center;
+    transition: all 0.2s ease;
+}
+
+.price-input-multiline::placeholder {
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.price-input-multiline:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.price-input-multiline:focus {
+    outline: none;
+    background: white;
+    color: #667eea;
+}
+
+.price-separator-multiline {
+    color: rgba(255, 255, 255, 0.7);
+    font-weight: 600;
+    font-size: 14px;
+    flex-shrink: 0;
+}
+
+/* ========================================
+   RECHERCHE
+   ======================================== */
+
+.search-group-multiline {
+    flex: 1;
+    min-width: 200px;
+    max-width: 350px;
+}
+
+.search-wrapper-multiline {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+.search-wrapper-multiline svg {
+    position: absolute;
+    left: 10px;
+    color: rgba(102, 126, 234, 0.6);
+    pointer-events: none;
+    z-index: 1;
+    width: 14px;
+    height: 14px;
+}
+
+.search-input-multiline {
+    width: 100%;
+    height: 32px;
+    padding: 0 12px 0 34px;
+    background: rgba(255, 255, 255, 0.12);
+    border: 2px solid transparent;
+    border-radius: 8px;
+    color: white;
+    font-size: 12px;
+    font-weight: 500;
+    transition: all 0.2s ease;
+}
+
+.search-input-multiline::placeholder {
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.search-input-multiline:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.search-input-multiline:focus {
+    outline: none;
+    background: white;
+    color: #667eea;
+}
+
+.search-wrapper-multiline:has(.search-input-multiline:focus) svg {
+    color: #667eea;
+}
+
+/* ========================================
+   BOUTON RESET & RESULTS
+   ======================================== */
+
+.filter-reset-btn-multiline {
+    width: 32px;
+    height: 32px;
+    padding: 0;
+    background: rgba(239, 68, 68, 0.25);
+    border: 2px solid transparent;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    flex-shrink: 0;
+}
+
+.filter-reset-btn-multiline svg {
+    width: 14px;
+    height: 14px;
+}
+
+.filter-reset-btn-multiline:hover {
+    background: #ef4444;
+    transform: rotate(90deg) scale(1.05);
+}
+
+.filter-results-multiline {
+    margin-left: auto;
+    padding: 0 12px;
+    height: 32px;
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-weight: 700;
+    font-size: 13px;
+    color: white;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    flex-shrink: 0;
+}
+
+.results-label {
+    font-weight: 400;
+    font-size: 11px;
+    opacity: 0.8;
+}
+
+/* ========================================
+   GRID RESPONSIVE (4-5 COLONNES DESKTOP)
+   ======================================== */
+
+.services-grid-modern {
+    display: grid;
+    gap: 20px;
+    margin-bottom: 40px;
+}
+
+/* Desktop Large: 5 colonnes */
+@media (min-width: 1600px) {
+    .services-grid-modern {
+        grid-template-columns: repeat(5, 1fr);
+        gap: 18px;
+    }
+}
+
+/* Desktop: 4 colonnes */
+@media (min-width: 1200px) and (max-width: 1599px) {
+    .services-grid-modern {
+        grid-template-columns: repeat(4, 1fr);
+        gap: 16px;
+    }
+}
+
+/* Tablette Large: 3 colonnes */
+@media (min-width: 900px) and (max-width: 1199px) {
+    .services-grid-modern {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 14px;
+    }
+}
+
+/* Tablette: 2 colonnes */
+@media (min-width: 600px) and (max-width: 899px) {
+    .services-grid-modern {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+    }
+
+    /* Filtres tablette */
+    .services-filters-multiline {
+        padding: 12px 16px;
+        gap: 8px;
+    }
+
+    .filters-row-primary,
+    .filters-row-secondary {
+        flex-wrap: wrap;
+    }
+
+    .platform-btn-multiline,
+    .tier-btn-multiline {
+        width: 30px;
+        height: 30px;
+    }
+
+    .filter-select-multiline,
+    .price-input-multiline {
+        min-width: 90px;
+        max-width: 120px;
+    }
+}
+
+/* Mobile: 1 colonne */
+@media (max-width: 599px) {
+    .services-grid-modern {
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+
+    /* Filtres mobile: scroll horizontal */
+    .services-filters-multiline {
+        padding: 10px 12px;
+        gap: 8px;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .filters-row {
+        flex-wrap: nowrap;
+        min-width: min-content;
+    }
+
+    .filters-row-primary,
+    .filters-row-secondary,
+    .filters-row-tools {
+        border-bottom: none;
+        padding-bottom: 0;
+    }
+
+    .platform-filters-multiline,
+    .tier-filters-multiline {
+        flex-wrap: nowrap;
+    }
+
+    .platform-btn-multiline,
+    .tier-btn-multiline {
+        width: 28px;
+        height: 28px;
+    }
+
+    .filter-select-multiline {
+        min-width: 85px;
+        max-width: 110px;
+        font-size: 11px;
+    }
+
+    .search-group-multiline {
+        min-width: 150px;
+        max-width: 200px;
+    }
+}
+
+/* ========================================
+   CARTES SERVICES COMPACTES
+   ======================================== */
+
+.service-card-modern {
+    background: white;
+    border-radius: 12px;
+    padding: 14px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    transition: all 0.25s ease;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    position: relative;
+}
+
+.service-card-modern:hover {
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
+    transform: translateY(-4px);
+}
+
+/* Header compact avec plateforme + tier */
+.service-card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+}
+
+.service-platform-badge {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 8px;
+    background: rgba(102, 126, 234, 0.1);
+    border-radius: 6px;
+    font-size: 11px;
+    font-weight: 600;
+    color: #667eea;
+}
+
+.service-platform-badge svg {
+    width: 12px;
+    height: 12px;
+}
+
+.service-tier-badge {
+    padding: 3px 8px;
+    border-radius: 6px;
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+}
+
+.service-tier-badge.tier-budget {
+    background: rgba(245, 158, 11, 0.15);
+    color: #d97706;
+}
+
+.service-tier-badge.tier-standard {
+    background: rgba(59, 130, 246, 0.15);
+    color: #2563eb;
+}
+
+.service-tier-badge.tier-premium {
+    background: rgba(139, 92, 246, 0.15);
+    color: #7c3aed;
+}
+
+.service-tier-badge.tier-ultimate {
+    background: rgba(236, 72, 153, 0.15);
+    color: #db2777;
+}
+
+/* Titre service compact */
+.service-card-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: #1f2937;
+    line-height: 1.3;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    min-height: 34px;
+}
+
+/* Prix + Actions */
+.service-card-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    padding-top: 8px;
+    border-top: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+.service-price {
+    font-size: 16px;
+    font-weight: 700;
+    color: #667eea;
+}
+
+.service-price-unit {
+    font-size: 10px;
+    font-weight: 400;
+    color: #9ca3af;
+}
+
+.service-order-btn {
+    padding: 6px 12px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 11px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.service-order-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+}
+
+/* Features badges (anti-drop, refill, instant) */
+.service-features {
+    display: flex;
+    gap: 4px;
+    flex-wrap: wrap;
+}
+
+.feature-badge {
+    padding: 2px 6px;
+    background: rgba(16, 185, 129, 0.1);
+    border-radius: 4px;
+    font-size: 9px;
+    font-weight: 600;
+    color: #059669;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+}
+
+.feature-badge.instant {
+    background: rgba(251, 191, 36, 0.1);
+    color: #d97706;
+}
+
+.feature-badge.refill {
+    background: rgba(59, 130, 246, 0.1);
+    color: #2563eb;
+}
+
+/* ========================================
+   RESPONSIVE CARTES
+   ======================================== */
+
+/* Desktop Large (5 colonnes) */
+@media (min-width: 1600px) {
+    .service-card-modern {
+        padding: 12px;
+    }
+
+    .service-card-title {
+        font-size: 12px;
+        min-height: 32px;
+    }
+
+    .service-price {
+        font-size: 15px;
+    }
+}
+
+/* Tablette (2-3 colonnes) */
+@media (max-width: 899px) {
+    .service-card-modern {
+        padding: 16px;
+    }
+
+    .service-card-title {
+        font-size: 14px;
+        min-height: 36px;
+    }
+}
+
+/* Mobile (1 colonne) - Vue liste compacte */
+@media (max-width: 599px) {
+    .service-card-modern {
+        flex-direction: row;
+        padding: 12px;
+        gap: 12px;
+    }
+
+    .service-card-header {
+        flex-direction: column;
+        align-items: flex-start;
+        flex: 1;
+    }
+
+    .service-card-title {
+        font-size: 13px;
+        -webkit-line-clamp: 1;
+        min-height: auto;
+    }
+
+    .service-card-footer {
+        flex-direction: column;
+        border-top: none;
+        padding-top: 0;
+        align-items: flex-end;
+    }
+}

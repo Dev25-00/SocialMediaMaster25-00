@@ -1,0 +1,110 @@
+/**
+ * SMM Mastery - FIXES CSS - VERSION SAFE
+ * Ne touche PAS au dashboard - Corrections publiques uniquement
+ * Version: 2.0 - Safe pour dashboard
+ */
+
+/* ========== FIX: Scroll Horizontal Global ========== */
+html,
+body {
+    overflow-x: hidden;
+    max-width: 100vw;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+/* ========== FIX: Pages Publiques SEULEMENT ========== */
+.hero-section,
+.feature-section,
+.pricing-section,
+.footer-section {
+    max-width: 100%;
+    overflow-x: hidden;
+}
+
+/* ========== FIX: Cards (non-dashboard) ========== */
+.service-card:not(.service-card-dash),
+.feature-card,
+.pricing-card {
+    max-width: 100%;
+    word-wrap: break-word;
+    overflow: hidden;
+}
+
+/* ========== FIX: Tables Responsive ========== */
+.table-responsive {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    max-width: 100%;
+}
+
+.table {
+    min-width: 600px;
+}
+
+/* ========== FIX: Forms ========== */
+.form-group input,
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
+/* ========== FIX: Container général ========== */
+.container {
+    max-width: 100%;
+    padding-left: 15px;
+    padding-right: 15px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* ========== FIX: Images ========== */
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+/* ========== MOBILE MENU GÉNÉRAL ========== */
+@media (max-width: 768px) {
+
+    /* Mobile menu button */
+    .mobile-menu-btn {
+        display: block;
+        position: fixed;
+        top: 15px;
+        right: 15px;
+        z-index: 1000;
+        background: #1e40af;
+        color: white;
+        border: none;
+        padding: 10px;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    /* Tables mobiles */
+    .table-responsive {
+        font-size: 14px;
+    }
+
+    /* Cards mobiles */
+    .card {
+        margin-bottom: 15px;
+        padding: 15px;
+    }
+}
+
+/* ========== NE JAMAIS TOUCHER ========== */
+/* Ces classes sont pour le dashboard et ne doivent pas être modifiées */
+/*
+.dashboard-page,
+.sidebar,
+.main-content (dans contexte dashboard),
+.dashboard-header,
+.dashboard-main,
+.dashboard-content
+*/

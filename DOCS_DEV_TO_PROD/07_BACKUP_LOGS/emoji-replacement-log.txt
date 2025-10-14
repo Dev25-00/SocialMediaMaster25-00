@@ -1,0 +1,33 @@
+=== REMPLACEMENT DES EMOJIS ===
+Date: 12/10/2025 10:39:02
+Fichiers traités: 25
+Fichiers modifiés: 22
+Emojis remplacés: 458
+
+DÉTAILS PAR FICHIER:
+------------------------------------------------------------
+dashboard/index.php                      INCHANGÉ (0 emojis)
+dashboard/balance.php                    INCHANGÉ (0 emojis)
+dashboard/profile.php                    INCHANGÉ (0 emojis)
+services/index.php                       MODIFIÉ (16 emojis)
+orders/new.php                           MODIFIÉ (1 emojis)
+orders/history.php                       MODIFIÉ (5 emojis)
+orders/tracking.php                      MODIFIÉ (7 emojis)
+support/tickets.php                      MODIFIÉ (6 emojis)
+support/new-ticket.php                   MODIFIÉ (8 emojis)
+support/view-ticket.php                  MODIFIÉ (3 emojis)
+admin/dashboard.php                      MODIFIÉ (8 emojis)
+admin/users.php                          MODIFIÉ (17 emojis)
+admin/services.php                       MODIFIÉ (27 emojis)
+admin/orders.php                         MODIFIÉ (10 emojis)
+admin/tickets.php                        MODIFIÉ (5 emojis)
+admin/settings.php                       MODIFIÉ (3 emojis)
+pages/about.php                          MODIFIÉ (42 emojis)
+pages/contact.php                        MODIFIÉ (17 emojis)
+pages/faq.php                            MODIFIÉ (20 emojis)
+pages/pricing.php                        MODIFIÉ (49 emojis)
+pages/privacy.php                        MODIFIÉ (42 emojis)
+pages/terms.php                          MODIFIÉ (16 emojis)
+pages/refund.php                         MODIFIÉ (82 emojis)
+pages/disclaimer.php                     MODIFIÉ (64 emojis)
+includes/sidebar.php                     MODIFIÉ (10 emojis)
