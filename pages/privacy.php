@@ -5,7 +5,7 @@ require_once '../functions.php';
 $page_title = 'Politique de Confidentialité | ' . SITE_NAME;
 $page_description = 'Découvrez comment SMM Mastery collecte, utilise et protège vos données personnelles. Conformité RGPD.';
 
-include '../includes/public-header.php';
+include '../includes/layout/public-header.php';
 ?>
 
 <div class="page-hero">
@@ -403,4 +403,4 @@ include '../includes/public-header.php';
 
 </div>
 
-<?php include '../includes/public-footer.php'; ?>
+<?php include '../includes/layout/public-footer.php'; ?>

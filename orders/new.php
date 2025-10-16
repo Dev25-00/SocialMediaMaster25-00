@@ -5,10 +5,10 @@
 
 require_once __DIR__ . '/../config.php';
 require_once __DIR__ . '/../functions.php';
-require_once __DIR__ . '/../includes/icons-config.php';
+require_once __DIR__ . '/../includes/config/icons-config.php';
 require_once __DIR__ . '/../api/SMMFollowsAPI.php';
 require_once __DIR__ . '/../api/AutoCreditSystem.php';
-require_once __DIR__ . '/../includes/EmailManager.php';
+require_once __DIR__ . '/../includes/email/EmailManager.php';
 
 // Vérifier si connecté
 if (!isLoggedIn()) {
@@ -180,7 +180,7 @@ $page_title_bar = "Nouvelle Commande";
 $include_charts = false;
 
 // Inclure header simple
-require_once __DIR__ . '/../includes/dashboard-header-simple.php';
+require_once __DIR__ . '/../includes/layout/dashboard-header-simple.php';
 ?>
 
 <!-- Container sans padding top (collé au top-bar) -->
@@ -419,4 +419,4 @@ require_once __DIR__ . '/../includes/dashboard-header-simple.php';
     calculateTotal();
 </script>
 
-<?php require_once __DIR__ . '/../includes/dashboard-footer-simple.php'; ?>
+<?php require_once __DIR__ . '/../includes/layout/dashboard-footer-simple.php'; ?>

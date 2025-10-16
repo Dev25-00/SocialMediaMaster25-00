@@ -251,33 +251,5 @@ if (typeof debugLog === 'function') {
     console.log('SMM Mastery JS loaded ✓');
 }
 
-// ========== Scroll to Top Button ==========
-document.addEventListener('DOMContentLoaded', function () {
-    // Créer le bouton scroll-to-top s'il n'existe pas déjà
-    if (!document.querySelector('.scroll-to-top')) {
-        const scrollBtn = document.createElement('button');
-        scrollBtn.className = 'scroll-to-top';
-        scrollBtn.innerHTML = '↑';
-        scrollBtn.setAttribute('aria-label', 'Retour en haut');
-        scrollBtn.setAttribute('title', 'Retour en haut');
-        document.body.appendChild(scrollBtn);
-
-        // Afficher/masquer le bouton selon la position de scroll
-        window.addEventListener('scroll', function () {
-            if (window.pageYOffset > 300) {
-                scrollBtn.classList.add('show');
-            } else {
-                scrollBtn.classList.remove('show');
-            }
-        });
-
-        // Action au clic : smooth scroll vers le haut
-        scrollBtn.addEventListener('click', function () {
-            window.scrollTo({
-                top: 0,
-                behavior: 'smooth'
-            });
-        });
-    }
-});
+// ...existing code...
 

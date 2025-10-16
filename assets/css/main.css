@@ -3,54 +3,12 @@
  * Version: 1.0
  */
 
-/* ========== Reset & Base ========== */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+/* Scroll-to-top supprimé pour debug espace blanc mobile */
+.scroll-to-top {
+    display: none !important;
 }
 
-:root {
-    --primary: #2563eb;
-    --secondary: #7c3aed;
-    --success: #10b981;
-    --danger: #ef4444;
-    --warning: #f59e0b;
-    --info: #3b82f6;
-    --dark: #111827;
-    --gray: #6b7280;
-    --light-gray: #f9fafb;
-    --border: #e5e7eb;
-    --radius: 12px;
-    --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-    --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
-}
 
-body {
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-    font-size: 16px;
-    line-height: 1.6;
-    color: var(--dark);
-    background: var(--light-gray);
-}
-
-a {
-    text-decoration: none;
-    color: inherit;
-    transition: all 0.3s ease;
-}
-
-img {
-    max-width: 100%;
-    height: auto;
-}
-
-/* ========== Container ========== */
-.container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 20px;
-}
 
 /* ========== Buttons ========== */
 .btn {
@@ -791,30 +749,34 @@ img {
 /* ========== Scroll to Top Button ========== */
 .scroll-to-top {
     position: fixed;
-    bottom: 30px;
-    right: 30px;
-    width: 48px;
-    height: 48px;
-    background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
-    border: none;
+    bottom: 24px;
+    right: 24px;
+    width: 32px;
+    height: 32px;
+    background: #fff;
+    border: 1.5px solid #2563eb;
     border-radius: 50%;
-    color: white;
-    font-size: 24px;
+    color: #2563eb;
+    font-size: 18px;
     cursor: pointer;
     opacity: 0;
     visibility: hidden;
-    transform: translateY(20px);
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.4);
+    transform: translateY(12px);
+    transition: opacity 0.2s, transform 0.2s;
+    box-shadow: none;
     z-index: 9999;
     display: flex;
     align-items: center;
     justify-content: center;
+    outline: none;
+    padding: 0;
 }
 
+
 .scroll-to-top:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 20px rgba(37, 99, 235, 0.5);
+    background: #f3f4f6;
+    transform: translateY(-2px);
+    box-shadow: none;
 }
 
 .scroll-to-top.show {
@@ -826,11 +788,11 @@ img {
 /* Mobile responsive */
 @media (max-width: 599px) {
     .scroll-to-top {
-        bottom: 20px;
-        right: 20px;
-        width: 52px;
-        height: 52px;
-        font-size: 26px;
+        bottom: 12px;
+        right: 12px;
+        width: 32px;
+        height: 32px;
+        font-size: 18px;
     }
 }
 
@@ -950,5 +912,84 @@ select.invalid:focus {
     select option {
         padding: 14px 16px;
         font-size: 16px;
+    }
+}
+
+/* SMM Mastery - Filtres collapsed (masquer sauf plateformes et filtres principaux)
+ * Correction: UX toggle
+ * Référence: 05_FIXES_PATCHES\css\
+ */
+.services-filters-multiline {
+    position: relative;
+}
+
+.filters-collapsed {
+    max-height: 72px;
+    overflow: hidden;
+    transition: max-height 0.3s cubic-bezier(.4, 0, .2, 1);
+    border-radius: 16px;
+}
+
+/* Masquer la ligne secondaire et les stats, garder plateformes et le premier groupe de filtres */
+.filters-collapsed .filters-row-secondary,
+.filters-collapsed .filter-divider-multiline,
+.filters-collapsed .filter-stats-info {
+    display: none !important;
+}
+
+.filters-collapsed .filters-row-primary>.filter-group-multiline:not(:first-child) {
+    display: none !important;
+}
+
+.filters-collapsed .platform-filters-multiline {
+    display: flex !important;
+}
+
+/* Languette toggle minimaliste en bas à droite de la section filtres */
+.filters-toggle-tab {
+    position: absolute;
+    right: 12px;
+    bottom: -12px;
+    z-index: 1000;
+    background: var(--primary);
+    color: #fff;
+    border: none;
+    border-radius: 6px 6px 0 0;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    padding: 6px 14px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: all 0.25s cubic-bezier(.4, 0, .2, 1);
+    opacity: 0.95;
+    min-width: 44px;
+    min-height: 32px;
+}
+
+.filters-toggle-tab:hover,
+.filters-toggle-tab:focus {
+    background: var(--primary-dark, #1d4ed8);
+    box-shadow: 0 6px 16px rgba(37, 99, 235, 0.2);
+    outline: 2px solid rgba(37, 99, 235, 0.3);
+    outline-offset: 2px;
+    opacity: 1;
+    transform: translateY(-2px);
+}
+
+.filters-toggle-tab i {
+    transition: transform 0.3s ease;
+}
+
+.filters-collapsed .filters-toggle-tab i {
+    transform: rotate(180deg);
+}
+
+@media (max-width: 599px) {
+    .filters-toggle-tab {
+        right: 8px;
+        bottom: -10px;
+        padding: 5px 12px;
+        font-size: 1rem;
+        min-width: 40px;
+        min-height: 28px;
     }
 }

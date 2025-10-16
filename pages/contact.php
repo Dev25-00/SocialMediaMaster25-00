@@ -48,7 +48,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
-include '../includes/public-header.php';
+include '../includes/layout/public-header.php';
 ?>
 
 <div class="page-hero">
@@ -409,4 +409,4 @@ include '../includes/public-header.php';
 
 </div>
 
-<?php include '../includes/public-footer.php'; ?>
+<?php include '../includes/layout/public-footer.php'; ?>

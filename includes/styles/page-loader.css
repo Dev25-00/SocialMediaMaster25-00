@@ -1,0 +1,240 @@
+/* === SMM PAGE LOADER - SYSTÈME LOADING SUBTIL === */
+/* Créé le 14 Octobre 2025 pour masquer délais traduction */
+/* Documentation: SYSTEME_LOADING_SUBTIL_TRADUCTION.md */
+
+/* === LOADER OVERLAY PRINCIPAL === */
+.smm-page-loader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(248, 250, 252, 0.92);
+    backdrop-filter: blur(2px);
+    -webkit-backdrop-filter: blur(2px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 999999;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.smm-page-loader.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* === CONTENU LOADER === */
+.smm-loader-content {
+    background: white;
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    max-width: 320px;
+    transform: translateY(20px);
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.smm-page-loader.active .smm-loader-content {
+    transform: translateY(0);
+}
+
+/* === ICÔNE ANIMÉE === */
+.smm-loader-icon {
+    width: 60px;
+    height: 60px;
+    margin: 0 auto 20px;
+    position: relative;
+}
+
+.smm-loader-globe {
+    font-size: 48px;
+    animation: gentleFloat 3s ease-in-out infinite;
+    display: block;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+@keyframes gentleFloat {
+
+    0%,
+    100% {
+        transform: translateY(0px) rotate(0deg);
+        opacity: 0.8;
+    }
+
+    50% {
+        transform: translateY(-8px) rotate(180deg);
+        opacity: 1;
+    }
+}
+
+/* Animation alternative pulse */
+.smm-loader-globe.pulse {
+    animation: gentlePulse 2s ease-in-out infinite;
+}
+
+@keyframes gentlePulse {
+
+    0%,
+    100% {
+        transform: scale(1);
+        opacity: 0.8;
+    }
+
+    50% {
+        transform: scale(1.1);
+        opacity: 1;
+    }
+}
+
+/* === TEXTE LOADER === */
+.smm-loader-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: #1f2937;
+    margin-bottom: 8px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.smm-loader-subtitle {
+    font-size: 14px;
+    color: #6b7280;
+    margin-bottom: 20px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* === BARRE PROGRESSION === */
+.smm-loader-progress {
+    width: 100%;
+    height: 3px;
+    background: #f3f4f6;
+    border-radius: 2px;
+    overflow: hidden;
+}
+
+.smm-loader-bar {
+    height: 100%;
+    background: linear-gradient(90deg, #2563eb, #7c3aed);
+    border-radius: 2px;
+    width: 0%;
+    animation: loadingProgress 2.5s ease-in-out infinite;
+}
+
+@keyframes loadingProgress {
+    0% {
+        width: 0%;
+    }
+
+    70% {
+        width: 85%;
+    }
+
+    100% {
+        width: 100%;
+    }
+}
+
+/* === VARIANTES THÈMES === */
+.smm-page-loader.dark {
+    background: rgba(17, 24, 39, 0.92);
+}
+
+.smm-page-loader.dark .smm-loader-content {
+    background: #1f2937;
+    color: white;
+    border: 1px solid rgba(55, 65, 81, 0.6);
+}
+
+.smm-page-loader.dark .smm-loader-title {
+    color: #f9fafb;
+}
+
+.smm-page-loader.dark .smm-loader-subtitle {
+    color: #d1d5db;
+}
+
+.smm-page-loader.dark .smm-loader-progress {
+    background: #374151;
+}
+
+/* === MODE COMPACT === */
+.smm-page-loader.compact .smm-loader-content {
+    padding: 25px 20px;
+    max-width: 280px;
+}
+
+.smm-page-loader.compact .smm-loader-globe {
+    font-size: 36px;
+}
+
+.smm-page-loader.compact .smm-loader-title {
+    font-size: 16px;
+}
+
+.smm-page-loader.compact .smm-loader-subtitle {
+    font-size: 13px;
+}
+
+/* === RESPONSIVE === */
+@media (max-width: 768px) {
+    .smm-page-loader .smm-loader-content {
+        margin: 20px;
+        padding: 30px 20px;
+        max-width: none;
+    }
+
+    .smm-loader-globe {
+        font-size: 36px;
+    }
+
+    .smm-loader-title {
+        font-size: 16px;
+    }
+
+    .smm-loader-subtitle {
+        font-size: 13px;
+    }
+}
+
+@media (max-width: 480px) {
+    .smm-page-loader .smm-loader-content {
+        margin: 15px;
+        padding: 25px 15px;
+    }
+
+    .smm-loader-globe {
+        font-size: 32px;
+    }
+}
+
+/* === ACCESSIBILITÉ === */
+@media (prefers-reduced-motion: reduce) {
+
+    .smm-page-loader,
+    .smm-loader-content,
+    .smm-loader-globe,
+    .smm-loader-bar {
+        animation: none;
+        transition: opacity 0.2s ease;
+    }
+
+    .smm-loader-globe {
+        transform: none;
+    }
+}
+
+/* === PERFORMANCE === */
+.smm-page-loader * {
+    will-change: transform, opacity;
+}
+
+/* GPU acceleration pour animations fluides */
+.smm-loader-globe,
+.smm-loader-content {
+    transform: translateZ(0);
+    backface-visibility: hidden;
+}

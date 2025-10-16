@@ -1,7 +1,7 @@
 <?php
 require_once '../config.php';
 require_once '../functions.php';
-require_once '../includes/icons-config.php';
+require_once '../includes/config/icons-config.php';
 
 // Vérifier si connecté
 if (!isLoggedIn()) {
@@ -9,6 +9,13 @@ if (!isLoggedIn()) {
 }
 
 $user = getCurrentUser($pdo);
+
+// GESTION LANGUE FALLBACK
+$selectedLang = $_GET['lang'] ?? 'fr';
+$validLangs = ['fr', 'en', 'es', 'de', 'it', 'pt', 'ar', 'zh-CN', 'ja', 'ko', 'hi'];
+if (!in_array($selectedLang, $validLangs)) {
+    $selectedLang = 'fr';
+}
 
 // Filtres
 $status = $_GET['status'] ?? '';
@@ -64,7 +71,7 @@ $page_title = "Historique Commandes";
 $page_title_bar = "Mes Commandes";
 
 // Inclure header simple
-require_once __DIR__ . '/../includes/dashboard-header-simple.php';
+require_once __DIR__ . '/../includes/layout/dashboard-header-simple.php';
 ?>
 
 <!-- Container sans padding top (collé au top-bar) -->
@@ -79,7 +86,7 @@ require_once __DIR__ . '/../includes/dashboard-header-simple.php';
     $page_header_icon = "orders";
     $page_header_description = getIcon('info', false, 'sm') . " Consultez l'historique complet de vos commandes";
     $page_header_gradient = false;
-    require_once __DIR__ . '/../includes/page-header.php';
+    require_once __DIR__ . '/../includes/layout/page-header.php';
     ?>
 
     <?php echo renderFlashMessage(); ?>
@@ -217,4 +224,4 @@ require_once __DIR__ . '/../includes/dashboard-header-simple.php';
 </div> <!-- Fin container-fluid -->
 </div>
 
-<?php require_once __DIR__ . '/../includes/dashboard-footer-simple.php'; ?>
+<?php require_once __DIR__ . '/../includes/layout/dashboard-footer-simple.php'; ?>

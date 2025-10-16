@@ -12,7 +12,7 @@ require_once __DIR__ . '/../config.php';
 require_once __DIR__ . '/../functions.php';
 require_once __DIR__ . '/SMMFollowsAPI.php';
 require_once __DIR__ . '/AutoCreditSystem.php';
-require_once __DIR__ . '/../includes/EmailManager.php';
+require_once __DIR__ . '/../includes/email/EmailManager.php';
 
 // Vérifier si connecté
 if (!isLoggedIn()) {

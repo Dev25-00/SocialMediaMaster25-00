@@ -1,7 +1,7 @@
 <?php
 require_once '../config.php';
 require_once '../functions.php';
-require_once '../includes/icons-config.php';
+require_once '../includes/config/icons-config.php';
 
 // Vérifier si connecté
 if (!isLoggedIn()) {
@@ -46,7 +46,7 @@ $page_title = "Suivi Commande #" . $order['order_number'];
 $page_title_bar = "Suivi de Commande";
 
 // Inclure header simple
-require_once __DIR__ . '/../includes/dashboard-header-simple.php';
+require_once __DIR__ . '/../includes/layout/dashboard-header-simple.php';
 ?>
 
 <style>
@@ -314,4 +314,4 @@ require_once __DIR__ . '/../includes/dashboard-header-simple.php';
     <?php endif; ?>
 </script>
 
-<?php require_once __DIR__ . '/../includes/dashboard-footer-simple.php'; ?>
+<?php require_once __DIR__ . '/../includes/layout/dashboard-footer-simple.php'; ?>

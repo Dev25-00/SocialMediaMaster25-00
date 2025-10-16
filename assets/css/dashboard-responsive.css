@@ -64,8 +64,9 @@ body {
     min-height: 100vh;
     background: #f8f9fa;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    padding: 0; /* Pas de padding pour que top-bar colle */
-    overflow-x: hidden; /* Éviter scroll horizontal */
+    padding: 0;
+    /* CRITICAL: overflow visible pour permettre sticky */
+    overflow: visible !important;
 }
 
 /* Container-fluid pour contenu pleine largeur */
@@ -85,24 +86,10 @@ body {
 }
 
 /* ============================================
-   TOP BAR - Sticky Header
+   TOP BAR - Sticky Header (Défini dans dashboard-top-bar.php)
    ============================================ */
 
-.top-bar-global {
-    position: sticky;
-    top: 0;
-    z-index: 100;
-    background: rgba(255, 255, 255, 0.95);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    border-bottom: 1px solid #e5e7eb;
-    padding: 0 24px;
-    height: 70px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
-}
+/* Supprimé car défini dans dashboard-top-bar.php pour éviter conflits */
 
 .top-bar-left {
     display: flex;
@@ -305,8 +292,29 @@ body {
    Basé sur le modèle parfait de services/index.php
    ============================================ */
 
-/* Tablet & Mobile - Point de bascule principal */
-@media (max-width: 1024px) {
+/* Tablet Large (1024px-769px) - Sidebar plus petite mais visible */
+@media (max-width: 1024px) and (min-width: 769px) {
+
+    /* SIDEBAR RÉDUITE pour tablettes */
+    .sidebar {
+        width: 200px;
+        /* Réduite de 260px à 200px */
+    }
+
+    /* MAIN CONTENT ajusté */
+    .main-content {
+        margin-left: 200px;
+        width: calc(100% - 200px);
+    }
+
+    /* Hamburger masqué sur tablette */
+    .hamburger-btn {
+        display: none;
+    }
+}
+
+/* Mobile - Point de bascule mobile */
+@media (max-width: 768px) {
 
     /* SIDEBAR DEVIENT MOBILE */
     .sidebar {
@@ -316,6 +324,8 @@ body {
         height: 100vh;
         z-index: 1001;
         box-shadow: 4px 0 12px rgba(0, 0, 0, 0.3);
+        width: 260px;
+        /* Garde la largeur complète */
     }
 
     .sidebar.active {

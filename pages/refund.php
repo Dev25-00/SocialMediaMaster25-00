@@ -5,7 +5,7 @@ require_once '../functions.php';
 $page_title = 'Politique de Remboursement | ' . SITE_NAME;
 $page_description = 'Découvrez notre politique de remboursement et nos garanties. Conditions de refund et de refill.';
 
-include '../includes/public-header.php';
+include '../includes/layout/public-header.php';
 ?>
 
 <div class="page-hero">
@@ -409,4 +409,4 @@ include '../includes/public-header.php';
 
 </div>
 
-<?php include '../includes/public-footer.php'; ?>
+<?php include '../includes/layout/public-footer.php'; ?>

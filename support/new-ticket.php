@@ -1,7 +1,7 @@
 <?php
 require_once '../config.php';
 require_once '../functions.php';
-require_once '../includes/icons-config.php';
+require_once '../includes/config/icons-config.php';
 
 // Vérifier si connecté
 if (!isLoggedIn()) {
@@ -66,7 +66,7 @@ $page_title = "Nouveau Ticket";
 $page_title_bar = "Nouveau Ticket";
 
 // Inclure header simple
-require_once __DIR__ . '/../includes/dashboard-header-simple.php';
+require_once __DIR__ . '/../includes/layout/dashboard-header-simple.php';
 ?>
 
 <!-- Container sans padding top (collé au top-bar) -->
@@ -196,4 +196,4 @@ require_once __DIR__ . '/../includes/dashboard-header-simple.php';
 </div> <!-- Fin container-fluid -->
 </div>
 
-<?php require_once __DIR__ . '/../includes/dashboard-footer-simple.php'; ?>
+<?php require_once __DIR__ . '/../includes/layout/dashboard-footer-simple.php'; ?>

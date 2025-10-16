@@ -5,7 +5,7 @@ require_once '../functions.php';
 $page_title = 'FAQ - Questions Fréquentes | ' . SITE_NAME;
 $page_description = 'Trouvez des réponses aux questions les plus fréquentes sur SMM Mastery, nos services, paiements, et support.';
 
-include '../includes/public-header.php';
+include '../includes/layout/public-header.php';
 ?>
 
 <div class="page-hero">
@@ -286,4 +286,4 @@ include '../includes/public-header.php';
 
 </div>
 
-<?php include '../includes/public-footer.php'; ?>
+<?php include '../includes/layout/public-footer.php'; ?>

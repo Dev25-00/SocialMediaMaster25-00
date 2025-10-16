@@ -6,7 +6,7 @@
 
 require_once __DIR__ . '/../config.php';
 require_once __DIR__ . '/../functions.php';
-require_once __DIR__ . '/../includes/icons-config.php';
+require_once __DIR__ . '/../includes/config/icons-config.php';
 
 // Vérifier si connecté
 if (!isLoggedIn()) {
@@ -45,14 +45,14 @@ $page_title_bar = "Dashboard";
 $include_charts = !empty($chart_data);
 
 // Inclure header simple
-require_once __DIR__ . '/../includes/dashboard-header-simple.php';
+require_once __DIR__ . '/../includes/layout/dashboard-header-simple.php';
 ?>
 
-<!-- Container sans padding top (collé au top-bar) -->
-<div class="container-fluid" style="padding: 0;">
+<!-- Container principal avec espacement correct pour le top-bar sticky -->
+<div class="container-fluid dashboard-container">
     
-    <!-- Content wrapper avec padding latéral seulement -->
-    <div style="padding: 24px;">
+    <!-- Content wrapper avec padding complet -->
+    <div class="dashboard-content-wrapper">
     
     <?php 
     // Header configuration avec nom d'utilisateur
@@ -62,7 +62,7 @@ require_once __DIR__ . '/../includes/dashboard-header-simple.php';
     $months = ['', 'janvier', 'février', 'mars', 'avril', 'mai', 'juin', 'juillet', 'août', 'septembre', 'octobre', 'novembre', 'décembre'];
     $page_header_description = getIcon('calendar', false, 'sm') . " " . $days[date('w')] . ' ' . date('d') . ' ' . $months[date('n')] . ' ' . date('Y');
     $page_header_gradient = true;
-    require_once __DIR__ . '/../includes/page-header.php';
+    require_once __DIR__ . '/../includes/layout/page-header.php';
     ?>
 
         <!-- Flash Messages -->
@@ -77,7 +77,7 @@ require_once __DIR__ . '/../includes/dashboard-header-simple.php';
                 <div class="stat-info">
                     <div class="stat-label">Solde actuel</div>
                     <div class="stat-value"><?php echo formatCurrency($user['balance']); ?></div>
-                    <a href="<?php echo SITE_URL; ?>/dashboard/balance.php" class="stat-action">
+                    <a href="<?php echo SITE_URL; ?>/dashboard/finances/balance.php" class="stat-action">
                         <?php echo getIcon('add', false, 'sm'); ?>
                         Ajouter des fonds
                     </a>
@@ -155,7 +155,7 @@ require_once __DIR__ . '/../includes/dashboard-header-simple.php';
                 </div>
             </a>
             
-            <a href="<?php echo SITE_URL; ?>/dashboard/balance.php" class="action-card action-success">
+            <a href="<?php echo SITE_URL; ?>/dashboard/finances/balance.php" class="action-card action-success">
                 <div class="action-icon">
                     <?php echo getIcon('money', true, 'xl'); ?>
                 </div>
@@ -717,4 +717,4 @@ document.addEventListener('DOMContentLoaded', function() {
 
 </div> <!-- Fin container-fluid -->
 
-<?php require_once __DIR__ . '/../includes/dashboard-footer-simple.php'; ?>
+<?php require_once __DIR__ . '/../includes/layout/dashboard-footer-simple.php'; ?>

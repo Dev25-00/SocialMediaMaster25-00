@@ -31,10 +31,12 @@ const ServicesManagerMultiline = {
         actionType: '',      // Type d'action (followers, likes, views, etc.)
         dropRate: '',        // Taux de perte (No Drop, Low Drop, High Drop)
         refill: '',          // Politique de remplissage (0, 30, 90, 365, lifetime)
+        country: '',         // Pays/Localisation (Worldwide, USA, France, etc.)
         priceMin: null,      // Prix minimum en USD
         priceMax: null,      // Prix maximum en USD
         sort: 'price-asc',   // Ordre de tri (price-asc, price-desc, name-asc, name-desc, popular)
-        searchId: ''         // Recherche par ID de service
+        searchId: '',        // Recherche par ID de service
+        favoritesOnly: false // Afficher uniquement les favoris
     },
 
     // ===== PROPRIÉTÉS DE PAGINATION =====
@@ -308,6 +310,17 @@ const ServicesManagerMultiline = {
             });
         }
 
+        // Filtre Pays
+        const countryFilter = document.getElementById('countryFilter');
+        if (countryFilter) {
+            countryFilter.addEventListener('change', (e) => {
+                this.filters.country = e.target.value;
+                // Ajouter classe active si une option est sélectionnée
+                e.target.classList.toggle('active', e.target.value !== '');
+                this.reloadWithFilters();
+            });
+        }
+
         // Prix Min
         const priceMin = document.getElementById('priceMin');
         if (priceMin) {
@@ -401,6 +414,50 @@ const ServicesManagerMultiline = {
             });
         }
 
+        // Toggle Favoris
+        const favoritesToggleBtn = document.getElementById('favoritesToggleBtn');
+        if (favoritesToggleBtn) {
+            favoritesToggleBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+
+                // Désactiver temporairement le bouton pour éviter double-clic
+                if (favoritesToggleBtn.disabled) {
+                    console.log('🚫 Bouton désactivé, ignoré');
+                    return;
+                }
+
+                favoritesToggleBtn.disabled = true;
+
+                const isActive = favoritesToggleBtn.dataset.active === 'true';
+                const newState = !isActive;
+                favoritesToggleBtn.dataset.active = newState;
+                this.filters.favoritesOnly = newState;
+
+                console.log('⭐ Toggle Favoris clicked:', {
+                    wasActive: isActive,
+                    nowActive: newState,
+                    filterObject: this.filters.favoritesOnly,
+                    favoritesInSet: window.userFavoritesIds ? window.userFavoritesIds.size : 0,
+                    favoriteIds: window.userFavoritesIds ? Array.from(window.userFavoritesIds) : []
+                });
+
+                // Message clair pour l'utilisateur
+                if (newState) {
+                    console.log('🌟 FILTRE FAVORIS ACTIVÉ - Seuls les services favoris seront affichés');
+                } else {
+                    console.log('📋 FILTRE FAVORIS DÉSACTIVÉ - Tous les services seront affichés');
+                }
+
+                this.reloadWithFilters();
+
+                // Réactiver après le chargement (1 seconde)
+                setTimeout(() => {
+                    favoritesToggleBtn.disabled = false;
+                }, 1000);
+            });
+        }
+
         // Reset
         const resetBtn = document.getElementById('resetFiltersBtn');
         if (resetBtn) {
@@ -418,6 +475,8 @@ const ServicesManagerMultiline = {
             actionType: '',
             dropRate: '',
             refill: '',
+            country: '',        // Reset pays
+            favoritesOnly: false, // Reset favoris
             priceMin: null,
             priceMax: null,
             sort: 'price-asc',  // Reset vers prix croissant
@@ -439,6 +498,7 @@ const ServicesManagerMultiline = {
         const actionTypeFilter = document.getElementById('actionTypeFilter');
         const dropRateFilter = document.getElementById('dropRateFilter');
         const refillFilter = document.getElementById('refillFilter');
+        const countryFilter = document.getElementById('countryFilter');
         const priceMin = document.getElementById('priceMin');
         const priceMax = document.getElementById('priceMax');
         const sortSelect = document.getElementById('sortSelect');
@@ -458,6 +518,11 @@ const ServicesManagerMultiline = {
         if (refillFilter) {
             refillFilter.value = '';
             refillFilter.classList.remove('active');
+        }
+
+        if (countryFilter) {
+            countryFilter.value = '';
+            countryFilter.classList.remove('active');
         }
 
         if (priceMin) {
@@ -482,6 +547,12 @@ const ServicesManagerMultiline = {
 
         if (clearSearchIdBtn) {
             clearSearchIdBtn.style.display = 'none';
+        }
+
+        // Reset toggle favoris
+        const favoritesToggleBtn = document.getElementById('favoritesToggleBtn');
+        if (favoritesToggleBtn) {
+            favoritesToggleBtn.dataset.active = 'false';
         }
 
         this.reloadWithFilters();
@@ -559,18 +630,30 @@ const ServicesManagerMultiline = {
         }
 
         try {
-            // Construction URL avec tous les filtres
-            let url = `../api/services.php?page=${this.currentPage}&per_page=${this.itemsPerPage}`;
+            let url;
 
-            if (this.filters.platform) url += `&platform=${encodeURIComponent(this.filters.platform)}`;
-            if (this.filters.tier) url += `&tier=${encodeURIComponent(this.filters.tier)}`;
-            if (this.filters.actionType) url += `&action_type=${encodeURIComponent(this.filters.actionType)}`;
-            if (this.filters.dropRate) url += `&drop_rate=${encodeURIComponent(this.filters.dropRate)}`;
-            if (this.filters.refill) url += `&refill_days=${encodeURIComponent(this.filters.refill)}`;
-            if (this.filters.priceMin) url += `&price_min=${this.filters.priceMin}`;
-            if (this.filters.priceMax) url += `&price_max=${this.filters.priceMax}`;
-            if (this.filters.sort) url += `&sort=${this.filters.sort}`;
-            if (this.filters.searchId) url += `&search_id=${encodeURIComponent(this.filters.searchId)}`;
+            // ⭐ Log pour debug
+            console.log('🔍 État du filtre favoritesOnly:', this.filters.favoritesOnly, 'Type:', typeof this.filters.favoritesOnly);
+
+            // ⭐ Si filtre Favoris activé, charger depuis l'API favorites
+            if (this.filters.favoritesOnly) {
+                console.log('⭐ Mode Favoris: Chargement depuis /api/favorites/list.php');
+                url = '/smm/api/favorites/list.php';
+            } else {
+                // Construction URL normale avec tous les filtres
+                url = `../api/services.php?page=${this.currentPage}&per_page=${this.itemsPerPage}`;
+
+                if (this.filters.platform) url += `&platform=${encodeURIComponent(this.filters.platform)}`;
+                if (this.filters.tier) url += `&tier=${encodeURIComponent(this.filters.tier)}`;
+                if (this.filters.actionType) url += `&action_type=${encodeURIComponent(this.filters.actionType)}`;
+                if (this.filters.dropRate) url += `&drop_rate=${encodeURIComponent(this.filters.dropRate)}`;
+                if (this.filters.refill) url += `&refill_days=${encodeURIComponent(this.filters.refill)}`;
+                if (this.filters.country) url += `&location=${encodeURIComponent(this.filters.country)}`;
+                if (this.filters.priceMin) url += `&price_min=${this.filters.priceMin}`;
+                if (this.filters.priceMax) url += `&price_max=${this.filters.priceMax}`;
+                if (this.filters.sort) url += `&sort=${this.filters.sort}`;
+                if (this.filters.searchId) url += `&search_id=${encodeURIComponent(this.filters.searchId)}`;
+            }
 
             console.log('📡 Fetching:', url);
 
@@ -589,10 +672,107 @@ const ServicesManagerMultiline = {
             this.removeSkeletons();
 
             if (data.success) {
-                // L'API retourne data.services et data.pagination
-                const services = data.services || data.data || [];
-                const pagination = data.pagination || {};
-                const total = pagination.total || data.total || 0;
+                let services = [];
+                let total = 0;
+
+                // ⭐ Gérer le format de l'API favorites vs services
+                if (this.filters.favoritesOnly && data.favorites) {
+                    console.log('🌟 FORMAT API FAVORITES DÉTECTÉ');
+                    console.log('📦 Données reçues:', data.favorites.length, 'favoris');
+
+                    // L'API favorites retourne un tableau de { favorite_id, service: {...} }
+                    services = data.favorites.map(fav => {
+                        // Extraire l'objet service et ajouter un flag favorite
+                        const service = fav.service;
+                        service.isFavorite = true; // Marquer comme favori
+                        return service;
+                    });
+
+                    // 🔍 FILTRAGE CÔTÉ CLIENT avec les autres filtres actifs
+                    let originalCount = services.length;
+
+                    if (this.filters.platform) {
+                        services = services.filter(s => s.platform.toLowerCase() === this.filters.platform.toLowerCase());
+                        console.log(`  📱 Filtre Platform "${this.filters.platform}": ${originalCount} → ${services.length}`);
+                        originalCount = services.length;
+                    }
+
+                    if (this.filters.tier) {
+                        services = services.filter(s => s.tier && s.tier.toLowerCase() === this.filters.tier.toLowerCase());
+                        console.log(`  🏆 Filtre Tier "${this.filters.tier}": ${originalCount} → ${services.length}`);
+                        originalCount = services.length;
+                    }
+
+                    if (this.filters.country) {
+                        services = services.filter(s => s.location && s.location.toLowerCase().includes(this.filters.country.toLowerCase()));
+                        console.log(`  🌍 Filtre Country "${this.filters.country}": ${originalCount} → ${services.length}`);
+                        originalCount = services.length;
+                    }
+
+                    if (this.filters.priceMin !== null) {
+                        services = services.filter(s => parseFloat(s.sell_price || s.price) >= this.filters.priceMin);
+                        console.log(`  💰 Filtre Prix Min ${this.filters.priceMin}: ${originalCount} → ${services.length}`);
+                        originalCount = services.length;
+                    }
+
+                    if (this.filters.priceMax !== null) {
+                        services = services.filter(s => parseFloat(s.sell_price || s.price) <= this.filters.priceMax);
+                        console.log(`  💰 Filtre Prix Max ${this.filters.priceMax}: ${originalCount} → ${services.length}`);
+                        originalCount = services.length;
+                    }
+
+                    if (this.filters.actionType) {
+                        services = services.filter(s => {
+                            const name = (s.name || '').toLowerCase();
+                            const action = this.filters.actionType.toLowerCase();
+                            return name.includes(action);
+                        });
+                        console.log(`  ⚡ Filtre Action "${this.filters.actionType}": ${originalCount} → ${services.length}`);
+                        originalCount = services.length;
+                    }
+
+                    if (this.filters.dropRate) {
+                        services = services.filter(s => {
+                            const drop = (s.drop_rate || '').toLowerCase();
+                            return drop.includes(this.filters.dropRate.toLowerCase());
+                        });
+                        console.log(`  📉 Filtre Drop Rate "${this.filters.dropRate}": ${originalCount} → ${services.length}`);
+                        originalCount = services.length;
+                    }
+
+                    if (this.filters.refill) {
+                        services = services.filter(s => {
+                            const refillDays = parseInt(s.refill_days || 0);
+                            const filterRefill = this.filters.refill;
+
+                            if (filterRefill === '0') return refillDays === 0;
+                            if (filterRefill === '30') return refillDays > 0 && refillDays <= 30;
+                            if (filterRefill === '90') return refillDays > 30 && refillDays <= 90;
+                            if (filterRefill === '365') return refillDays > 90 && refillDays <= 365;
+                            if (filterRefill === 'lifetime') return refillDays > 365;
+
+                            return true;
+                        });
+                        console.log(`  🔄 Filtre Refill "${this.filters.refill}": ${originalCount} → ${services.length}`);
+                    }
+
+                    console.log(`✅ Filtrage terminé: ${data.favorites.length} favoris → ${services.length} après filtres`);
+
+                    total = services.length;
+                    // Pas de pagination pour les favoris
+                    this.hasMore = false;
+                } else {
+                    // Format normal de l'API services
+                    services = data.services || data.data || [];
+                    const pagination = data.pagination || {};
+                    total = pagination.total || data.total || 0;
+
+                    // Calculer has_more si l'API ne le fournit pas
+                    const totalPages = pagination.total_pages || Math.ceil(total / this.itemsPerPage);
+                    this.hasMore = pagination.has_more !== undefined
+                        ? pagination.has_more
+                        : (this.currentPage < totalPages);
+                }
 
                 // Mettre à jour le total disponible
                 this.totalAvailable = total;
@@ -605,20 +785,13 @@ const ServicesManagerMultiline = {
                 // Ajouter le nombre de services chargés
                 this.totalDisplayed += (services?.length || 0);
 
-                // Calculer has_more si l'API ne le fournit pas
-                const totalPages = pagination.total_pages || Math.ceil(total / this.itemsPerPage);
-                this.hasMore = pagination.has_more !== undefined
-                    ? pagination.has_more
-                    : (this.currentPage < totalPages);
-
                 console.log(`📊 Pagination détaillée:`, {
+                    favoritesMode: this.filters.favoritesOnly,
                     page: this.currentPage,
                     received: services?.length || 0,
                     displayed: this.totalDisplayed,
                     total: this.totalAvailable,
-                    hasMore: this.hasMore,
-                    totalPages: totalPages,
-                    apiData: pagination
+                    hasMore: this.hasMore
                 });
 
                 this.renderServices(services);
@@ -662,6 +835,12 @@ const ServicesManagerMultiline = {
     },
 
     renderServices(services) {
+        console.log('🎨 renderServices called:', {
+            totalServices: services.length,
+            favoritesOnly: this.filters.favoritesOnly,
+            userFavoritesSize: window.userFavoritesIds ? window.userFavoritesIds.size : 0
+        });
+
         const grid = document.getElementById('servicesGrid');
         if (!grid) {
             console.warn('⚠️ Grid non trouvée lors du rendu');
@@ -677,19 +856,26 @@ const ServicesManagerMultiline = {
             return;
         }
 
+        // ⭐ En mode favoris, les services sont déjà filtrés par l'API
+        // Pas besoin de filtrage côté client
+        let filteredServices = services;
+
+        console.log(`📊 Services à afficher: ${filteredServices.length}`);
+
         // Vérifier si on doit afficher un message "aucun résultat"
-        if (services.length === 0 && this.currentPage === 1) {
-            grid.innerHTML = '<div style="grid-column: 1 / -1; text-align: center; padding: 40px; color: #6b7280;">Aucun service trouvé avec ces filtres.</div>';
+        if (filteredServices.length === 0 && this.currentPage === 1) {
+            const message = this.filters.favoritesOnly
+                ? '<div style="grid-column: 1 / -1; text-align: center; padding: 40px; color: #6b7280;">⭐ Aucun favori trouvé. Cliquez sur l\'étoile pour ajouter des services en favoris.</div>'
+                : '<div style="grid-column: 1 / -1; text-align: center; padding: 40px; color: #6b7280;">Aucun service trouvé avec ces filtres.</div>';
+            grid.innerHTML = message;
             return;
         }
 
         // Fragment pour optimiser les performances
         const fragment = document.createDocumentFragment();
 
-        services.forEach((service, index) => {
-            const card = template.content.cloneNode(true);
-
-            // 🆔 ID du service (provider_id - ID chez le fournisseur)
+        filteredServices.forEach((service, index) => {
+            const card = template.content.cloneNode(true);            // 🆔 ID du service (provider_id - ID chez le fournisseur)
             const idBadge = card.querySelector('.service-id-badge');
             if (idBadge && service.provider_id) {
                 idBadge.textContent = `ID: ${service.provider_id}`;
@@ -977,6 +1163,20 @@ const ServicesManagerMultiline = {
                 cardElement.dataset.cancel = service.cancel || '0';
                 cardElement.dataset.description = service.description || '';
                 cardElement.dataset.location = service.location || '';
+
+                // ⭐ Marquer comme favori si le service vient de l'API favorites
+                if (service.isFavorite || (window.userFavoritesIds && window.userFavoritesIds.has(service.id))) {
+                    const favoriteBtn = cardElement.querySelector('.service-favorite-btn');
+                    if (favoriteBtn) {
+                        favoriteBtn.dataset.favorite = 'true';
+                        favoriteBtn.classList.add('active');
+                        const icon = favoriteBtn.querySelector('i');
+                        if (icon) {
+                            icon.className = 'fas fa-star';
+                        }
+                        favoriteBtn.title = 'Remove from favorites';
+                    }
+                }
             }
 
             fragment.appendChild(card);

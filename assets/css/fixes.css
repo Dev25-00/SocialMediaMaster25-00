@@ -38,8 +38,84 @@ body {
 .service-card-dash {
     max-width: 100%;
     word-wrap: break-word;
-    overflow: hidden;
 }
+
+/* SMM Mastery - FIX DÉFINITIF espace blanc mobile sidepanel pages
+ * Correction: Suppression complète du gap sur toutes les pages client
+ * Référence: 05_FIXES_PATCHES\css\
+ * PROBLÈME: L'espace blanc persiste sur dashboard/services avec sidepanel + top navbar
+ */
+
+/* FIX RADICAL: Supprime min-height sur toutes les pages sidepanel mobile */
+@media (max-width: 768px) {
+
+    /* Annule TOUS les min-height sur pages dashboard/services */
+    .main-content,
+    .dashboard-page,
+    .dashboard-container,
+    .container-fluid {
+        min-height: auto !important;
+        height: auto !important;
+    }
+
+    /* Force body à ne pas créer d'espace vertical excédentaire */
+    body {
+        overflow-x: hidden !important;
+        max-width: 100vw !important;
+        height: auto !important;
+        min-height: auto !important;
+    }
+
+    /* Supprime padding/margin en bas de TOUS les containers */
+    .main-content,
+    .dashboard-container,
+    .container-fluid,
+    .dashboard-content-wrapper {
+        padding-bottom: 0 !important;
+        margin-bottom: 0 !important;
+    }
+}
+
+/* FIX SPÉCIFIQUE: Émulation iPhone SE et petits mobiles */
+@media (max-width: 375px) {
+
+    /* Force hauteur automatique sur TOUS les éléments de layout */
+    html,
+    body,
+    .dashboard-page,
+    .main-content {
+        height: auto !important;
+        min-height: auto !important;
+        max-height: none !important;
+    }
+}
+
+/* FIX EXTRÊME: Suppression forcée de tout espace blanc résiduel */
+@media (max-width: 768px) {
+
+    /* Empêche TOUT débordement horizontal */
+    * {
+        max-width: 100vw !important;
+        overflow-x: hidden !important;
+        box-sizing: border-box !important;
+    }
+
+    /* Supprime l'espace blanc en bas sur toutes les pages sidepanel */
+    body::after,
+    .dashboard-page::after,
+    .main-content::after {
+        display: none !important;
+    }
+
+    /* Force la suppression de tout margin/padding en bas */
+    body>*:last-child,
+    .main-content>*:last-child,
+    .dashboard-container>*:last-child {
+        margin-bottom: 0 !important;
+        padding-bottom: 0 !important;
+    }
+}
+
 
 /* ========== FIX: Tables Responsive ========== */
 .table-responsive {

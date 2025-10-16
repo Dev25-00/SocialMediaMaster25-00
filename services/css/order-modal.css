@@ -15,7 +15,8 @@
     bottom: 0;
     background: rgba(0, 0, 0, 0.7);
     backdrop-filter: blur(8px);
-    z-index: 9999;
+    z-index: 1000000000;
+    /* Au-dessus du top-bar (999999999) */
     animation: fadeIn 0.3s ease;
 }
 

@@ -10,7 +10,7 @@ if (!defined('DB_HOST')) {
 }
 
 // Charger la configuration des icônes (Font Awesome)
-require_once __DIR__ . '/includes/icons-config.php';
+require_once __DIR__ . '/includes/config/icons-config.php';
 
 /**
  * Vérifier si l'utilisateur est connecté
@@ -327,7 +327,7 @@ function getStatusBadge($status) {
 function getTierBadge($tier) {
     // Charger les icônes si pas déjà fait
     if (!function_exists('tierBadge')) {
-        require_once __DIR__ . '/includes/icons-config.php';
+        require_once __DIR__ . '/includes/config/icons-config.php';
     }
     return tierBadge($tier);
 }

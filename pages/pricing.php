@@ -5,7 +5,7 @@ require_once '../functions.php';
 $page_title = 'Tarifs et Pricing | ' . SITE_NAME;
 $page_description = 'Découvrez nos tarifs transparents pour tous nos services SMM. 4 niveaux de qualité pour tous les budgets.';
 
-include '../includes/public-header.php';
+include '../includes/layout/public-header.php';
 ?>
 
 <div class="page-hero">
@@ -428,4 +428,4 @@ include '../includes/public-header.php';
 
 </div>
 
-<?php include '../includes/public-footer.php'; ?>
+<?php include '../includes/layout/public-footer.php'; ?>

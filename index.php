@@ -71,6 +71,11 @@ require_once 'functions.php';
             box-shadow: var(--shadow);
             z-index: 1000;
             transition: all 0.3s ease;
+            width: 100%;
+            /* Fix pour mobile Safari/Chrome */
+            -webkit-transform: translate3d(0, 0, 0);
+            transform: translate3d(0, 0, 0);
+            will-change: transform;
         }
         
         .header.scrolled {
@@ -110,10 +115,18 @@ require_once 'functions.php';
             -webkit-text-fill-color: transparent;
         }
         
+        /* Widget Traduction Header */
+        .header-translate-widget {
+            display: flex;
+            align-items: center;
+            order: 1;
+        }
+        
         .nav {
             display: flex;
             align-items: center;
             gap: 24px;
+            order: 2;
         }
         
         .nav a {
@@ -262,6 +275,11 @@ require_once 'functions.php';
                     <span><?php echo SITE_NAME; ?></span>
                 </div>
                 
+                <!-- Widget Traduction (toujours visible) -->
+                <div class="header-translate-widget">
+                    <?php include __DIR__ . '/includes/widgets/google-translate-widget-v3-final.php'; ?>
+                </div>
+                
                 <!-- Hamburger Button (Mobile) -->
                 <button class="hamburger" id="hamburger" aria-label="Menu">
                     <span></span>
@@ -274,7 +292,6 @@ require_once 'functions.php';
                     <a href="#services"><i class="fa-solid fa-grid-2"></i> Services</a>
                     <a href="#pricing"><i class="fa-solid fa-tag"></i> Tarifs</a>
                     <a href="#features"><i class="fa-solid fa-star"></i> Avantages</a>
-                    <?php include __DIR__ . '/includes/google-translate-widget.php'; ?>
                     <?php if (isLoggedIn()): ?>
                         <a href="dashboard/index.php" class="btn btn-primary">
                             <i class="fa-solid fa-gauge-high"></i> Dashboard
@@ -1257,8 +1274,26 @@ require_once 'functions.php';
             
             /* Responsive */
             @media (max-width: 992px) {
+                .header-content {
+                    display: grid;
+                    grid-template-columns: 1fr auto auto;
+                    grid-template-areas: "logo translate hamburger";
+                    align-items: center;
+                    gap: 16px;
+                }
+                
+                .logo {
+                    grid-area: logo;
+                }
+                
+                .header-translate-widget {
+                    grid-area: translate;
+                    order: unset;
+                }
+                
                 .hamburger {
                     display: flex;
+                    grid-area: hamburger;
                 }
                 
                 .nav {
@@ -1268,13 +1303,16 @@ require_once 'functions.php';
                     right: 0;
                     background: var(--white);
                     flex-direction: column;
-                    padding: 20px;
+                    padding: 16px 20px;  /* Réduit de 20px à 16px */
                     box-shadow: var(--shadow-lg);
                     transform: translateY(-100%);
                     opacity: 0;
                     visibility: hidden;
                     transition: all 0.3s ease;
                     z-index: 1000;
+                    order: unset;
+                    max-height: 60vh;  /* Limite hauteur mobile */
+                    overflow-y: auto;
                 }
                 
                 .nav.active {
@@ -1284,9 +1322,10 @@ require_once 'functions.php';
                 }
                 
                 .nav a {
-                    padding: 12px 16px;
+                    padding: 10px 16px;  /* Réduit de 12px à 10px */
                     border-radius: 8px;
                     transition: all 0.3s ease;
+                    font-size: 15px;    /* Légèrement plus petit */
                 }
                 
                 .nav a:hover {
@@ -1296,8 +1335,68 @@ require_once 'functions.php';
                 .nav .btn {
                     width: 100%;
                     justify-content: center;
-                    margin-top: 8px;
+                    margin-top: 6px;    /* Réduit de 8px à 6px */
+                    padding: 10px 16px; /* Plus compact */
+                    font-size: 14px;
                 }
+            }
+            
+            /* Fix sticky mobile spécifique */
+            @media (max-width: 992px) {
+                .header {
+                    /* Force position fixed sur mobile */
+                    position: fixed !important;
+                    top: 0 !important;
+                    background: rgba(255, 255, 255, 0.98);
+                    backdrop-filter: blur(15px);
+                    -webkit-backdrop-filter: blur(15px);
+                    /* Améliore performance mobile */
+                    -webkit-transform: translateZ(0);
+                    transform: translateZ(0);
+                    backface-visibility: hidden;
+                    perspective: 1000;
+                }
+                
+                /* Évite les problèmes de viewport mobile */
+                .header-content {
+                    position: relative;
+                    z-index: 1001;
+                }
+            }
+            
+            /* Mobile très petits écrans */
+            @media (max-width: 480px) {
+                .header-content {
+                    padding: 12px 0;  /* Header plus compact */
+                }
+                
+                .logo {
+                    font-size: 20px;  /* Logo plus petit */
+                }
+                
+                .logo span {
+                    display: none;     /* Cache texte, garde juste icône */
+                }
+                
+                .header-translate-widget {
+                    /* Le widget reste mais plus compact */
+                }
+                
+                .nav {
+                    padding: 12px 16px;  /* Encore plus compact */
+                    max-height: 50vh;    /* Plus petit sur très petits écrans */
+                }
+                
+                .nav a {
+                    padding: 8px 12px;   /* Ultra compact */
+                    font-size: 14px;
+                }
+                
+                .nav .btn {
+                    padding: 8px 12px;
+                    font-size: 13px;
+                }
+            }
                 
                 .nav .btn-secondary {
                     margin-top: 8px;

@@ -1,7 +1,7 @@
 <?php
 require_once '../config.php';
 require_once '../functions.php';
-require_once '../includes/icons-config.php';
+require_once '../includes/config/icons-config.php';
 
 // Vérifier si connecté
 if (!isLoggedIn()) {
@@ -44,7 +44,7 @@ $page_title = "Support Tickets";
 $page_title_bar = "Mes Tickets";
 
 // Inclure header simple
-require_once __DIR__ . '/../includes/dashboard-header-simple.php';
+require_once __DIR__ . '/../includes/layout/dashboard-header-simple.php';
 ?>
 
 <!-- Container sans padding top (collé au top-bar) -->
@@ -59,7 +59,7 @@ require_once __DIR__ . '/../includes/dashboard-header-simple.php';
     $page_header_icon = "support";
     $page_header_description = getIcon('info', false, 'sm') . " Besoin d'aide ? Créez un ticket ou consultez vos demandes";
     $page_header_gradient = false;
-    require_once __DIR__ . '/../includes/page-header.php';
+    require_once __DIR__ . '/../includes/layout/page-header.php';
     ?>
     
     <!-- Action Bar -->
@@ -195,4 +195,4 @@ require_once __DIR__ . '/../includes/dashboard-header-simple.php';
 </div> <!-- Fin container-fluid -->
 </div>
 
-<?php require_once __DIR__ . '/../includes/dashboard-footer-simple.php'; ?>
+<?php require_once __DIR__ . '/../includes/layout/dashboard-footer-simple.php'; ?>

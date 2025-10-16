@@ -5,7 +5,7 @@ require_once '../functions.php';
 $page_title = 'CGU - Conditions Générales d\'Utilisation | ' . SITE_NAME;
 $page_description = 'Conditions générales d\'utilisation de SMM Mastery. Consultez nos termes et conditions avant d\'utiliser nos services.';
 
-include '../includes/public-header.php';
+include '../includes/layout/public-header.php';
 ?>
 
 <div class="page-hero">
@@ -356,4 +356,4 @@ include '../includes/public-header.php';
 
 </div>
 
-<?php include '../includes/public-footer.php'; ?>
+<?php include '../includes/layout/public-footer.php'; ?>

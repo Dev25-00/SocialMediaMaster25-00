@@ -151,10 +151,14 @@ class OrderModal {
                                         <i class="fas fa-star"></i>
                                         Favorites
                                     </button>
+                                    <!-- 
+                                    ===== COUNTRIES TAB DÉSACTIVÉ =====
+                                    Fonctionnalité déplacée vers les filtres de la page services/index.php
                                     <button class="order-tab-btn" data-tab="countries">
                                         <i class="fas fa-globe"></i>
                                         Countries
                                     </button>
+                                    -->
                                     <button class="order-tab-btn" data-tab="auto-subscription" style="display: none;">
                                         <i class="fas fa-sync-alt"></i>
                                         Auto Sub
@@ -336,7 +340,9 @@ class OrderModal {
                             </div>
                             <!-- FIN TAB 2: FAVORITES -->
                             
-                            <!-- TAB 3: COUNTRIES -->
+                            <!-- 
+                            ===== TAB 3: COUNTRIES - DÉSACTIVÉ =====
+                            Fonctionnalité déplacée vers les filtres de la page services/index.php
                             <div class="order-tab-panel" data-tab-panel="countries">
                                 <div class="countries-container">
                                     <div class="countries-header">
@@ -345,7 +351,6 @@ class OrderModal {
                                         <p>Target specific geographic locations</p>
                                     </div>
                                     
-                                    <!-- Country Selector -->
                                     <div class="country-selector-group">
                                         <label>
                                             <i class="fas fa-flag"></i>
@@ -353,11 +358,9 @@ class OrderModal {
                                         </label>
                                         <select id="countrySelector" class="country-select">
                                             <option value="">-- Select a Country --</option>
-                                            <!-- Rempli dynamiquement -->
                                         </select>
                                     </div>
                                     
-                                    <!-- Services filtered by country -->
                                     <div id="countryServicesList" class="country-services-list">
                                         <div class="country-services-empty">
                                             <i class="fas fa-globe-americas"></i>
@@ -366,6 +369,7 @@ class OrderModal {
                                     </div>
                                 </div>
                             </div>
+                            -->
                             <!-- FIN TAB 3: COUNTRIES -->
                             
                             <!-- TAB 4: AUTO SUBSCRIPTION (Future) -->
@@ -636,9 +640,11 @@ class OrderModal {
             case 'favorites':
                 this.loadFavorites();
                 break;
+            /* ===== COUNTRIES TAB DÉSACTIVÉ =====
             case 'countries':
                 this.loadCountries();
                 break;
+            */
             case 'auto-subscription':
                 // Future implementation
                 break;

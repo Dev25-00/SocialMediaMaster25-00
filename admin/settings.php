@@ -26,6 +26,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             'min_deposit' => floatval($_POST['min_deposit'] ?? 5.00),
             'paypal_email' => clean($_POST['paypal_email'] ?? ''),
             'paypal_mode' => clean($_POST['paypal_mode'] ?? 'sandbox'),
+            'allow_password_preview' => isset($_POST['allow_password_preview']) ? '1' : '0',
         ];
         
         try {
@@ -200,14 +201,30 @@ $current_settings = getSiteSettings($pdo);
                 </div>
             </div>
 
-            <!-- Bouton Save -->
-            <div class="card">
-                <div style="padding: 30px;">
-                    <button type="submit" class="btn btn-primary btn-lg btn-block">
-                        💾 Sauvegarder les paramètres
-                    </button>
-                </div>
-            </div>
+                    <!-- Security / Dev -->
+                    <div class="card" style="margin-bottom: 20px;">
+                        <div class="card-header">
+                            <h2>🔒 Sécurité / Développement</h2>
+                        </div>
+                        <div style="padding: 30px;">
+                            <div class="form-group">
+                                <label for="allow_password_preview">Autoriser l'affichage du lien de réinitialisation (dev)</label>
+                                <div>
+                                    <input type="checkbox" id="allow_password_preview" name="allow_password_preview" value="1" <?php echo (!empty($current_settings['allow_password_preview']) && $current_settings['allow_password_preview'] === '1') ? 'checked' : ''; ?>>
+                                    <small style="display:block;margin-top:8px;">Permet d'afficher le lien de reset sur la page de mot de passe oublié (utile en développement). Ne pas activer en production.</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Bouton Save -->
+                    <div class="card">
+                        <div style="padding: 30px;">
+                            <button type="submit" class="btn btn-primary btn-lg btn-block">
+                                💾 Sauvegarder les paramètres
+                            </button>
+                        </div>
+                    </div>
         </form>
 
     </div>

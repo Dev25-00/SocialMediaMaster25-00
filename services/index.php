@@ -32,7 +32,7 @@
 
 require_once '../config.php';
 require_once '../functions.php';
-require_once '../includes/icons-config.php';
+require_once '../includes/config/icons-config.php';
 
 // Vérification authentification
 if (!isLoggedIn()) {
@@ -66,7 +66,7 @@ $page_title = "Services";
 $page_title_bar = "Services SMM";
 
 // Inclure header simple
-require_once __DIR__ . '/../includes/dashboard-header-simple.php';
+require_once __DIR__ . '/../includes/layout/dashboard-header-simple.php';
 ?>
 
 <!-- ========================================
@@ -79,11 +79,11 @@ require_once __DIR__ . '/../includes/dashboard-header-simple.php';
 <!-- Modal de Commande -->
 <link rel="stylesheet" href="css/order-modal.css?v=<?php echo time(); ?>">
 
-<!-- Container sans padding top (collé au top-bar) -->
-<div class="container-fluid" style="padding: 0;">
+<!-- Container principal avec espacement correct pour le top-bar sticky -->
+<div class="container-fluid dashboard-container" style="overflow: visible !important;">
     
-    <!-- Content wrapper avec padding latéral seulement -->
-    <div style="padding: 24px;">
+    <!-- Content wrapper STICKY FRIENDLY avec padding complet -->
+    <div class="dashboard-content-wrapper" style="overflow: visible !important;">
     
     <?php 
     // Header configuration
@@ -91,21 +91,21 @@ require_once __DIR__ . '/../includes/dashboard-header-simple.php';
     $page_header_icon = "services";
     $page_header_description = "Choisissez parmi <strong>" . number_format($total) . "</strong> services disponibles";
     $page_header_gradient = false;
-    require_once __DIR__ . '/../includes/page-header.php';
+    require_once __DIR__ . '/../includes/layout/page-header.php';
     ?>
 
     <!-- Filtres 2 Lignes Optimisés -->
         <div class="services-filters-multiline" id="filtersBar">
             
-            <!-- Bouton toggle mobile uniquement -->
-            <button class="filters-toggle-mobile" id="filtersToggleBtn" title="Afficher/Masquer les filtres" style="display: none;">
-                <i class="fas fa-angle-down"></i>
+            <!-- Languette toggle en bas à droite de la section filtres -->
+            <button class="filters-toggle-tab" id="filtersToggleTab" title="Afficher/Masquer les filtres" aria-label="Afficher ou masquer les filtres">
+                <i class="fas fa-angle-double-up"></i>
             </button>
             
-            <!-- Ligne 1: Plateformes + Qualité + Infos utiles -->
+            <!-- Ligne 1: Plateformes (FULL WIDTH) -->
             <div class="filters-row filters-row-primary">
                 
-                <!-- Plateformes -->
+                <!-- Plateformes (100% width) -->
                 <div class="filter-group-multiline">
                     <button class="filter-label-multiline filter-label-clickable platform-btn-multiline active" 
                             data-platform="" 
@@ -171,8 +171,14 @@ require_once __DIR__ . '/../includes/dashboard-header-simple.php';
 
                 <div class="filter-divider-multiline"></div>
 
-                <!-- Qualité (Tiers) - ORDRE CORRIGÉ -->
-                <div class="filter-group-multiline">
+            </div>
+
+            <!-- Ligne 2: Refill + Prix + Pays + Tri + Reset -->
+            <!-- Ligne de filtres secondaires remontée en desktop -->
+            <div class="filters-row filters-row-secondary filters-row-secondary-desktop">
+
+                <!-- Tiers (moved from row1) -->
+                <div class="filter-group-multiline group-tiers">
                     <button class="filter-label-multiline filter-label-clickable tier-btn-multiline active" 
                             data-tier="" 
                             title="Toutes les qualités">
@@ -196,8 +202,8 @@ require_once __DIR__ . '/../includes/dashboard-header-simple.php';
 
                 <div class="filter-divider-multiline"></div>
 
-                <!-- Type d'action + Drop Rate (VERTICAL en responsive) -->
-                <div class="filter-group-multiline filter-actions-drop-group">
+                <!-- Type d'action + Drop Rate (moved from row1) -->
+                <div class="filter-group-multiline filter-actions-drop-group group-actions">
                     <!-- Type d'action -->
                     <div class="filter-subgroup-multiline">
                         <label class="filter-label-multiline" title="Type d'action">
@@ -215,7 +221,7 @@ require_once __DIR__ . '/../includes/dashboard-header-simple.php';
                     </div>
                     
                     <!-- Drop Rate -->
-                    <div class="filter-subgroup-multiline">
+                    <div class="filter-subgroup-multiline group-drop">
                         <label class="filter-label-multiline" title="Taux de drop">
                             <?php echo getIcon('shield', false, 'sm'); ?>
                         </label>
@@ -228,29 +234,10 @@ require_once __DIR__ . '/../includes/dashboard-header-simple.php';
                     </div>
                 </div>
 
-                <!-- Infos utiles (desktop uniquement) -->
-                <div class="filter-stats-info">
-                    <div class="stat-badge">
-                        <?php echo getIcon('check', false, 'sm'); ?>
-                        <span><?php echo count($platform_counts); ?> plateformes</span>
-                    </div>
-                    <div class="stat-badge">
-                        <?php echo getIcon('trending', false, 'sm'); ?>
-                        <span>Mis à jour 24/7</span>
-                    </div>
-                    <div class="stat-badge stat-badge-highlight">
-                        <?php echo getIcon('bolt', false, 'sm'); ?>
-                        <span>Livraison instantanée</span>
-                    </div>
-                </div>
+                <div class="filter-divider-multiline"></div>
 
-            </div>
-
-            <!-- Ligne 2: Refill + Prix + Tri + Reset -->
-            <div class="filters-row filters-row-secondary">
-                
                 <!-- Auto-Refill (en jours) -->
-                <div class="filter-group-multiline">
+                <div class="filter-group-multiline group-refill">
                     <label class="filter-label-multiline" title="Auto-Refill">
                         <?php echo getIcon('refresh', false, 'sm'); ?>
                     </label>
@@ -266,8 +253,40 @@ require_once __DIR__ . '/../includes/dashboard-header-simple.php';
 
                 <div class="filter-divider-multiline"></div>
 
+                <!-- Filtre Pays -->
+                <div class="filter-group-multiline group-country">
+                    <label class="filter-label-multiline" title="Pays">
+                        <?php echo getIcon('globe', false, 'sm'); ?>
+                    </label>
+                    <select id="countryFilter" class="filter-select-multiline filter-select-country">
+                        <option value="">🌍 Tous les pays</option>
+                        <option value="Worldwide">🌐 Worldwide</option>
+                        <option value="USA">🇺🇸 USA</option>
+                        <option value="UK">🇬🇧 UK</option>
+                        <option value="Canada">🇨🇦 Canada</option>
+                        <option value="Australia">🇦🇺 Australia</option>
+                        <option value="France">🇫🇷 France</option>
+                        <option value="Germany">🇩🇪 Germany</option>
+                        <option value="Spain">🇪🇸 Spain</option>
+                        <option value="Italy">🇮🇹 Italy</option>
+                        <option value="Brazil">🇧🇷 Brazil</option>
+                        <option value="India">🇮🇳 India</option>
+                        <option value="Japan">🇯🇵 Japan</option>
+                        <option value="South Korea">🇰🇷 South Korea</option>
+                        <option value="Mexico">🇲🇽 Mexico</option>
+                        <option value="Netherlands">🇳🇱 Netherlands</option>
+                        <option value="Turkey">🇹🇷 Turkey</option>
+                        <option value="Russia">🇷🇺 Russia</option>
+                        <option value="Argentina">🇦🇷 Argentina</option>
+                        <option value="Poland">🇵🇱 Poland</option>
+                        <option value="Sweden">🇸🇪 Sweden</option>
+                    </select>
+                </div>
+
+                <div class="filter-divider-multiline"></div>
+
                 <!-- Prix Min-Max -->
-                <div class="filter-group-multiline price-range-multiline">
+                <div class="filter-group-multiline price-range-multiline group-price">
                     <label class="filter-label-multiline" title="Budget">
                         <?php echo getIcon('money', false, 'sm'); ?>
                     </label>
@@ -288,50 +307,63 @@ require_once __DIR__ . '/../includes/dashboard-header-simple.php';
 
                 <div class="filter-divider-multiline"></div>
 
-                <!-- Tri (Prix / Alphabétique) -->
-                <div class="filter-group-multiline">
-                    <label class="filter-label-multiline" title="Trier">
-                        <?php echo getIcon('bar-chart', false, 'sm'); ?>
-                    </label>
-                    <select id="sortSelect" class="filter-select-multiline">
-                        <option value="price-asc">💰 Prix ↑</option>
-                        <option value="price-desc">💵 Prix ↓</option>
-                        <option value="name-asc">🔤 A-Z</option>
-                        <option value="name-desc">🔠 Z-A</option>
-                    </select>
-                </div>
+                <!-- Tri moved to tertiary row for layout clarity -->
 
-                <div class="filter-divider-multiline"></div>
+            </div>
 
-                <!-- Recherche par ID (subtile) -->
-                <div class="filter-group-multiline filter-search-id-group">
-                    <label class="filter-label-multiline" title="Rechercher par ID">
-                        <?php echo getIcon('search', false, 'sm'); ?>
-                    </label>
-                    <input type="text" 
-                           id="searchIdInput" 
-                           class="filter-search-id-input" 
-                           placeholder="ID service..."
-                           maxlength="10">
-                    <button class="filter-search-id-clear" 
-                            id="clearSearchIdBtn" 
-                            title="Effacer la recherche"
-                            style="display: none;">
-                        <i class="fas fa-times"></i>
+            <!-- Ligne 3: ID search, Favoris, Reset, Results count -->
+            <div class="filters-row filters-row-tertiary">
+                <div class="left-tools">
+                    <!-- Recherche par ID (subtile) -->
+                    <div class="filter-group-multiline filter-search-id-group">
+                        <label class="filter-label-multiline" title="Rechercher par ID">
+                            <?php echo getIcon('search', false, 'sm'); ?>
+                        </label>
+                        <input type="text" 
+                               id="searchIdInput" 
+                               class="filter-search-id-input" 
+                               placeholder="ID service..."
+                               maxlength="10">
+                        <button class="filter-search-id-clear" 
+                                id="clearSearchIdBtn" 
+                                title="Effacer la recherche"
+                                style="display: none;">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+
+                    <!-- Tri (Prix / Alphabétique) - placed in tertiary for layout -->
+                    <div class="filter-group-multiline filter-sort-group" style="margin-left:8px;">
+                        <label class="filter-label-multiline" title="Trier">
+                            <?php echo getIcon('bar-chart', false, 'sm'); ?>
+                        </label>
+                        <select id="sortSelect" class="filter-select-multiline">
+                            <option value="price-asc">💰 Prix ↑</option>
+                            <option value="price-desc">💵 Prix ↓</option>
+                            <option value="name-asc">🔤 A-Z</option>
+                            <option value="name-desc">🔠 Z-A</option>
+                        </select>
+                    </div>
+
+                    <!-- Toggle Favoris -->
+                    <button class="filter-favorites-toggle" id="favoritesToggleBtn" title="Afficher uniquement les favoris" data-active="false">
+                        <?php echo getIcon('star', false, 'sm'); ?>
+                        <span class="favorites-label">Favoris</span>
+                    </button>
+
+                    <!-- Reset (bouton compact) -->
+                    <button class="filter-reset-btn-multiline" id="resetFiltersBtn" title="Réinitialiser tous les filtres">
+                        <?php echo getIcon('delete', false, 'sm'); ?>
                     </button>
                 </div>
 
-                <!-- Reset (bouton compact) -->
-                <button class="filter-reset-btn-multiline" id="resetFiltersBtn" title="Réinitialiser tous les filtres">
-                    <?php echo getIcon('delete', false, 'sm'); ?>
-                </button>
-
-                <!-- Résultats count -->
-                <div class="filter-results-multiline">
-                    <span id="resultsCount"><?php echo number_format($total); ?></span>
-                    <span class="results-label">services</span>
+                <div class="right-tools">
+                    <!-- Résultats count -->
+                    <div class="filter-results-multiline">
+                        <span id="resultsCount"><?php echo number_format($total); ?></span>
+                        <span class="results-label">services</span>
+                    </div>
                 </div>
-
             </div>
 
         </div>
@@ -448,7 +480,7 @@ require_once __DIR__ . '/../includes/dashboard-header-simple.php';
 /* Container principal sticky */
 .services-filters-compact {
     position: sticky;
-    top: 70px;
+    top: 90px; /* Augmenté pour dashboard header */
     z-index: 998;
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     border-radius: 16px;
@@ -457,6 +489,10 @@ require_once __DIR__ . '/../includes/dashboard-header-simple.php';
     box-shadow: 0 4px 20px rgba(102, 126, 234, 0.3);
     backdrop-filter: blur(10px);
     transition: all 0.3s ease;
+    /* Amélioration mobile sticky */
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+    will-change: transform;
 }
 
 .services-filters-compact:hover {
@@ -939,8 +975,15 @@ require_once __DIR__ . '/../includes/dashboard-header-simple.php';
         margin-left: -24px;
         margin-right: -24px;
         padding: 10px 12px;
-        top: 56px;
+        top: 70px; /* Ajusté pour header fixe */
+        /* Fix sticky mobile Chrome/Safari */
+        position: -webkit-sticky;
+        position: sticky;
+        -webkit-transform: translateZ(0);
+        transform: translateZ(0);
+        backface-visibility: hidden;
     }
+}
     
     .filters-row {
         flex-wrap: nowrap;
@@ -2652,37 +2695,22 @@ document.addEventListener('DOMContentLoaded', () => {
     document.addEventListener('DOMContentLoaded', () => {
         ServicesManagerMultiline.init();
         
-        // ===== TOGGLE COLLAPSE FILTRES (Mobile uniquement) =====
-        const toggleBtn = document.getElementById('filtersToggleBtn');
+        // ===== TOGGLE COLLAPSE FILTRES (Desktop + Mobile avec languette) =====
+        const toggleTab = document.getElementById('filtersToggleTab');
         const filtersBar = document.getElementById('filtersBar');
         
-        // Afficher le bouton uniquement sur mobile
-        if (window.innerWidth <= 599) {
-            toggleBtn.style.display = 'flex';
+        // Toggle collapse au clic (desktop + mobile)
+        if (toggleTab) {
+            toggleTab.addEventListener('click', () => {
+                filtersBar.classList.toggle('filters-collapsed');
+                const isCollapsed = filtersBar.classList.contains('filters-collapsed');
+                localStorage.setItem('filtersCollapsed', isCollapsed);
+            });
         }
-        
-        // Gérer le resize pour responsive
-        window.addEventListener('resize', () => {
-            if (window.innerWidth <= 599) {
-                toggleBtn.style.display = 'flex';
-            } else {
-                toggleBtn.style.display = 'none';
-                filtersBar.classList.remove('filters-collapsed');
-            }
-        });
-        
-        // Toggle collapse au clic
-        toggleBtn.addEventListener('click', () => {
-            filtersBar.classList.toggle('filters-collapsed');
-            
-            // Sauvegarder l'état dans localStorage
-            const isCollapsed = filtersBar.classList.contains('filters-collapsed');
-            localStorage.setItem('filtersCollapsed', isCollapsed);
-        });
         
         // Restaurer l'état depuis localStorage
         const savedState = localStorage.getItem('filtersCollapsed');
-        if (savedState === 'true' && window.innerWidth <= 599) {
+        if (savedState === 'true') {
             filtersBar.classList.add('filters-collapsed');
         }
     });
@@ -2702,8 +2730,10 @@ document.addEventListener('DOMContentLoaded', () => {
         const card = favoriteBtn.closest('.service-card-modern');
         if (!card) return;
         
-        const serviceId = card.dataset.serviceId;
+        const serviceId = parseInt(card.dataset.serviceId); // Convertir en nombre
         const isFavorite = favoriteBtn.dataset.favorite === 'true';
+        
+        console.log('🔍 Toggle favorite pour service ID:', serviceId, 'Type:', typeof serviceId);
         
         try {
             // Désactiver le bouton temporairement
@@ -2727,6 +2757,9 @@ document.addEventListener('DOMContentLoaded', () => {
                     favoriteBtn.querySelector('i').className = 'far fa-star';
                     favoriteBtn.title = 'Add to favorites';
                     
+                    // Retirer de la variable globale
+                    window.userFavoritesIds.delete(serviceId);
+                    
                     console.log('✅ Removed from favorites');
                 } else {
                     throw new Error(data.message || 'Failed to remove favorite');
@@ -2747,6 +2780,9 @@ document.addEventListener('DOMContentLoaded', () => {
                     favoriteBtn.classList.add('active');
                     favoriteBtn.querySelector('i').className = 'fas fa-star';
                     favoriteBtn.title = 'Remove from favorites';
+                    
+                    // Ajouter à la variable globale
+                    window.userFavoritesIds.add(serviceId);
                     
                     // Animation
                     favoriteBtn.style.transform = 'scale(1.3) rotate(15deg)';
@@ -2776,16 +2812,42 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
     
+    // ========================================
+    // FAVORITES SYSTEM - Variable globale pour stocker les IDs
+    // ========================================
+    window.userFavoritesIds = new Set();
+    
+    // Debounce pour éviter les appels multiples
+    let favoritesLoadTimeout = null;
+    
     // Charger l'état des favoris au chargement de la page
     async function loadFavoritesState() {
-        try {
-            console.log('🔄 Loading favorites state...');
-            const response = await fetch('/smm/api/favorites/list.php');
-            const data = await response.json();
-            
-            console.log('📊 API Response:', data);
-            
-            if (data.success && data.favorites) {
+        // Annuler tout timeout en attente
+        if (favoritesLoadTimeout) {
+            clearTimeout(favoritesLoadTimeout);
+        }
+        
+        // Debounce de 100ms pour éviter les appels multiples
+        favoritesLoadTimeout = setTimeout(async () => {
+            try {
+                console.log('🔄 Loading favorites state...');
+                const response = await fetch('/smm/api/favorites/list.php');
+                const data = await response.json();
+                
+                console.log('📊 API Response:', data);
+                
+                if (data.success && data.favorites) {
+                    // Stocker les IDs des favoris dans la variable globale
+                    window.userFavoritesIds.clear();
+                    data.favorites.forEach(fav => {
+                        // ✅ L'API retourne fav.service.id (pas fav.service_id)
+                        const serviceIdNum = parseInt(fav.service.id);
+                        console.log('🔍 Ajout favori ID:', serviceIdNum, 'Type:', typeof serviceIdNum);
+                        window.userFavoritesIds.add(serviceIdNum);
+                    });
+                    
+                    console.log(`⭐ Stored ${window.userFavoritesIds.size} favorite IDs:`, Array.from(window.userFavoritesIds));
+                
                 let markedCount = 0;
                 const totalCards = document.querySelectorAll('[data-service-id]').length;
                 
@@ -2816,19 +2878,20 @@ document.addEventListener('DOMContentLoaded', () => {
                     }
                 });
                 
-                console.log(`⭐ Loaded ${data.favorites.length} favorites (${markedCount} marked in page)`);
-                
-                // Si pas tous marqués ET qu'il y a des cards dans le DOM, réessayer
-                if (markedCount < data.favorites.length && totalCards > 0) {
-                    console.log('🔄 Some favorites not marked, will retry when more services load...');
-                } else if (markedCount === 0 && data.favorites.length > 0) {
-                    console.log('⚠️ No services in DOM yet, retrying in 1s...');
-                    setTimeout(loadFavoritesState, 1000);
+                    console.log(`⭐ Loaded ${data.favorites.length} favorites (${markedCount} marked in page)`);
+                    
+                    // Si pas tous marqués ET qu'il y a des cards dans le DOM, réessayer
+                    if (markedCount < data.favorites.length && totalCards > 0) {
+                        console.log('🔄 Some favorites not marked, will retry when more services load...');
+                    } else if (markedCount === 0 && data.favorites.length > 0) {
+                        console.log('⚠️ No services in DOM yet, retrying in 1s...');
+                        setTimeout(loadFavoritesState, 1000);
+                    }
                 }
+            } catch (error) {
+                console.error('❌ Failed to load favorites state:', error);
             }
-        } catch (error) {
-            console.error('❌ Failed to load favorites state:', error);
-        }
+        }, 100); // Debounce de 100ms
     }
     
     // Charger l'état après un délai pour laisser les services charger
@@ -2861,8 +2924,53 @@ document.addEventListener('DOMContentLoaded', () => {
 // Initialize modal when DOM is ready
 let orderModal;
 
+// Fix sticky pour mobile
+function initMobileStickyFix() {
+    const filtersBar = document.querySelector('.services-filters-compact');
+    if (!filtersBar) return;
+    
+    // Détecter mobile
+    const isMobile = window.innerWidth <= 768;
+    
+    if (isMobile) {
+        let ticking = false;
+        
+        function updatePosition() {
+            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            const headerHeight = 70; // Hauteur header fixe
+            
+            // Si sticky natif ne fonctionne pas, utiliser position fixed
+            if (!CSS.supports('position', 'sticky')) {
+                if (scrollTop > 100) {
+                    filtersBar.style.position = 'fixed';
+                    filtersBar.style.top = headerHeight + 'px';
+                    filtersBar.style.left = '0';
+                    filtersBar.style.right = '0';
+                } else {
+                    filtersBar.style.position = 'relative';
+                    filtersBar.style.top = 'auto';
+                }
+            }
+            
+            ticking = false;
+        }
+        
+        window.addEventListener('scroll', () => {
+            if (!ticking) {
+                requestAnimationFrame(updatePosition);
+                ticking = true;
+            }
+        });
+        
+        console.log('🔧 Mobile sticky fix initialized');
+    }
+}
+
 document.addEventListener('DOMContentLoaded', () => {
     console.log('🚀 Initializing Order Modal...');
+    
+    // Initialize mobile sticky fix
+    initMobileStickyFix();
     
     // Create modal instance
     orderModal = new OrderModal('orderModal');
@@ -2994,4 +3102,4 @@ console.log('✅ Buy button click handler setup complete');
 
 </div> <!-- Fin container-fluid -->
 
-<?php require_once __DIR__ . '/../includes/dashboard-footer-simple.php'; ?>
+<?php require_once __DIR__ . '/../includes/layout/dashboard-footer-simple.php'; ?>
