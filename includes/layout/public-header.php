@@ -17,9 +17,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     
     <!-- CSS -->
-    <link rel="stylesheet" href="<?php echo SITE_URL; ?>/assets/css/main.css">
-    <link rel="stylesheet" href="<?php echo SITE_URL; ?>/assets/css/icons.css">
-    <link rel="stylesheet" href="<?php echo SITE_URL; ?>/assets/css/fixes.css">
+    <link rel="stylesheet" href="<?php echo SITE_URL; ?>/assets/css/global/main.css">
+    <link rel="stylesheet" href="<?php echo SITE_URL; ?>/assets/css/global/icons.css">
+    <link rel="stylesheet" href="<?php echo SITE_URL; ?>/assets/css/global/fixes.css">
     
     <style>
         body {

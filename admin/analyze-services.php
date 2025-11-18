@@ -1,5 +1,10 @@
 <?php
 /**
+ * INCLUSION: Sidebar admin navigation
+ * FICHIER: sidebar.php
+ * DOCUMENTATION: DOCS_DEV_TO_PROD/ARCHITECTURE_INCLUDES_VISUELLE.md
+ */
+/**
  * SMM Mastery - Analyse des services
  * Script pour analyser toutes les valeurs distinctes dans la BDD
  * Date: 12 Octobre 2025
@@ -111,8 +116,16 @@ header('Content-Type: text/html; charset=UTF-8');
             box-shadow: 0 7px 20px rgba(0,0,0,0.3);
         }
     </style>
+   
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../assets/css/global/main.css">
+    <link rel="stylesheet" href="../assets/css/global/fixes.css">
+
+    <link rel="stylesheet" href="/smm/assets/css/admin/admin-dashboard.css">
 </head>
 <body>
+    <?php require_once __DIR__ . '/sidebar.php'; ?>
+    <div class="main-content">
     <div class="container">
         <a href="dashboard.php" class="back-btn">← Retour Dashboard</a>
         <h1>📊 Analyse des Services</h1>
@@ -342,6 +355,7 @@ header('Content-Type: text/html; charset=UTF-8');
                 </ul>
             </div>
         </div>
+    </div>
     </div>
 </body>
 </html>

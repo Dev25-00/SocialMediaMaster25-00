@@ -9,14 +9,29 @@ require_once '../api/SMMFollowsAPI.php';
 
 // Vérifier si admin
 if (!isLoggedIn() || !isAdmin()) {
-    die('Accès non autorisé');
-}
+    die('Accès non autorisé');}
+?>
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../assets/css/global/main.css">
+    <link rel="stylesheet" href="../assets/css/dashboard/dashboard.css">
+    <link rel="stylesheet" href="../assets/css/global/fixes.css">
 
-echo "<h1>🔍 Analyse des Données API SMMFollows</h1>";
-echo "<style>
-    body { font-family: 'Inter', sans-serif; padding: 20px; background: #f5f5f5; }
-    .section { background: white; padding: 20px; margin: 20px 0; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
-    table { width: 100%; border-collapse: collapse; }
+    <link rel="stylesheet" href="/smm/assets/css/admin/admin-dashboard.css">
+</head>
+<?php
+require_once __DIR__ . '/sidebar.php';?>
+    <div class="main-content">
+    <h1>🔍 Analyse des Données API SMMFollows</h1>
+    <style>
+        body { font-family: 'Inter', sans-serif; padding: 20px; background: #f5f5f5; }
+        .section { background: white; padding: 20px; margin: 20px 0; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        table { width: 100%; border-collapse: collapse; }
     th, td { padding: 10px; text-align: left; border-bottom: 1px solid #ddd; }
     th { background: #667eea; color: white; }
     .warning { background: #fef3c7; padding: 15px; border-left: 4px solid #f59e0b; margin: 20px 0; }
@@ -25,8 +40,8 @@ echo "<style>
     pre { background: #1f2937; color: #fff; padding: 15px; border-radius: 5px; overflow-x: auto; }
     .missing { color: #ef4444; font-weight: bold; }
     .present { color: #10b981; font-weight: bold; }
-</style>";
-
+</style>
+<?php 
 // 1. Récupérer un échantillon de l'API
 echo "<div class='section'>";
 echo "<h2>📡 1. Données brutes de l'API (échantillon)</h2>";
@@ -213,3 +228,4 @@ echo "<hr>";
 echo "<p><a href='sync-services.php' style='padding: 10px 20px; background: #10b981; color: white; text-decoration: none; border-radius: 5px;'>🔄 Synchroniser maintenant</a></p>";
 echo "<p><a href='check-prices.php' style='padding: 10px 20px; background: #f59e0b; color: white; text-decoration: none; border-radius: 5px;'>💰 Vérifier les prix</a></p>";
 ?>
+</div></html>

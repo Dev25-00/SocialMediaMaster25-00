@@ -1,361 +1,110 @@
-/* 
- * SMM Master - Système de Filtres Services
- * Version: 5.1 - Hotfix Toggle
- * Date: 15 Octobre 2025
+/**
+ * SMM Mastery - Filtres 2 Lignes & Grid Responsive
+ * Date: 12 Octobre 2025
+ * Version: 2.1 - FINAL
  * 
- * HOTFIX: Le toggle garde maintenant la ligne plateformes visible
- * 
- * Structure sur 3 lignes :
- * Ligne 1: Plateformes (toujours visible même en collapsed)
- * Ligne 2: Tiers | Actions+Drop | Refill+Pays | Prix Min-Max
- * Ligne 3: Tri | Recherche ID | Favoris | Reset | Compteur
- * 
- * Responsive: Desktop > Tablette > Mobile
+ * FIXES:
+ * - 2 lignes uniquement (plus de 3ème ligne)
+ * - Infos stats sur ligne 1 (desktop uniquement)
+ * - Responsive plus compact
+ * - Icônes dans les selects
+ * - Grid 4-5 colonnes desktop
  */
 
 /* ========================================
-   CONTENEUR PRINCIPAL - Design moderne
+   FILTRES 2 LIGNES
    ======================================== */
+
 .services-filters-multiline {
     position: sticky;
     top: 70px;
-    /* Hauteur du header dashboard */
     z-index: 998;
-    background: linear-gradient(135deg, #4F46E5 0%, #7C3AED 100%);
-    border-radius: 16px;
-    padding: 16px 20px;
-    margin-bottom: 24px;
-    box-shadow: 0 10px 40px rgba(79, 70, 229, 0.25);
+    background: linear-gradient(135deg, #2563eb 0%, #7c3aed 100%);
+    border-radius: 14px;
+    padding: 10px 16px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 20px rgba(37, 99, 235, 0.3);
     backdrop-filter: blur(10px);
-    transition: all 0.3s ease;
-    width: 100%;
-    overflow: visible;
-    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+    /* Optimisations sticky */
+    will-change: transform;
+    transition: box-shadow 0.3s ease, transform 0.2s ease, opacity 0.3s ease;
+    /* Transparence subtile sur tous les écrans */
+    opacity: 0.95;
 }
 
-/* Toggle tab (collapse/expand button) */
-.filters-toggle-tab {
-    position: absolute;
-    bottom: -20px;
-    right: 30px;
-    width: 40px;
-    height: 20px;
-    background: linear-gradient(135deg, #4F46E5, #7C3AED);
-    border: 2px solid white;
-    border-radius: 0 0 12px 12px;
-    cursor: pointer;
+/* Opacité complète lors d'interaction */
+.services-filters-multiline:hover,
+.services-filters-multiline:focus-within {
+    opacity: 1;
+}
+
+/* Effet au scroll (sticky actif) */
+.services-filters-multiline.is-stuck {
+    box-shadow: 0 6px 30px rgba(37, 99, 235, 0.45);
+    top: 0;
+    margin-top: 0;
+}
+
+/* Smooth scroll pour toute la page */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Optimisation performance scroll */
+* {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.filters-row {
     display: flex;
     align-items: center;
-    justify-content: center;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    z-index: 999;
+    gap: 7px;
+    flex-wrap: wrap;
 }
 
-.filters-toggle-tab i {
-    color: white;
-    font-size: 12px;
-    transition: transform 0.3s ease;
-}
-
-.filters-toggle-tab:hover {
-    transform: translateY(2px);
-    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
-}
-
-/* ========================================
-   ÉTAT COLLAPSED - HOTFIX v5.1
-   Garde uniquement la ligne plateformes visible
-   ======================================== */
-.services-filters-multiline.filters-collapsed {
-    padding-bottom: 12px !important;
-    /* Réduire padding mais garder espace pour plateformes */
-}
-
-/* Cache les lignes 2 et 3 en mode collapsed */
-.services-filters-multiline.filters-collapsed .filters-row-secondary,
-.services-filters-multiline.filters-collapsed .filters-row-secondary-desktop,
-.services-filters-multiline.filters-collapsed .filters-row-tertiary {
-    display: none !important;
-}
-
-/* Garde la ligne 1 (plateformes) toujours visible */
-.services-filters-multiline.filters-collapsed .filters-row-primary {
-    margin-bottom: 0 !important;
-    padding-bottom: 0 !important;
-    border-bottom: none !important;
-}
-
-/* Ajuste l'icône du toggle */
-.services-filters-multiline.filters-collapsed .filters-toggle-tab i {
-    transform: rotate(180deg);
-}
-
-/* Ajuste la position du toggle en mode collapsed */
-.services-filters-multiline.filters-collapsed .filters-toggle-tab {
-    bottom: -20px;
-}
-
-/* Animation smooth pour le collapse (scoped) */
-.services-filters-multiline .filters-row-secondary,
-.services-filters-multiline .filters-row-secondary-desktop,
-.services-filters-multiline .filters-row-tertiary {
-    opacity: 1;
-    max-height: 500px;
-    transition: all 0.3s ease;
-    overflow: hidden;
-}
-
-.services-filters-multiline.filters-collapsed .filters-row-secondary,
-.services-filters-multiline.filters-collapsed .filters-row-secondary-desktop,
-.services-filters-multiline.filters-collapsed .filters-row-tertiary {
-    opacity: 0;
-    max-height: 0;
-    margin: 0;
-    padding: 0;
-}
-
-/* ========================================
-   STRUCTURE 3 LIGNES
-   ======================================== */
-
-/* Ligne générique */
-/* (filters-row is scoped earlier; original unscoped block removed) */
-
-/* ========================================
-   LIGNE 1: PLATEFORMES (Toujours visible)
-   ======================================== */
-/* (filters-row-primary scoped version exists; original removed) */
-
-/* (platform group scoped version exists) */
-
-/* (platform label/button scoped versions exist) */
-
-/* (platform-filters-multiline scoped version exists) */
-
-/* (platform button scoped versions exist) */
-
-.platform-btn-multiline.active::after {
-    content: '';
-    position: absolute;
-    inset: -4px;
-    border: 2px solid rgba(255, 255, 255, 0.3);
-    border-radius: 10px;
-    animation: pulse 2s ease-in-out infinite;
-}
-
-@keyframes pulse {
-
-    0%,
-    100% {
-        opacity: 0;
-        transform: scale(0.9);
-    }
-
-    50% {
-        opacity: 1;
-        transform: scale(1);
-    }
-}
-
-/* ========================================
-   LIGNE 2: CONTRÔLES PRINCIPAUX
-   ======================================== */
-.filters-row-secondary,
-.filters-row-secondary-desktop {
-    display: flex;
-    align-items: stretch;
-    gap: 12px;
+.filters-row-primary {
     width: 100%;
-    margin-bottom: 12px;
-    padding-bottom: 12px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    padding-bottom: 7px;
     border-bottom: 1px solid rgba(255, 255, 255, 0.15);
 }
 
-/* Groupe Tiers */
-.group-tiers {
+.filters-row-secondary {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 7px;
+    padding-bottom: 7px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+}
 
-    /* Ligne générique (scoped to services filters to avoid global collisions) */
-    .services-filters-multiline .filters-row {
-        display: flex;
-        align-items: center;
-        gap: 12px;
-        margin-bottom: 12px;
-    }
-
-    .services-filters-multiline .filters-row:last-child {
-        margin-bottom: 0;
-    }
-
+.filters-row-tertiary {
+    width: 100%;
     display: flex;
     align-items: center;
-    gap: 6px;
-    flex: 0 0 auto;
-    background: rgba(255, 255, 255, 0.08);
-    padding: 6px;
-    border-radius: 8px;
+    gap: 7px;
+    padding-bottom: 0;
+    border: none;
+    background: none;
+    box-shadow: none;
 }
 
-/* Label cliquable pour tiers */
-.tier-btn-multiline.filter-label-clickable {
-    width: 32px;
-    height: 32px;
-    padding: 0;
-    background: rgba(255, 255, 255, 0.15);
+/* ========================================
+   GROUPES
+   ======================================== */
 
-    .services-filters-multiline .filters-row-primary {
-        display: flex !important;
-        /* Force display même en collapsed */
-        align-items: center;
-        gap: 10px;
-        width: 100%;
-        margin-bottom: 14px;
-        padding-bottom: 14px;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.15);
-        opacity: 1 !important;
-        /* Toujours visible */
-        visibility: visible !important;
-    }
-
-    border: 2px solid transparent;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: all 0.2s ease;
+/* Groupe Actions + Drop (vertical en responsive) */
+.filter-actions-drop-group {
     display: flex;
     align-items: center;
-    justify-content: center;
-    color: white;
-}
-
-.tier-btn-multiline.filter-label-clickable.active {
-    .services-filters-multiline .filter-group-multiline.platform-group {
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        width: 100%;
-        background: rgba(255, 255, 255, 0.08);
-        padding: 8px;
-        border-radius: 10px;
-    }
-
-    background: white;
-    color: #6B7280;
-    border-color: white;
-}
-
-/* Boutons Tiers */
-.tier-filters-multiline {
-    display: flex;
     gap: 4px;
-}
-
-.tier-btn-multiline {
-    width: 32px;
-    height: 32px;
-    padding: 0;
-    background: rgba(255, 255, 255, 0.12);
-    border: 2px solid transparent;
-
-    .services-filters-multiline .platform-btn-multiline.filter-label-clickable {
-        width: 36px;
-        height: 36px;
-        padding: 0;
-        background: rgba(255, 255, 255, 0.2);
-        border: 2px solid rgba(255, 255, 255, 0.25);
-        border-radius: 8px;
-        cursor: pointer;
-        transition: all 0.25s ease;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        color: white;
-        flex-shrink: 0;
-    }
-
-    border-radius: 6px;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: white;
-    position: relative;
-}
-
-.tier-btn-multiline svg,
-.tier-btn-multiline i {
-    width: 14px;
-
-    .services-filters-multiline .platform-filters-multiline {
-        display: flex;
-        gap: 6px;
-        overflow-x: auto;
-        overflow-y: hidden;
-        scroll-behavior: smooth;
-        scrollbar-width: none;
-        /* Firefox */
-        -ms-overflow-style: none;
-        /* IE/Edge */
-        width: 100%;
-        padding-bottom: 2px;
-    }
-
-    height: 14px;
-}
-
-.tier-btn-multiline:hover {
-    background: rgba(255, 255, 255, 0.2);
-    transform: translateY(-1px);
-}
-
-.tier-btn-multiline.active {
-    background: white;
-    border-color: white;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-}
-
-.tier-btn-multiline.tier-budget.active {
-    color: #F59E0B;
-}
-
-.tier-btn-multiline.tier-standard.active {
-    color: #3B82F6;
-}
-
-.tier-btn-multiline.tier-premium.active {
-    color: #A855F7;
-}
-
-.tier-btn-multiline.tier-ultimate.active {
-    color: #EC4899;
-}
-
-.services-filters-multiline .platform-btn-multiline {
-    width: 36px;
-    height: 36px;
-    padding: 0;
-    background: rgba(255, 255, 255, 0.15);
-    border: 2px solid transparent;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: white;
-    flex-shrink: 0;
-    position: relative;
-}
-
-/* Groupe Actions + Drop Rate (empilé verticalement) */
-.group-actions {
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-    flex: 0 0 auto;
-    background: rgba(255, 255, 255, 0.08);
-    padding: 6px;
-    border-radius: 8px;
 }
 
 .filter-subgroup-multiline {
@@ -364,104 +113,561 @@
     gap: 4px;
 }
 
-/* Groupe Refill + Pays (empilé verticalement) */
-.group-refill-country {
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-    flex: 0 0 auto;
-    background: rgba(255, 255, 255, 0.08);
-    padding: 6px;
-    border-radius: 8px;
-}
-
-.group-refill,
-.group-country {
+.filter-group-multiline {
     display: flex;
     align-items: center;
     gap: 4px;
-}
-
-/* Groupe Prix (prend le reste de l'espace) */
-.group-price {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    flex: 1 1 auto;
-    min-width: 150px;
     background: rgba(255, 255, 255, 0.08);
-    padding: 6px 8px;
-    border-radius: 8px;
+    padding: 3px 5px;
+    border-radius: 7px;
+    flex-wrap: wrap;
 }
 
-/* Labels d'icônes */
 .filter-label-multiline {
-    width: 24px;
-    height: 24px;
+    width: 20px;
+    height: 20px;
     display: flex;
     align-items: center;
     justify-content: center;
-    color: white;
+    color: rgba(255, 255, 255, 0.95);
     background: rgba(255, 255, 255, 0.1);
-    border-radius: 4px;
+    border-radius: 5px;
+    flex-shrink: 0;
+    border: none;
+    padding: 0;
+    cursor: default;
+}
+
+.filter-label-multiline svg {
+    width: 11px;
+    height: 11px;
+}
+
+/* Label Action (éclair - zap) - Violet lumineux */
+.filter-select-actions+.filter-label-multiline,
+.filter-subgroup-multiline:has(.filter-select-actions) .filter-label-multiline {
+    background: linear-gradient(135deg, #8b5cf6 0%, #a855f7 100%);
+    box-shadow: 0 2px 8px rgba(139, 92, 246, 0.3);
+}
+
+/* Label Tri (bar-chart) - Bleu lumineux */
+#sortSelect~.filter-label-multiline,
+.filter-group-multiline:has(#sortSelect) .filter-label-multiline {
+    background: linear-gradient(135deg, #3b82f6 0%, #60a5fa 100%);
+    box-shadow: 0 2px 8px rgba(59, 130, 246, 0.3);
+}
+
+/* Labels cliquables (boutons "All") */
+.filter-label-clickable {
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.filter-label-clickable:hover {
+    background: rgba(255, 255, 255, 0.18);
+    border-color: rgba(255, 255, 255, 0.3);
+    transform: scale(1.05);
+}
+
+.filter-label-clickable.active {
+    background: rgba(255, 255, 255, 0.25);
+    border-color: rgba(255, 255, 255, 0.4);
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+    animation: filter-pulse 2s ease-in-out infinite;
+}
+
+/* Icône étoile (tier) devient grise quand active */
+.filter-label-clickable.tier-btn-multiline.active {
+    color: rgba(156, 163, 175, 0.9);
+    /* Gris */
+}
+
+.filter-label-clickable:active {
+    transform: scale(0.98);
+}
+
+/* Animation pulse subtile pour filtres actifs */
+@keyframes filter-pulse {
+
+    0%,
+    100% {
+        box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+        transform: scale(1);
+    }
+
+    50% {
+        box-shadow: 0 0 15px rgba(255, 255, 255, 0.35);
+        transform: scale(1.02);
+    }
+}
+
+/* Animation pulse icônes actives (scale dynamique) */
+@keyframes icon-pulse {
+    0% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(0.8);
+    }
+
+    75% {
+        transform: scale(1.3);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+/* Animation pulse colorée pour les tiers */
+@keyframes tier-pulse-budget {
+
+    0%,
+    100% {
+        box-shadow: 0 0 8px rgba(245, 158, 11, 0.3);
+    }
+
+    50% {
+        box-shadow: 0 0 15px rgba(245, 158, 11, 0.5);
+    }
+}
+
+@keyframes tier-pulse-standard {
+
+    0%,
+    100% {
+        box-shadow: 0 0 8px rgba(59, 130, 246, 0.3);
+    }
+
+    50% {
+        box-shadow: 0 0 15px rgba(59, 130, 246, 0.5);
+    }
+}
+
+@keyframes tier-pulse-premium {
+
+    0%,
+    100% {
+        box-shadow: 0 0 8px rgba(168, 85, 247, 0.4);
+    }
+
+    50% {
+        box-shadow: 0 0 15px rgba(168, 85, 247, 0.6);
+    }
+}
+
+@keyframes tier-pulse-ultimate {
+
+    0%,
+    100% {
+        box-shadow: 0 0 8px rgba(236, 72, 153, 0.3);
+    }
+
+    50% {
+        box-shadow: 0 0 15px rgba(236, 72, 153, 0.5);
+    }
+}
+
+.filter-divider-multiline {
+    width: 1px;
+    height: 22px;
+    background: rgba(255, 255, 255, 0.2);
     flex-shrink: 0;
 }
 
-.filter-label-multiline svg,
-.filter-label-multiline i {
+/* ========================================
+   INFOS STATS (DESKTOP)
+   ======================================== */
+
+.filter-stats-info {
+    display: none;
+    align-items: center;
+    gap: 7px;
+    margin-left: auto;
+}
+
+@media (min-width: 1400px) {
+    .filter-stats-info {
+        display: flex;
+    }
+}
+
+.stat-badge {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding: 3px 9px;
+    background: rgba(255, 255, 255, 0.12);
+    border-radius: 7px;
+    font-size: 10px;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.9);
+    white-space: nowrap;
+}
+
+.stat-badge svg {
+    width: 11px;
+    height: 11px;
+}
+
+.stat-badge-highlight {
+    background: rgba(251, 191, 36, 0.25);
+    color: #fbbf24;
+}
+
+/* ========================================
+   BOUTONS PLATEFORMES/TIERS
+   ======================================== */
+
+.platform-filters-multiline,
+.tier-filters-multiline {
+    display: flex;
+    gap: 3px;
+    flex-wrap: wrap;
+}
+
+.platform-btn-multiline,
+.tier-btn-multiline {
+    width: 28px;
+    height: 28px;
+    padding: 0;
+    background: rgba(255, 255, 255, 0.12);
+    border: 2px solid transparent;
+    border-radius: 7px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: rgba(255, 255, 255, 0.9);
+    flex-shrink: 0;
+}
+
+.platform-btn-multiline svg,
+.tier-btn-multiline svg {
     width: 12px;
     height: 12px;
 }
 
-/* Selects compacts */
+.platform-btn-multiline:hover,
+.tier-btn-multiline:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateY(-1px);
+}
+
+.platform-btn-multiline.active {
+    background: white;
+    color: var(--platform-color, #2563eb);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
+    animation: filter-pulse 2s ease-in-out infinite;
+}
+
+/* Animation pulse sur l'icône des plateformes actives */
+.platform-btn-multiline.active svg,
+.platform-btn-multiline.active i {
+    animation: icon-pulse 1s ease-in-out infinite;
+}
+
+.tier-btn-multiline.active {
+    background: white;
+    border-color: rgba(255, 255, 255, 0.3);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
+    animation: filter-pulse 2s ease-in-out infinite;
+}
+
+/* Animation pulse sur l'icône des tiers actifs */
+.tier-btn-multiline.active svg,
+.tier-btn-multiline.active i {
+    animation: icon-pulse 1s ease-in-out infinite;
+}
+
+/* Couleurs par tier (avec animation pulse colorée) */
+.tier-btn-multiline.tier-budget.active {
+    color: #f59e0b;
+    animation: tier-pulse-budget 2.5s ease-in-out infinite;
+}
+
+.tier-btn-multiline.tier-standard.active {
+    color: #3b82f6;
+    animation: tier-pulse-standard 2.5s ease-in-out infinite;
+}
+
+.tier-btn-multiline.tier-premium.active {
+    color: #a855f7;
+    /* Plus clair: de #8b5cf6 à #a855f7 pour meilleur contraste */
+    animation: tier-pulse-premium 2.5s ease-in-out infinite;
+}
+
+.tier-btn-multiline.tier-ultimate.active {
+    color: #ec4899;
+    animation: tier-pulse-ultimate 2.5s ease-in-out infinite;
+}
+
+/* ========================================
+   SELECTS
+   ======================================== */
+
 .filter-select-multiline {
-    height: 32px;
-    padding: 0 28px 0 8px;
+    height: 28px;
+    padding: 0 24px 0 7px;
     background: rgba(255, 255, 255, 0.12);
     border: 2px solid transparent;
-    border-radius: 6px;
+    border-radius: 7px;
     color: white;
-    font-size: 11px;
+    font-size: 10px;
     font-weight: 500;
     cursor: pointer;
     transition: all 0.2s ease;
-    min-width: 100px;
+    min-width: 90px;
+    max-width: 125px;
     appearance: none;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 10 10'%3E%3Cpath fill='white' d='M5 7L2 3h6z'/%3E%3C/svg%3E");
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='9' height='9' viewBox='0 0 9 9'%3E%3Cpath fill='white' d='M4.5 6L1 2h7z'/%3E%3C/svg%3E");
     background-repeat: no-repeat;
-    background-position: right 8px center;
+    background-position: right 6px center;
 }
 
 .filter-select-multiline:hover {
     background-color: rgba(255, 255, 255, 0.2);
-    border-color: rgba(255, 255, 255, 0.2);
 }
 
 .filter-select-multiline:focus {
     outline: none;
     background-color: white;
-    color: #4F46E5;
-    border-color: white;
-    box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.2);
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 10 10'%3E%3Cpath fill='%234F46E5' d='M5 7L2 3h6z'/%3E%3C/svg%3E");
+    color: #2563eb;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='9' height='9' viewBox='0 0 9 9'%3E%3Cpath fill='%232563eb' d='M4.5 6L1 2h7z'/%3E%3C/svg%3E");
+}
+
+/* Select actif (option sélectionnée) avec animation pulse */
+.filter-select-multiline.active {
+    background-color: white;
+    color: #2563eb;
+    border-color: rgba(37, 99, 235, 0.3);
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='9' height='9' viewBox='0 0 9 9'%3E%3Cpath fill='%232563eb' d='M4.5 6L1 2h7z'/%3E%3C/svg%3E");
+    animation: filter-pulse-select 1.5s ease-in-out infinite;
+    transform-origin: center;
+}
+
+/* Options colorisées pour Actions, Drop Rate, Refill */
+.filter-select-colorized option {
+    padding: 8px 12px;
+    font-size: 12px;
+    font-weight: 500;
+    background: white;
+    color: #1f2937;
+}
+
+/* Actions - Followers (Violet) */
+.filter-select-colorized option[value="followers"] {
+    background: linear-gradient(to right, rgba(139, 92, 246, 0.15), rgba(139, 92, 246, 0.05));
+    color: #8B5CF6;
+    font-weight: 600;
+}
+
+/* Actions - Likes (Rose) */
+.filter-select-colorized option[value="likes"] {
+    background: linear-gradient(to right, rgba(236, 72, 153, 0.15), rgba(236, 72, 153, 0.05));
+    color: #EC4899;
+    font-weight: 600;
+}
+
+/* Actions - Views (Bleu) */
+.filter-select-colorized option[value="views"] {
+    background: linear-gradient(to right, rgba(59, 130, 246, 0.15), rgba(59, 130, 246, 0.05));
+    color: #3B82F6;
+    font-weight: 600;
+}
+
+/* Actions - Subscribers (Rouge) */
+.filter-select-colorized option[value="subscribers"] {
+    background: linear-gradient(to right, rgba(239, 68, 68, 0.15), rgba(239, 68, 68, 0.05));
+    color: #EF4444;
+    font-weight: 600;
+}
+
+/* Actions - Comments (Vert) */
+.filter-select-colorized option[value="comments"] {
+    background: linear-gradient(to right, rgba(16, 185, 129, 0.15), rgba(16, 185, 129, 0.05));
+    color: #10B981;
+    font-weight: 600;
+}
+
+/* Actions - Shares (Orange) */
+.filter-select-colorized option[value="shares"] {
+    background: linear-gradient(to right, rgba(245, 158, 11, 0.15), rgba(245, 158, 11, 0.05));
+    color: #F59E0B;
+    font-weight: 600;
+}
+
+/* Drop Rate - No Drop (Vert) */
+.filter-select-colorized option[value="No Drop"] {
+    background: linear-gradient(to right, rgba(16, 185, 129, 0.15), rgba(16, 185, 129, 0.05));
+    color: #10B981;
+    font-weight: 600;
+}
+
+/* Drop Rate - Low Drop (Orange) */
+.filter-select-colorized option[value="Low Drop"] {
+    background: linear-gradient(to right, rgba(245, 158, 11, 0.15), rgba(245, 158, 11, 0.05));
+    color: #F59E0B;
+    font-weight: 600;
+}
+
+/* Drop Rate - High Drop (Rouge) */
+.filter-select-colorized option[value="High Drop"] {
+    background: linear-gradient(to right, rgba(239, 68, 68, 0.15), rgba(239, 68, 68, 0.05));
+    color: #EF4444;
+    font-weight: 600;
+}
+
+/* Refill - Sans refill (Gris) */
+.filter-select-colorized option[value="0"] {
+    background: linear-gradient(to right, rgba(107, 114, 128, 0.15), rgba(107, 114, 128, 0.05));
+    color: #6B7280;
+    font-weight: 600;
+}
+
+/* Refill - 1-30 jours (Vert) */
+.filter-select-colorized option[value="30"] {
+    background: linear-gradient(to right, rgba(16, 185, 129, 0.15), rgba(16, 185, 129, 0.05));
+    color: #10B981;
+    font-weight: 600;
+}
+
+/* Refill - 30-90 jours (Bleu) */
+.filter-select-colorized option[value="90"] {
+    background: linear-gradient(to right, rgba(59, 130, 246, 0.15), rgba(59, 130, 246, 0.05));
+    color: #3B82F6;
+    font-weight: 600;
+}
+
+/* Refill - 90-365 jours (Violet) */
+.filter-select-colorized option[value="365"] {
+    background: linear-gradient(to right, rgba(139, 92, 246, 0.15), rgba(139, 92, 246, 0.05));
+    color: #8B5CF6;
+    font-weight: 600;
+}
+
+/* Refill - Lifetime (Rose) */
+.filter-select-colorized option[value="lifetime"] {
+    background: linear-gradient(to right, rgba(236, 72, 153, 0.15), rgba(236, 72, 153, 0.05));
+    color: #EC4899;
+    font-weight: 600;
+}
+
+/* Option par défaut (non sélectionnée) */
+.filter-select-colorized option[value=""] {
+    background: #f9fafb;
+    color: #6b7280;
+    font-weight: 500;
+}
+
+@keyframes filter-pulse-select {
+    0% {
+        box-shadow: 0 0 8px rgba(37, 99, 235, 0.3);
+        transform: scale(1);
+    }
+
+    25% {
+        transform: scale(0.98);
+    }
+
+    50% {
+        box-shadow: 0 0 15px rgba(37, 99, 235, 0.5);
+        transform: scale(0.95);
+    }
+
+    75% {
+        transform: scale(1.05);
+    }
+
+    100% {
+        box-shadow: 0 0 8px rgba(37, 99, 235, 0.3);
+        transform: scale(1);
+    }
 }
 
 .filter-select-multiline option {
     background: white;
     color: #374151;
-    padding: 8px;
+    padding: 5px;
 }
 
-/* Prix inputs */
+/* Colorisation des options de filtres */
+.filter-select-actions option[value="followers"] {
+    background-color: rgba(139, 92, 246, 0.1);
+}
+
+.filter-select-actions option[value="likes"] {
+    background-color: rgba(236, 72, 153, 0.1);
+}
+
+.filter-select-actions option[value="views"] {
+    background-color: rgba(59, 130, 246, 0.1);
+}
+
+.filter-select-actions option[value="subscribers"] {
+    background-color: rgba(239, 68, 68, 0.1);
+}
+
+.filter-select-actions option[value="comments"] {
+    background-color: rgba(16, 185, 129, 0.1);
+}
+
+.filter-select-actions option[value="shares"] {
+    background-color: rgba(245, 158, 11, 0.1);
+}
+
+.filter-select-drop option[value="No Drop"] {
+    background-color: rgba(16, 185, 129, 0.1);
+}
+
+.filter-select-drop option[value="Low Drop"] {
+    background-color: rgba(245, 158, 11, 0.1);
+}
+
+.filter-select-drop option[value="High Drop"] {
+    background-color: rgba(239, 68, 68, 0.1);
+}
+
+.filter-select-refill option[value="0"] {
+    background-color: rgba(239, 68, 68, 0.1);
+}
+
+.filter-select-refill option[value="30"] {
+    background-color: rgba(16, 185, 129, 0.1);
+}
+
+.filter-select-refill option[value="90"] {
+    background-color: rgba(59, 130, 246, 0.1);
+}
+
+.filter-select-refill option[value="365"] {
+    background-color: rgba(139, 92, 246, 0.1);
+}
+
+.filter-select-refill option[value="lifetime"] {
+    background-color: rgba(236, 72, 153, 0.1);
+}
+
+/* ========================================
+   PRIX
+   ======================================== */
+
+.price-range-multiline {
+    gap: 3px;
+}
+
 .price-input-multiline {
-    width: 65px;
-    height: 32px;
-    padding: 0 8px;
+    width: 55px;
+    height: 28px;
+    padding: 0 5px;
     background: rgba(255, 255, 255, 0.12);
     border: 2px solid transparent;
-    border-radius: 6px;
+    border-radius: 7px;
     color: white;
-    font-size: 11px;
+    font-size: 10px;
     font-weight: 500;
     text-align: center;
     transition: all 0.2s ease;
@@ -469,592 +675,1929 @@
 
 .price-input-multiline::placeholder {
     color: rgba(255, 255, 255, 0.5);
-    font-size: 10px;
+    font-size: 9px;
 }
 
 .price-input-multiline:hover {
     background: rgba(255, 255, 255, 0.2);
-    border-color: rgba(255, 255, 255, 0.15);
 }
 
 .price-input-multiline:focus {
     outline: none;
     background: white;
-    color: #4F46E5;
-    border-color: white;
-    box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.2);
+    color: #2563eb;
 }
 
-/* Séparateur de prix */
+/* Input prix actif (valeur entrée) avec animation pulse */
+.price-input-multiline.active {
+    background: white;
+    color: #2563eb;
+    border-color: rgba(37, 99, 235, 0.3);
+    animation: filter-pulse-select 2.5s ease-in-out infinite;
+}
+
 .price-separator-multiline {
-    color: rgba(255, 255, 255, 0.8);
+    color: rgba(255, 255, 255, 0.7);
     font-weight: 600;
-    font-size: 14px;
+    font-size: 12px;
+    flex-shrink: 0;
 }
 
 /* ========================================
-   LIGNE 3: OUTILS & RÉSULTATS
+   RECHERCHE PAR ID
    ======================================== */
-.services-filters-multiline .filters-row-tertiary {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 10px;
-    width: 100%;
-}
 
-.filters-row-tertiary {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 10px;
-    width: 100%;
-}
+/**
+ * Champ de recherche subtil pour rechercher un service par son ID
+ * Position: Ligne 2, après Tri et avant Reset
+ * Responsive: Adapté mobile/tablet/desktop
+ */
 
-.left-tools {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    flex: 1 1 auto;
-}
-
-.right-tools {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    flex: 0 0 auto;
-}
-
-/* Groupe Tri */
-.filter-sort-group {
-    display: flex;
-    align-items: center;
-    gap: 4px;
-    background: rgba(255, 255, 255, 0.08);
-    padding: 4px 6px;
-    border-radius: 6px;
-}
-
-/* Recherche par ID */
 .filter-search-id-group {
+    position: relative;
     display: flex;
     align-items: center;
     gap: 4px;
-    position: relative;
-    background: rgba(255, 255, 255, 0.08);
-    padding: 4px 6px;
-    border-radius: 6px;
 }
 
 .filter-search-id-input {
-    width: 100px;
+    width: 95px;
     height: 28px;
-    padding: 0 24px 0 8px;
+    padding: 0 28px 0 6px;
     background: rgba(255, 255, 255, 0.12);
     border: 2px solid transparent;
-    border-radius: 4px;
+    border-radius: 7px;
     color: white;
-    font-size: 11px;
+    font-size: 10px;
     font-weight: 500;
-    transition: all 0.2s ease;
+    text-align: left;
+    transition: all 0.25s ease;
+    font-family: 'Courier New', monospace;
+    letter-spacing: 0.5px;
 }
 
 .filter-search-id-input::placeholder {
-    color: rgba(255, 255, 255, 0.5);
-    font-size: 10px;
+    color: rgba(255, 255, 255, 0.55);
+    font-size: 9px;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    letter-spacing: normal;
+}
+
+.filter-search-id-input:hover {
+    background: rgba(255, 255, 255, 0.18);
+    border-color: rgba(255, 255, 255, 0.1);
 }
 
 .filter-search-id-input:focus {
     outline: none;
     background: white;
-    color: #4F46E5;
-    border-color: white;
-    width: 130px;
+    color: #2563eb;
+    border-color: #2563eb;
+    width: 120px;
+    box-shadow: 0 2px 8px rgba(37, 99, 235, 0.25);
 }
 
+.filter-search-id-input:focus::placeholder {
+    color: rgba(37, 99, 235, 0.4);
+}
+
+/* Input actif (valeur entrée) */
+.filter-search-id-input.active {
+    background: white;
+    color: #2563eb;
+    border-color: rgba(37, 99, 235, 0.4);
+    font-weight: 600;
+    animation: filter-pulse-select 2.5s ease-in-out infinite;
+}
+
+/* Bouton clear (X) */
 .filter-search-id-clear {
     position: absolute;
-    right: 8px;
+    right: 4px;
     top: 50%;
     transform: translateY(-50%);
-    width: 18px;
-    height: 18px;
-    background: rgba(239, 68, 68, 0.3);
+    width: 20px;
+    height: 20px;
+    background: rgba(239, 68, 68, 0.2);
     border: none;
-    border-radius: 3px;
+    border-radius: 4px;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
     transition: all 0.2s ease;
+    z-index: 2;
 }
 
 .filter-search-id-clear i {
-    font-size: 10px;
+    font-size: 9px;
     color: white;
 }
 
 .filter-search-id-clear:hover {
-    background: rgba(239, 68, 68, 0.5);
+    background: #ef4444;
+    transform: translateY(-50%) scale(1.1);
 }
 
-/* Bouton Favoris */
-.filter-favorites-toggle {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    height: 32px;
-    padding: 0 12px;
-    background: rgba(255, 255, 255, 0.12);
-    border: 2px solid transparent;
-    border-radius: 6px;
-    color: white;
-    font-size: 11px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
-
-.filter-favorites-toggle svg,
-.filter-favorites-toggle i {
-    width: 14px;
-    height: 14px;
-    transition: all 0.3s ease;
-}
-
-.filter-favorites-toggle:hover {
-    background: rgba(255, 255, 255, 0.2);
-    transform: scale(1.05);
-}
-
-.filter-favorites-toggle[data-active="true"] {
-    background: linear-gradient(135deg, #FDE047, #F59E0B);
-    color: #78350F;
-    border-color: #FDE047;
-    box-shadow: 0 0 20px rgba(253, 224, 71, 0.5);
-}
-
-.filter-favorites-toggle[data-active="true"] svg,
-.filter-favorites-toggle[data-active="true"] i {
-    animation: star-rotate 3s ease-in-out infinite;
-}
-
-@keyframes star-rotate {
+/* Animation subtile quand actif */
+@keyframes search-id-glow {
 
     0%,
     100% {
-        transform: rotate(0deg) scale(1);
+        box-shadow: 0 0 0 rgba(37, 99, 235, 0);
     }
 
     50% {
-        transform: rotate(15deg) scale(1.1);
+        box-shadow: 0 0 12px rgba(37, 99, 235, 0.4);
     }
 }
 
-/* Bouton Reset */
+.filter-search-id-input.active {
+    animation: search-id-glow 2s ease-in-out infinite, filter-pulse-select 2.5s ease-in-out infinite;
+}
+
+/* ========================================
+   RECHERCHE (Ancienne section - conservée)
+   ======================================== */
+
+.search-group-multiline {
+    flex: 1;
+    min-width: 160px;
+    max-width: 300px;
+}
+
+.search-wrapper-multiline {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+.search-wrapper-multiline svg {
+    position: absolute;
+    left: 8px;
+    color: rgba(102, 126, 234, 0.6);
+    pointer-events: none;
+    z-index: 1;
+    width: 11px;
+    height: 11px;
+}
+
+.search-input-multiline {
+    width: 100%;
+    height: 28px;
+    padding: 0 9px 0 27px;
+    background: rgba(255, 255, 255, 0.12);
+    border: 2px solid transparent;
+    border-radius: 7px;
+    color: white;
+    font-size: 10px;
+    font-weight: 500;
+    transition: all 0.2s ease;
+}
+
+.search-input-multiline::placeholder {
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.search-input-multiline:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.search-input-multiline:focus {
+    outline: none;
+    background: white;
+    color: #2563eb;
+}
+
+.search-wrapper-multiline:has(.search-input-multiline:focus) svg {
+    color: #2563eb;
+}
+
+/* ========================================
+   RESET & RESULTS
+   ======================================== */
+
 .filter-reset-btn-multiline {
-    width: 32px;
-    height: 32px;
+    width: 28px;
+    height: 28px;
     padding: 0;
     background: rgba(239, 68, 68, 0.25);
     border: 2px solid transparent;
-    border-radius: 6px;
+    border-radius: 7px;
     cursor: pointer;
-    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: all 0.2s ease;
     display: flex;
     align-items: center;
     justify-content: center;
     color: white;
-}
-
-.filter-reset-btn-multiline svg,
-.filter-reset-btn-multiline i {
-    width: 14px;
-    height: 14px;
-}
-
-.filter-reset-btn-multiline:hover {
-    background: #EF4444;
-    transform: rotate(90deg) scale(1.1);
-    box-shadow: 0 4px 12px rgba(239, 68, 68, 0.4);
-}
-
-/* Compteur de résultats */
-.filter-results-multiline {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    padding: 0 14px;
-    height: 32px;
-    background: rgba(255, 255, 255, 0.2);
-    border-radius: 6px;
-    font-weight: 700;
-    font-size: 12px;
-    color: white;
-    border: 2px solid rgba(255, 255, 255, 0.25);
-}
-
-#resultsCount {
-    font-size: 14px;
-    font-weight: 800;
-}
-
-.results-label {
-    font-weight: 500;
-    font-size: 10px;
-    opacity: 0.9;
-}
-
-/* Dividers */
-.filter-divider-multiline {
-    width: 1px;
-    height: 24px;
-    background: rgba(255, 255, 255, 0.2);
     flex-shrink: 0;
 }
 
-/* ========================================
-   RESPONSIVE - TABLETTE (600-1024px)
-   ======================================== */
-@media (max-width: 1024px) and (min-width: 600px) {
-    .services-filters-multiline {
-        padding: 12px 16px;
-        border-radius: 12px;
-    }
+.filter-reset-btn-multiline svg {
+    width: 12px;
+    height: 12px;
+}
 
-    /* Ajuster le collapsed pour tablette */
-    .services-filters-multiline.filters-collapsed {
-        padding-bottom: 10px !important;
-    }
+.filter-reset-btn-multiline:hover {
+    background: #ef4444;
+    transform: rotate(90deg) scale(1.05);
+}
 
-    /* Ligne 1 - Plateformes */
-    .platform-btn-multiline,
-    .platform-btn-multiline.filter-label-clickable {
-        width: 32px;
-        height: 32px;
-    }
+.filter-results-multiline {
+    margin-left: auto;
+    padding: 0 9px;
+    height: 28px;
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 7px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-weight: 700;
+    font-size: 11px;
+    color: white;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    flex-shrink: 0;
+}
 
-    .platform-btn-multiline svg,
-    .platform-btn-multiline i {
-        width: 14px;
-        height: 14px;
-    }
+#resultsCount {
+    font-family: 'Courier New', monospace;
+    letter-spacing: 0.5px;
+    font-weight: 800;
+    color: #fff;
+}
 
-    /* Ligne 2 - Contrôles */
-    .filters-row-secondary,
-    .filters-row-secondary-desktop {
-        flex-wrap: wrap;
-    }
-
-    .group-actions {
-        flex-direction: row;
-        flex-wrap: wrap;
-    }
-
-    .group-refill-country {
-        flex-direction: row;
-        gap: 8px;
-    }
-
-    .filter-select-multiline {
-        min-width: 90px;
-        font-size: 10px;
-    }
-
-    .price-input-multiline {
-        width: 55px;
-        font-size: 10px;
-    }
-
-    /* Ligne 3 - Outils */
-    .filters-row-tertiary {
-        flex-wrap: wrap;
-    }
-
-    .filter-search-id-input {
-        width: 90px;
-    }
-
-    .filter-favorites-toggle .favorites-label {
-        display: none;
-    }
+.results-label {
+    font-weight: 400;
+    font-size: 9px;
+    opacity: 0.8;
 }
 
 /* ========================================
-   RESPONSIVE - MOBILE (<600px)
+   GRID RESPONSIVE (4-5 COLONNES)
    ======================================== */
-@media (max-width: 599px) {
+
+.services-grid-modern {
+    display: grid;
+    gap: 16px;
+    margin-bottom: 40px;
+}
+
+/* Desktop XL: 5 colonnes */
+@media (min-width: 1600px) {
+    .services-grid-modern {
+        grid-template-columns: repeat(5, 1fr);
+        gap: 14px;
+    }
+}
+
+/* Desktop Large: 4 colonnes */
+@media (min-width: 1200px) and (max-width: 1599px) {
+    .services-grid-modern {
+        grid-template-columns: repeat(4, 1fr);
+        gap: 14px;
+    }
+}
+
+/* Tablette Large: 3 colonnes */
+@media (min-width: 900px) and (max-width: 1199px) {
+    .services-grid-modern {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 12px;
+    }
+}
+
+/* Tablette: 2 colonnes + 3 lignes filtres ULTRA-COMPACTES */
+@media (min-width: 600px) and (max-width: 899px) {
+    .services-grid-modern {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+    }
+
     .services-filters-multiline {
-        top: 56px;
-        padding: 10px 12px;
+        padding: 6px 10px;
+        gap: 5px;
+        position: sticky;
+        top: 60px;
+        z-index: 998;
+    }
+
+    /* FORCER 3 LIGNES HORIZONTALES */
+    .filters-row {
+        width: 100%;
+        flex-wrap: wrap;
+        gap: 5px;
+    }
+
+    .filters-row-primary,
+    .filters-row-secondary,
+    .filters-row-tertiary {
+        border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+        padding-bottom: 5px;
+        margin-bottom: 0;
+    }
+
+    /* Actions + Drop Rate en VERTICAL */
+    .filter-actions-drop-group {
+        flex-direction: column;
+        align-items: flex-start;
+        background: rgba(0, 0, 0, 0.25);
+        padding: 4px;
+        border-radius: 7px;
+        gap: 3px;
+    }
+
+    .filter-subgroup-multiline {
+        width: 100%;
+    }
+
+    /* Ligne 1: Plateformes (wrap naturel) */
+    .platform-filters-multiline {
+        flex-wrap: wrap;
+        width: 100%;
+        gap: 4px;
+    }
+
+    /* Ligne 2: Tiers + Actions + Drop (côte à côte) */
+    .tier-filters-multiline {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 4px;
+    }
+
+    /* Ligne 3: Refill + Prix + Recherche + Reset (wrap si besoin) */
+    .price-range-multiline {
+        display: flex;
+        gap: 3px;
+    }
+
+    /* Boutons compacts */
+    .platform-btn-multiline,
+    .tier-btn-multiline {
+        width: 25px;
+        height: 25px;
+    }
+
+    .platform-btn-multiline svg,
+    .tier-btn-multiline svg {
+        width: 11px;
+        height: 11px;
+    }
+
+    /* Selects compacts */
+    .filter-select-multiline {
+        min-width: 75px;
+        max-width: 105px;
+        font-size: 9px;
+        height: 25px;
+        padding: 0 20px 0 6px;
+    }
+
+    /* Prix compacts */
+    .price-input-multiline {
+        width: 50px;
+        height: 25px;
+        font-size: 9px;
+    }
+
+    /* Recherche flexible */
+    .search-group-multiline {
+        flex: 1;
+        min-width: 110px;
+    }
+
+    .search-input-multiline {
+        height: 25px;
+        font-size: 9px;
+    }
+
+    /* Boutons outils */
+    .filter-reset-btn-multiline {
+        width: 25px;
+        height: 25px;
+    }
+
+    .filter-results-multiline {
+        height: 25px;
+        padding: 0 7px;
+        font-size: 9px;
+    }
+
+    /* Masquer éléments non-essentiels */
+    .filter-stats-info {
+        display: none;
+    }
+
+    .filter-divider-multiline {
+        display: none;
+    }
+
+    /* Assurer aucun overflow */
+    .filter-group-multiline {
+        min-width: 0;
+        flex-shrink: 1;
+    }
+}
+
+/* Mobile: Layout CLAIR 3 LIGNES (360-600px) */
+@media (max-width: 599px) {
+    .services-grid-modern {
+        grid-template-columns: 1fr;
+        gap: 8px;
+    }
+
+    /* ========== CONTENEUR FILTRES - DESIGN DESKTOP ADAPTÉ ========== */
+    .services-filters-multiline {
+        padding: 10px 8px;
+        gap: 10px;
+        position: sticky;
+        top: 55px;
+        z-index: 998;
         border-radius: 0;
         margin-left: -24px;
         margin-right: -24px;
         width: calc(100% + 48px);
     }
 
-    /* Ajuster le collapsed pour mobile */
-    .services-filters-multiline.filters-collapsed {
-        padding: 8px 12px !important;
+    /* Masquer dividers et stats sur mobile */
+    .filter-divider-multiline,
+    .filter-stats-info {
+        display: none !important;
     }
 
-    /* Ligne 1 - Plateformes très compactes (toujours visible) */
+    /* ========== LIGNE 1: Layout horizontal comme desktop ========== */
     .filters-row-primary {
-        margin-bottom: 10px;
-        padding-bottom: 10px;
-    }
-
-    /* En mode collapsed, pas de bordure */
-    .services-filters-multiline.filters-collapsed .filters-row-primary {
-        margin-bottom: 0;
-        padding-bottom: 0;
-        border-bottom: none;
-    }
-
-    .platform-btn-multiline,
-    .platform-btn-multiline.filter-label-clickable {
-        width: 28px;
-        height: 28px;
-    }
-
-    .platform-btn-multiline svg,
-    .platform-btn-multiline i {
-        width: 12px;
-        height: 12px;
-    }
-
-    /* Ligne 2 - Contrôles adaptés mobile */
-    .filters-row-secondary,
-    .filters-row-secondary-desktop {
+        display: flex !important;
         flex-wrap: wrap;
         gap: 6px;
-        margin-bottom: 10px;
-        padding-bottom: 10px;
+        align-items: center;
     }
 
-    /* Tiers en ligne horizontale */
-    .group-tiers {
+    /* Plateformes - Garde le style desktop mais plus compact */
+    .filters-row-primary>.filter-group-multiline:nth-child(1) {
+        display: flex;
+        gap: 3px;
+        align-items: center;
+    }
+
+    .filters-row-primary>.filter-group-multiline:nth-child(1)>.filter-label-clickable {
+        width: 32px;
+        height: 32px;
+    }
+
+    .platform-filters-multiline {
+        display: flex;
+        gap: 3px;
+        overflow-x: auto;
+        scrollbar-width: none;
+        max-width: calc(100vw - 120px);
+        /* Laisse place au label */
+    }
+
+    .platform-filters-multiline::-webkit-scrollbar {
+        display: none;
+    }
+
+    .platform-btn-multiline {
+        flex: 0 0 auto;
+        width: 32px;
+        height: 32px;
+        border-radius: 6px;
+    }
+
+    /* ✅ TIERS EN HORIZONTAL comme desktop */
+    .filters-row-primary>.filter-group-multiline:nth-child(3) {
+        display: flex;
+        gap: 3px;
+        align-items: center;
+        flex-wrap: nowrap;
+    }
+
+    .filters-row-primary>.filter-group-multiline:nth-child(3)>.filter-label-clickable {
+        width: 32px;
+        height: 32px;
+    }
+
+    .tier-filters-multiline {
+        display: flex !important;
+        flex-direction: row !important;
+        /* ✅ Horizontal forcé */
+        gap: 3px;
+        flex-wrap: nowrap;
+    }
+
+    .tier-btn-multiline {
+        flex: 0 0 auto;
+        width: 32px;
+        height: 32px;
+        border-radius: 6px;
+        font-size: 10px;
+    }
+
+    /* ✅ ACTIONS + DROP RATE EN HORIZONTAL côte à côte */
+    .filter-actions-drop-group {
+        display: flex !important;
+        flex-direction: row !important;
+        /* ✅ Horizontal forcé */
+        gap: 4px;
         width: 100%;
-        justify-content: center;
-    }
-
-    .tier-btn-multiline,
-    .tier-btn-multiline.filter-label-clickable {
-        width: 28px;
-        height: 28px;
-    }
-
-    /* Actions + Drop en horizontal (côte à côte) */
-    .group-actions {
-        flex-direction: row;
-        width: 100%;
-        gap: 6px;
+        align-items: center;
     }
 
     .filter-subgroup-multiline {
+        display: flex;
+        gap: 2px;
+        align-items: center;
         flex: 1;
+        /* Prend toute la largeur disponible */
     }
 
-    /* Refill + Pays en horizontal */
-    .group-refill-country {
-        flex-direction: row;
-        width: 100%;
-        gap: 6px;
+    .filter-subgroup-multiline>.filter-label-multiline {
+        width: 28px;
+        height: 28px;
+        flex-shrink: 0;
     }
 
-    .group-refill,
-    .group-country {
-        flex: 1;
-    }
-
-    /* Prix sur toute la largeur */
-    .group-price {
-        width: 100%;
-        justify-content: center;
-    }
-
-    /* Selects et inputs très compacts */
     .filter-select-multiline {
-        min-width: 80px;
         height: 28px;
-        font-size: 10px;
-        padding-right: 24px;
+        font-size: 11px;
+        padding: 0 6px;
+        flex: 1;
     }
 
-    .price-input-multiline {
-        width: 50px;
+
+    .filter-select-multiline {
         height: 28px;
-        font-size: 10px;
+        font-size: 11px;
+        padding: 0 6px;
+        flex: 1;
     }
 
-    .filter-label-multiline {
-        width: 20px;
-        height: 20px;
-    }
-
-    .filter-label-multiline svg,
-    .filter-label-multiline i {
-        width: 10px;
-        height: 10px;
-    }
-
-    /* Ligne 3 - Outils compacts */
-    .filters-row-tertiary {
+    /* ========== LIGNE 2: Layout horizontal comme desktop ========== */
+    .filters-row-secondary {
+        display: flex !important;
         flex-wrap: wrap;
         gap: 6px;
+        align-items: center;
     }
 
-    .left-tools {
-        width: 100%;
-        justify-content: space-between;
+    /* Refill - Compact */
+    .filters-row-secondary>.filter-group-multiline:nth-child(1) {
+        display: flex !important;
+        gap: 2px;
+        align-items: center;
     }
 
-    .right-tools {
-        width: 100%;
-        justify-content: center;
-    }
-
-    .filter-sort-group {
-        flex: 1;
-    }
-
-    .filter-search-id-group {
-        flex: 1;
-    }
-
-    .filter-search-id-input {
-        width: 80px;
-        height: 26px;
-        font-size: 10px;
-    }
-
-    .filter-favorites-toggle {
-        height: 28px;
-        padding: 0 8px;
-    }
-
-    .filter-favorites-toggle .favorites-label {
-        display: none;
-    }
-
-    .filter-reset-btn-multiline {
+    .filters-row-secondary>.filter-group-multiline:nth-child(1) .filter-label-multiline {
         width: 28px;
         height: 28px;
     }
 
-    .filter-results-multiline {
-        width: 100%;
-        justify-content: center;
+    .filters-row-secondary>.filter-group-multiline:nth-child(1) .filter-select-multiline {
+        min-width: 100px;
         height: 28px;
+        font-size: 10px;
+    }
+
+    /* Prix Min/Max - Compact */
+    .price-range-multiline {
+        display: flex !important;
+        gap: 3px;
+        align-items: center;
+    }
+
+    .price-range-multiline .filter-label-multiline {
+        width: 28px;
+        height: 28px;
+    }
+
+    .price-input-multiline {
+        width: 60px;
+        height: 28px;
+        font-size: 10px;
+        padding: 0 4px;
+        text-align: center;
+    }
+
+    .price-separator-multiline {
+        color: rgba(255, 255, 255, 0.7);
+        font-weight: 500;
+    }
+
+    /* Tri - Compact */
+    .filters-row-secondary>.filter-group-multiline:nth-child(5) {
+        display: flex;
+        gap: 2px;
+        align-items: center;
+    }
+
+    .filters-row-secondary>.filter-group-multiline:nth-child(5) .filter-label-multiline {
+        width: 28px;
+        height: 28px;
+    }
+
+    #sortSelect {
+        min-width: 90px;
+        height: 28px;
+        font-size: 10px;
+    }
+
+    /* Reset button - Compact */
+    .filter-reset-btn-multiline {
+        width: 32px;
+        height: 32px;
+        flex-shrink: 0;
+    }
+
+    /* Compteur résultats - Plus petit */
+    .filter-results-multiline {
         font-size: 11px;
+        padding: 4px 8px;
+        height: 28px;
+    }
+
+    /* ========== LIGNE 3: RESET | COMPTEUR (si besoin) ========== */
+
+    .filter-reset-btn-multiline {
+        grid-column: 1;
+        grid-row: 2;
+        width: 100%;
+        height: 36px;
+        border-radius: 6px;
+        background: rgba(239, 68, 68, 0.2) !important;
+        transition: background 0.2s ease !important;
+        transform: none !important;
+    }
+
+    .filter-reset-btn-multiline:hover,
+    .filter-reset-btn-multiline:active {
+        background: rgba(239, 68, 68, 0.35) !important;
+        transform: none !important;
+    }
+
+    .filter-reset-btn-multiline svg {
+        width: 16px;
+        height: 16px;
+        transition: none !important;
+        transform: none !important;
+    }
+
+    .filter-results-multiline {
+        grid-column: 2;
+        grid-row: 2;
+        height: 36px;
+        padding: 0 8px;
+        font-size: 10px;
+        border-radius: 6px;
+        background: rgba(59, 130, 246, 0.2) !important;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 2px;
+        overflow: hidden;
     }
 
     #resultsCount {
+        font-size: 14px;
+        font-weight: 700;
+        line-height: 1;
+        white-space: nowrap;
+    }
+
+    .results-label {
+        font-size: 9px;
+        opacity: 0.9;
+        line-height: 1;
+        white-space: nowrap;
+    }
+
+    /* Ajustements globaux */
+    .filter-group-multiline {
+        min-height: 36px;
+    }
+}
+
+/* ========================================
+   CARTES SERVICES COMPACTES
+   ======================================== */
+
+.service-card-modern {
+    background: white;
+    border-radius: 11px;
+    padding: 13px;
+    box-shadow: 0 2px 7px rgba(0, 0, 0, 0.07);
+    transition: all 0.25s ease;
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+    position: relative;
+}
+
+.service-card-modern:hover {
+    box-shadow: 0 5px 18px rgba(0, 0, 0, 0.11);
+    transform: translateY(-3px);
+}
+
+/* Animations fade */
+.services-grid-modern.fading-out {
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.service-card-modern {
+    animation: fadeInUp 0.4s ease-out forwards;
+    opacity: 0;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(15px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Header */
+.service-card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 7px;
+}
+
+/* ID Badge (nouveau) */
+.service-id-badge {
+    padding: 3px 7px;
+    background: linear-gradient(135deg, rgba(107, 114, 128, 0.12), rgba(107, 114, 128, 0.06));
+    border: 1px solid rgba(107, 114, 128, 0.2);
+    border-radius: 5px;
+    font-size: 9px;
+    font-weight: 700;
+    color: #6b7280;
+    font-family: 'Courier New', monospace;
+    letter-spacing: 0.3px;
+    white-space: nowrap;
+    cursor: pointer;
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    transition: all 0.2s ease;
+}
+
+.service-id-badge:hover {
+    background: linear-gradient(135deg, rgba(107, 114, 128, 0.2), rgba(107, 114, 128, 0.12));
+    border-color: rgba(107, 114, 128, 0.35);
+    transform: scale(1.05);
+}
+
+.service-id-badge:active {
+    transform: scale(0.95);
+}
+
+/* Toast notification */
+.copy-toast {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    background: linear-gradient(135deg, #10B981, #059669);
+    color: white;
+    padding: 12px 20px;
+    border-radius: 10px;
+    box-shadow: 0 8px 25px rgba(16, 185, 129, 0.4);
+    font-size: 13px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    z-index: 9999;
+    animation: slideInUp 0.3s ease, slideOutDown 0.3s ease 2.7s;
+    pointer-events: none;
+}
+
+.copy-toast::before {
+    content: '✓';
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 22px;
+    height: 22px;
+    background: rgba(255, 255, 255, 0.25);
+    border-radius: 50%;
+    font-size: 14px;
+    font-weight: 700;
+}
+
+@keyframes slideInUp {
+    from {
+        transform: translateY(100px);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slideOutDown {
+    from {
+        transform: translateY(0);
+        opacity: 1;
+    }
+
+    to {
+        transform: translateY(100px);
+        opacity: 0;
+    }
+}
+
+/* Toast responsive */
+@media (max-width: 599px) {
+    .copy-toast {
+        bottom: 20px;
+        right: 20px;
+        left: 20px;
+        padding: 10px 16px;
+        font-size: 12px;
+        text-align: center;
+        justify-content: center;
+    }
+
+    .copy-toast::before {
+        width: 20px;
+        height: 20px;
+        font-size: 12px;
+    }
+}
+
+@media (max-width: 400px) {
+    .copy-toast {
+        bottom: 15px;
+        right: 15px;
+        left: 15px;
+        padding: 8px 12px;
+        font-size: 11px;
+    }
+
+    .copy-toast::before {
+        width: 18px;
+        height: 18px;
+        font-size: 11px;
+    }
+}
+
+.service-platform-badge {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    padding: 4px 8px;
+    background: rgba(37, 99, 235, 0.08);
+    border-radius: 6px;
+    font-size: 10px;
+    font-weight: 600;
+    transition: all 0.2s ease;
+}
+
+.service-platform-badge:hover {
+    background: rgba(37, 99, 235, 0.12);
+}
+
+.platform-icon-mini {
+    font-size: 11px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.platform-name {
+    font-weight: 600;
+    font-size: 10px;
+}
+
+.service-tier-badge {
+    padding: 3px 8px;
+    border-radius: 5px;
+    font-size: 9px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+    display: flex;
+    align-items: center;
+    gap: 3px;
+    transition: all 0.2s ease;
+}
+
+.service-tier-badge i {
+    font-size: 9px;
+}
+
+.service-tier-badge:hover {
+    transform: scale(1.05);
+}
+
+.service-tier-badge.tier-budget {
+    background: rgba(245, 158, 11, 0.15);
+    color: #d97706;
+    border: 1px solid rgba(245, 158, 11, 0.3);
+}
+
+.service-tier-badge.tier-standard {
+    background: rgba(59, 130, 246, 0.15);
+    color: #2563eb;
+    border: 1px solid rgba(59, 130, 246, 0.3);
+}
+
+.service-tier-badge.tier-premium {
+    background: rgba(139, 92, 246, 0.15);
+    color: #7c3aed;
+    border: 1px solid rgba(139, 92, 246, 0.3);
+}
+
+.service-tier-badge.tier-ultimate {
+    background: rgba(236, 72, 153, 0.15);
+    color: #db2777;
+    border: 1px solid rgba(236, 72, 153, 0.3);
+}
+
+.service-tier-badge.tier-ultimate {
+    background: rgba(236, 72, 153, 0.15);
+    color: #db2777;
+}
+
+/* Titre */
+.service-card-title {
+    font-size: 12px;
+    font-weight: 600;
+    color: #1f2937;
+    line-height: 1.3;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    min-height: 31px;
+}
+
+/* Footer */
+.service-card-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 7px;
+    padding-top: 7px;
+    border-top: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+.service-price {
+    font-size: 15px;
+    font-weight: 700;
+    color: #2563eb;
+}
+
+.service-price-unit {
+    font-size: 9px;
+    font-weight: 400;
+    color: #9ca3af;
+}
+
+.service-order-btn {
+    padding: 5px 11px;
+    background: linear-gradient(135deg, #2563eb 0%, #7c3aed 100%);
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 10px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.service-order-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 11px rgba(37, 99, 235, 0.35);
+}
+
+/* Features */
+.service-features {
+    display: flex;
+    gap: 3px;
+    flex-wrap: wrap;
+}
+
+/* Service Feature Item (Desktop Glowing) */
+.service-feature-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+    padding: 4px 8px;
+    background: linear-gradient(135deg, rgba(37, 99, 235, 0.08), rgba(37, 99, 235, 0.04));
+    border: 1px solid rgba(37, 99, 235, 0.15);
+    border-radius: 6px;
+    font-size: 9px;
+    font-weight: 600;
+    color: #2563eb;
+    white-space: nowrap;
+    box-shadow:
+        0 2px 4px rgba(37, 99, 235, 0.08),
+        0 0 8px rgba(37, 99, 235, 0.06);
+    transition: all 0.2s ease;
+}
+
+.service-feature-item:hover {
+    background: linear-gradient(135deg, rgba(37, 99, 235, 0.12), rgba(37, 99, 235, 0.06));
+    border-color: rgba(37, 99, 235, 0.25);
+    box-shadow:
+        0 4px 8px rgba(37, 99, 235, 0.12),
+        0 0 12px rgba(37, 99, 235, 0.1);
+    transform: translateY(-1px);
+}
+
+.service-feature-item i {
+    font-size: 9px;
+    opacity: 0.85;
+}
+
+/* ✅ NOUVEAUX BADGES V2 - Métadonnées enrichies */
+
+.feature-quality,
+.feature-quality-high {
+    background: linear-gradient(135deg, rgba(245, 158, 11, 0.12), rgba(245, 158, 11, 0.06)) !important;
+    color: #f59e0b !important;
+    border-color: rgba(245, 158, 11, 0.25) !important;
+}
+
+.feature-quality-high {
+    box-shadow: 0 2px 6px rgba(245, 158, 11, 0.15), 0 0 10px rgba(245, 158, 11, 0.1) !important;
+}
+
+.feature-location {
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.12), rgba(59, 130, 246, 0.06)) !important;
+    color: #3b82f6 !important;
+    border-color: rgba(59, 130, 246, 0.25) !important;
+}
+
+.feature-speed {
+    background: linear-gradient(135deg, rgba(139, 92, 246, 0.12), rgba(139, 92, 246, 0.06)) !important;
+    color: #8b5cf6 !important;
+    border-color: rgba(139, 92, 246, 0.25) !important;
+}
+
+.feature-time {
+    background: linear-gradient(135deg, rgba(16, 185, 129, 0.12), rgba(16, 185, 129, 0.06)) !important;
+    color: #10b981 !important;
+    border-color: rgba(16, 185, 129, 0.25) !important;
+}
+
+.feature-dripfeed {
+    background: linear-gradient(135deg, rgba(6, 182, 212, 0.12), rgba(6, 182, 212, 0.06)) !important;
+    color: #06b6d4 !important;
+    border-color: rgba(6, 182, 212, 0.25) !important;
+}
+
+.feature-cancel {
+    background: linear-gradient(135deg, rgba(239, 68, 68, 0.12), rgba(239, 68, 68, 0.06)) !important;
+    color: #ef4444 !important;
+    border-color: rgba(239, 68, 68, 0.25) !important;
+}
+
+.feature-refill {
+    background: linear-gradient(135deg, rgba(236, 72, 153, 0.12), rgba(236, 72, 153, 0.06)) !important;
+    color: #ec4899 !important;
+    border-color: rgba(236, 72, 153, 0.25) !important;
+}
+
+/* Hover effects pour nouveaux badges */
+.feature-quality:hover,
+.feature-quality-high:hover,
+.feature-location:hover,
+.feature-speed:hover,
+.feature-time:hover,
+.feature-dripfeed:hover,
+.feature-cancel:hover,
+.feature-refill:hover {
+    transform: translateY(-1px);
+    filter: brightness(1.1);
+}
+
+/* Features legacy badges (keep for compatibility) */
+.feature-badge {
+    padding: 2px 5px;
+    background: rgba(16, 185, 129, 0.1);
+    border-radius: 4px;
+    font-size: 8px;
+    font-weight: 600;
+    color: #059669;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+}
+
+.feature-badge.instant {
+    background: rgba(251, 191, 36, 0.1);
+    color: #d97706;
+}
+
+.feature-badge.refill {
+    background: rgba(59, 130, 246, 0.1);
+    color: #2563eb;
+}
+
+/* Responsive cartes */
+@media (min-width: 1600px) {
+    .service-card-modern {
+        padding: 11px;
+    }
+
+    .service-card-title {
+        font-size: 11px;
+        min-height: 29px;
+    }
+}
+
+/* ========================================
+   RESPONSIVE MOBILE/TABLETTE/DESKTOP - LAYOUT STRUCTURÉ
+   Header: Plateforme | Tier
+   HR 80%
+   Body: Titre (80%) | Prix + Commander (20%)
+   HR 90%
+   Footer: Caractéristiques (drop, refill, min/max)
+   ======================================== */
+
+/* Desktop/Tablette large (900px+) : Layout standard */
+@media (min-width: 900px) {
+    .service-card-modern {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        padding: 12px;
+    }
+}
+
+/* Tablette/Mobile (max 899px) : Layout optimisé */
+@media (max-width: 899px) {
+    .services-grid-modern {
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+
+    .service-card-modern {
+        display: flex;
+        flex-direction: column;
+        gap: 0;
+        padding: 10px;
+    }
+
+    /* === HEADER: ID | Plateforme (gauche) | Tier (droite) === */
+    .service-card-header {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        gap: 6px;
+        padding-bottom: 6px;
+        flex-wrap: wrap;
+    }
+
+    .service-id-badge {
+        padding: 2px 5px;
+        font-size: 8px;
+        order: 1;
+    }
+
+    .service-platform-badge {
+        padding: 3px 7px;
+        font-size: 9px;
+        gap: 4px;
+        order: 2;
+    }
+
+    .service-action-badge {
+        order: 3;
+        font-size: 8px;
+        padding: 2px 6px;
+    }
+
+    .platform-icon-mini {
+        font-size: 10px;
+    }
+
+    .platform-name {
+        font-size: 9px;
+    }
+
+    .service-tier-badge {
+        padding: 3px 7px;
+        font-size: 8px;
+        gap: 3px;
+        order: 4;
+        margin-left: auto;
+    }
+
+    .service-tier-badge i {
+        font-size: 8px;
+    }
+
+    /* === HR 80% === */
+    .service-card-header::after {
+        content: '';
+        display: block;
+        position: absolute;
+        left: 10%;
+        width: 80%;
+        height: 1px;
+        background: rgba(0, 0, 0, 0.06);
+        margin-top: 38px;
+    }
+
+    /* === BODY: Titre (80%) | Prix + Commander (20%) === */
+    .service-card-body {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 10px;
+        padding: 8px 0;
+    }
+
+    .service-card-title {
+        flex: 0 0 80%;
+        font-size: 11px;
+        line-height: 1.4;
+        font-weight: 600;
+        color: #1f2937;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        line-clamp: 2;
+        -webkit-box-orient: vertical;
+        min-height: auto;
+    }
+
+    /* === HR 90% === */
+    .service-card-body::after {
+        content: '';
+        display: block;
+        position: absolute;
+        left: 5%;
+        width: 90%;
+        height: 1px;
+        background: rgba(0, 0, 0, 0.08);
+        margin-top: 48px;
+    }
+
+    /* Prix + Commander (20%) */
+    .service-card-footer {
+        flex: 0 0 20%;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        gap: 6px;
+        border-top: none;
+        padding-top: 0;
+    }
+
+    .service-price {
+        font-size: 13px;
+        font-weight: 700;
+        line-height: 1;
+    }
+
+    .service-price-unit {
+        font-size: 8px;
+    }
+
+    .service-order-btn {
+        padding: 5px 10px;
+        font-size: 9px;
+        white-space: nowrap;
+    }
+
+    /* === FOOTER: Caractéristiques === */
+    .service-features {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 8px;
+        flex-wrap: wrap;
+        padding-top: 8px;
+        font-size: 8px;
+        color: #6b7280;
+    }
+
+    .service-feature-item {
+        display: flex;
+        align-items: center;
+        gap: 3px;
+        padding: 3px 6px;
+        background: linear-gradient(135deg, rgba(102, 126, 234, 0.08), rgba(102, 126, 234, 0.04));
+        border: 1px solid rgba(102, 126, 234, 0.12);
+        border-radius: 5px;
+        white-space: nowrap;
+        font-size: 8px;
+        box-shadow: 0 1px 3px rgba(102, 126, 234, 0.06);
+    }
+
+    .service-feature-item i {
+        font-size: 8px;
+        opacity: 0.85;
+    }
+}
+
+/* Mobile (max 599px) : Layout compact */
+@media (max-width: 599px) {
+    .service-card-modern {
+        padding: 8px;
+    }
+
+    .service-card-header {
+        padding-bottom: 5px;
+        gap: 5px;
+    }
+
+    .service-id-badge {
+        padding: 2px 4px;
+        font-size: 7px;
+    }
+
+    .service-platform-badge {
+        padding: 2px 5px;
+        font-size: 8px;
+    }
+
+    .service-action-badge {
+        font-size: 7px;
+        padding: 2px 4px;
+    }
+
+    .platform-icon-mini {
+        font-size: 9px;
+    }
+
+    .platform-name {
+        font-size: 8px;
+    }
+
+    .service-tier-badge {
+        padding: 2px 5px;
+        font-size: 7px;
+    }
+
+    .service-tier-badge i {
+        font-size: 7px;
+    }
+
+    .service-card-header::after {
+        margin-top: 33px;
+    }
+
+    .service-card-body {
+        padding: 6px 0;
+        gap: 6px;
+    }
+
+    .service-card-title {
+        font-size: 10px;
+        -webkit-line-clamp: 2;
+        line-clamp: 2;
+    }
+
+    .service-card-body::after {
+        margin-top: 40px;
+    }
+
+    .service-price {
         font-size: 12px;
     }
 
-    /* Masquer dividers sur mobile */
-    .filter-divider-multiline {
-        display: none;
+    .service-price-unit {
+        font-size: 7px;
     }
 
-    /* Toggle tab position */
-    .filters-toggle-tab {
-        bottom: -15px;
-        right: 20px;
-        width: 36px;
-        height: 18px;
+    .service-order-btn {
+        padding: 4px 8px;
+        font-size: 8px;
     }
 
-    /* En mode collapsed sur mobile, ajuster le toggle */
-    .services-filters-multiline.filters-collapsed .filters-toggle-tab {
-        bottom: -15px;
+    .service-features {
+        gap: 6px;
+        padding-top: 6px;
+        font-size: 7px;
+    }
+
+    .service-feature-item {
+        padding: 2px 5px;
+        gap: 2px;
+    }
+
+    .service-feature-item i {
+        font-size: 7px;
+    }
+}
+
+/* Très petit mobile (max 400px) : Ultra-compact */
+@media (max-width: 400px) {
+    .service-card-modern {
+        padding: 6px;
+    }
+
+    .service-id-badge {
+        padding: 1px 3px;
+        font-size: 6px;
+    }
+
+    .service-platform-badge {
+        padding: 2px 4px;
+        font-size: 7px;
+    }
+
+    .service-action-badge {
+        padding: 1px 3px;
+        font-size: 6px;
+    }
+
+    .platform-icon-mini {
+        font-size: 8px;
+    }
+
+    .platform-name {
+        font-size: 7px;
+    }
+
+    .service-tier-badge {
+        padding: 2px 4px;
+        font-size: 6px;
+    }
+
+    .service-card-title {
+        font-size: 9px;
+        flex: 0 0 75%;
+    }
+
+    .service-card-footer {
+        flex: 0 0 25%;
+    }
+
+    .service-price {
+        font-size: 11px;
+    }
+
+    .service-order-btn {
+        padding: 3px 6px;
+        font-size: 7px;
+    }
+
+    .service-features {
+        font-size: 6px;
+        gap: 4px;
+    }
+
+    .service-feature-item {
+        padding: 1px 4px;
     }
 }
 
 /* ========================================
-   ÉTATS & ANIMATIONS
+   LOADING STATE
    ======================================== */
 
-/* Filtre actif */
-.filter-active {
-    background: white !important;
-    color: #4F46E5 !important;
-    border-color: white !important;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+.loading-state-mini {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: rgba(102, 126, 234, 0.95);
+    padding: 10px 16px;
+    border-radius: 10px;
+    display: none;
+    align-items: center;
+    gap: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    z-index: 999;
 }
 
-/* Hover states (scoped) */
-.services-filters-multiline .filter-group-multiline:hover {
-    background: rgba(255, 255, 255, 0.12);
+.loading-state-mini.active {
+    display: flex;
 }
 
-/* Focus states pour accessibilité (scoped) */
-.services-filters-multiline button:focus-visible,
-.services-filters-multiline select:focus-visible,
-.services-filters-multiline input:focus-visible {
-    outline: 2px solid white;
-    outline-offset: 2px;
+.loading-spinner-mini {
+    width: 18px;
+    height: 18px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-top-color: white;
+    border-radius: 50%;
+    animation: spin 0.6s linear infinite;
 }
 
-/* Transition smooth (scoped) */
-.services-filters-multiline * {
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-}
-
-/* Performance */
-.services-filters-multiline {
-    will-change: transform;
-    -webkit-transform: translateZ(0);
-    transform: translateZ(0);
-    backface-visibility: hidden;
-}
-
-/* ========================================
-   DARK MODE SUPPORT (optionnel)
-   ======================================== */
-@media (prefers-color-scheme: dark) {
-    .services-filters-multiline {
-        background: linear-gradient(135deg, #1E1B4B, #312E81);
-    }
-}
-
-/* ========================================
-   ANIMATIONS SPÉCIALES
-   ======================================== */
-
-/* Pulse animation pour éléments actifs */
-@keyframes filter-pulse {
-
-    0%,
-    100% {
-        box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.4);
-        transform: scale(1);
-    }
-
-    50% {
-        box-shadow: 0 0 10px 3px rgba(255, 255, 255, 0.4);
-        transform: scale(1.02);
-    }
-}
-
-/* Animation chargement */
-@keyframes loading-spin {
-    from {
-        transform: rotate(0deg);
-    }
-
+@keyframes spin {
     to {
         transform: rotate(360deg);
     }
 }
 
-.services-filters-multiline .loading-indicator {
-    width: 16px;
+.loading-text-mini {
+    color: white;
+    font-size: 11px;
+    font-weight: 600;
+}
+
+/* ========================================
+   SKELETON LOADING
+   ======================================== */
+
+.infinite-scroll-sentinel {
+    width: 100%;
+    height: 10px;
+    margin-top: 20px;
+    position: relative;
+}
+
+.skeleton-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 16px;
+    margin-top: 20px;
+}
+
+.service-card-skeleton {
+    background: white;
+    border-radius: 12px;
+    padding: 16px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    animation: skeletonPulse 1.5s ease-in-out infinite;
+}
+
+@keyframes skeletonPulse {
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.7;
+    }
+}
+
+.skeleton-shimmer {
+    background: linear-gradient(90deg,
+            rgba(102, 126, 234, 0.08) 0%,
+            rgba(102, 126, 234, 0.15) 50%,
+            rgba(102, 126, 234, 0.08) 100%);
+    background-size: 200% 100%;
+    animation: shimmer 1.8s ease-in-out infinite;
+    border-radius: 6px;
+}
+
+@keyframes shimmer {
+    0% {
+        background-position: -200% 0;
+    }
+
+    100% {
+        background-position: 200% 0;
+    }
+}
+
+.skeleton-tier-badge {
+    width: 60px;
+    height: 18px;
+    margin-bottom: 12px;
+}
+
+.skeleton-header {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 12px;
+    align-items: center;
+}
+
+.skeleton-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    flex-shrink: 0;
+}
+
+.skeleton-text-group {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.skeleton-text {
+    height: 12px;
+}
+
+.skeleton-text-lg {
+    width: 80%;
+    height: 14px;
+}
+
+.skeleton-text-sm {
+    width: 60%;
+}
+
+.skeleton-title {
+    width: 100%;
     height: 16px;
-    border: 2px solid rgba(255, 255, 255, 0.3);
-    border-top-color: white;
-    border-radius: 50%;
-    animation: loading-spin 0.8s linear infinite;
+    margin-bottom: 12px;
+}
+
+.skeleton-price {
+    width: 70px;
+    height: 24px;
+    margin-bottom: 12px;
+}
+
+.skeleton-metrics {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 12px;
+}
+
+.skeleton-metric {
+    width: 50px;
+    height: 22px;
+}
+
+.skeleton-button {
+    width: 100%;
+    height: 32px;
+    margin-top: 8px;
+}
+
+/* Responsive Skeleton Grid */
+@media (max-width: 1599px) {
+    .skeleton-grid {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+@media (max-width: 1199px) {
+    .skeleton-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (max-width: 899px) {
+    .skeleton-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 599px) {
+    .skeleton-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .service-card-skeleton {
+        padding: 12px;
+    }
+}
+
+/* ========================================
+   AMÉLIORATION BADGES - Version Complète
+   ======================================== */
+
+/* Badges Drop Rate */
+.feature-badge.badge-nodrop {
+    background: rgba(16, 185, 129, 0.12);
+    color: #059669;
+    border: 1px solid rgba(16, 185, 129, 0.2);
+}
+
+.feature-badge.badge-lowdrop {
+    background: rgba(251, 191, 36, 0.12);
+    color: #d97706;
+    border: 1px solid rgba(251, 191, 36, 0.2);
+}
+
+.feature-badge.badge-fulldrop {
+    background: rgba(239, 68, 68, 0.12);
+    color: #dc2626;
+    border: 1px solid rgba(239, 68, 68, 0.2);
+}
+
+.feature-badge.badge-custom {
+    background: rgba(147, 51, 234, 0.12);
+    color: #7c3aed;
+    border: 1px solid rgba(147, 51, 234, 0.2);
+}
+
+.feature-badge.badge-unknown {
+    background: rgba(156, 163, 175, 0.12);
+    color: #6b7280;
+    border: 1px solid rgba(156, 163, 175, 0.2);
+}
+
+/* Badges Refill */
+.feature-badge.badge-norefill {
+    background: rgba(239, 68, 68, 0.12);
+    color: #dc2626;
+    border: 1px solid rgba(239, 68, 68, 0.2);
+}
+
+.feature-badge.badge-lifetime {
+    background: linear-gradient(135deg, rgba(236, 72, 153, 0.15), rgba(167, 139, 250, 0.15));
+    color: #a855f7;
+    border: 1px solid rgba(167, 139, 250, 0.3);
+    font-weight: 700;
+    animation: pulse-lifetime 2s ease-in-out infinite;
+}
+
+@keyframes pulse-lifetime {
+
+    0%,
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+
+    50% {
+        opacity: 0.85;
+        transform: scale(1.02);
+    }
+}
+
+.feature-badge.badge-refill-short {
+    background: rgba(59, 130, 246, 0.12);
+    color: #2563eb;
+    border: 1px solid rgba(59, 130, 246, 0.2);
+}
+
+.feature-badge.badge-refill-medium {
+    background: rgba(14, 165, 233, 0.12);
+    color: #0284c7;
+    border: 1px solid rgba(14, 165, 233, 0.2);
+}
+
+.feature-badge.badge-refill-long {
+    background: rgba(16, 185, 129, 0.12);
+    color: #059669;
+    border: 1px solid rgba(16, 185, 129, 0.2);
+}
+
+/* Badges Vitesse */
+.feature-badge.badge-instant {
+    background: rgba(251, 191, 36, 0.12);
+    color: #d97706;
+    border: 1px solid rgba(251, 191, 36, 0.2);
+    animation: pulse-instant 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse-instant {
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.7;
+    }
+}
+
+.feature-badge.badge-fast {
+    background: rgba(34, 197, 94, 0.12);
+    color: #16a34a;
+    border: 1px solid rgba(34, 197, 94, 0.2);
+}
+
+.feature-badge.badge-slow {
+    background: rgba(156, 163, 175, 0.12);
+    color: #6b7280;
+    border: 1px solid rgba(156, 163, 175, 0.2);
+}
+
+/* Badge Quantité */
+.feature-badge.badge-quantity {
+    background: rgba(37, 99, 235, 0.12);
+    color: #2563eb;
+    border: 1px solid rgba(37, 99, 235, 0.2);
+    font-size: 7px;
+    font-weight: 500;
+}
+
+/* ========================================
+   SYSTÈME D'EXPANSION TITRE
+   ======================================== */
+
+.service-card-title.title-truncated {
+    position: relative;
+    display: flex;
+    align-items: flex-start;
+    gap: 6px;
+    cursor: pointer;
+}
+
+.service-card-title.title-truncated .title-text {
+    flex: 1;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.service-card-title.title-truncated.title-expanded .title-text {
+    -webkit-line-clamp: unset;
+    line-clamp: unset;
+    display: block;
+}
+
+.title-expand-btn {
+    flex-shrink: 0;
+    width: 20px;
+    height: 20px;
+    background: rgba(102, 126, 234, 0.1);
+    border: 1px solid rgba(102, 126, 234, 0.2);
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    padding: 0;
+    margin-top: 2px;
+}
+
+.title-expand-btn:hover {
+    background: rgba(37, 99, 235, 0.2);
+    border-color: rgba(37, 99, 235, 0.4);
+    transform: scale(1.1);
+}
+
+.title-expand-btn svg {
+    width: 14px;
+    height: 14px;
+    color: #2563eb;
+    transition: transform 0.3s ease;
+}
+
+.service-card-title.title-expanded {
+    min-height: auto;
+    max-height: none;
+}
+
+/* Animation d'expansion */
+@keyframes expandHeight {
+    from {
+        max-height: 31px;
+        opacity: 0.7;
+    }
+
+    to {
+        max-height: 200px;
+        opacity: 1;
+    }
+}
+
+.service-card-title.title-expanded .title-text {
+    animation: expandHeight 0.3s ease forwards;
+}
+
+/* Responsive Badges & Titres */
+@media (max-width: 1199px) {
+    .feature-badge {
+        font-size: 7px;
+        padding: 2px 4px;
+    }
+
+    .feature-badge.badge-quantity {
+        font-size: 6px;
+    }
+
+    .title-expand-btn {
+        width: 18px;
+        height: 18px;
+    }
+
+    .title-expand-btn svg {
+        width: 12px;
+        height: 12px;
+    }
+}
+
+@media (max-width: 599px) {
+    .feature-badge {
+        font-size: 7px;
+        padding: 2px 4px;
+    }
+
+    .service-card-title {
+        font-size: 11px;
+    }
+
+    .title-expand-btn {
+        width: 16px;
+        height: 16px;
+    }
 }

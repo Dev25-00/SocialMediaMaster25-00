@@ -45,6 +45,28 @@ $recent_orders = $stmt->fetchAll();
 
 // Dernière sync
 $last_sync = getSetting($pdo, 'last_sync', 'Jamais');
+// Auto-credit queue status
+$pending_queue = 0;
+try {
+    $pending_queue = (int)$pdo->query("SELECT COUNT(*) FROM auto_credit_queue WHERE status = 'pending'")->fetchColumn();
+} catch (Exception $e) {
+    $pending_queue = 0; // table pas encore créée
+}
+// Auto-credit mode
+$auto_credit_mode = getSetting($pdo, 'auto_credit_mode', 'normal');
+// Provider balance and threshold
+$provider_balance = 0;
+$balance_alert_threshold = (float)getSetting($pdo, 'provider_balance_alert_threshold', 25.00);
+try {
+    $apiKey = getSetting($pdo, 'smmfollows_api_key', '');
+    if (!empty($apiKey)) {
+        require_once __DIR__ . '/../api/SMMFollowsAPI.php';
+        $api = new SMMFollowsAPI($apiKey);
+        $provider_balance = (float)$api->getBalance();
+    }
+} catch (Exception $e) {
+    $provider_balance = 0; // en cas d'erreur API, ne pas casser le dashboard
+}
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -53,14 +75,15 @@ $last_sync = getSetting($pdo, 'last_sync', 'Jamais');
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../assets/css/main.css">
-    <link rel="stylesheet" href="../assets/css/dashboard.css">
-    <link rel="stylesheet" href="../assets/css/fixes.css">
+    <link rel="stylesheet" href="../assets/css/global/main.css">
+    <link rel="stylesheet" href="../assets/css/dashboard/dashboard.css">
+    <link rel="stylesheet" href="../assets/css/global/fixes.css">
+<head>
+    ...existing code...
+    <link rel="stylesheet" href="/smm/assets/css/admin/admin-dashboard.css">
 </head>
-<body class="dashboard-page logged-in">
-    
     <!-- Sidebar -->
-    <?php include 'sidebar.php'; ?>
+    <?php require_once __DIR__ . '/sidebar.php'; ?>
 
     <!-- Main Content -->
     <div class="main-content">
@@ -73,6 +96,25 @@ $last_sync = getSetting($pdo, 'last_sync', 'Jamais');
         </div>
 
         <?php echo renderFlashMessage(); ?>
+
+        <?php if ($pending_queue > 0): ?>
+            <div class="alert alert-warning" style="margin-bottom:20px;">
+                ⚠️ Auto-Crédit: <?php echo $pending_queue; ?> commande(s) en attente de fonds fournisseur.
+                <?php if ($auto_credit_mode === 'queue_only'): ?>
+                    <span style="margin-left:10px;">Mode: Queue Only (ajoutez des fonds puis le système relancera automatiquement).</span>
+                <?php else: ?>
+                    <span style="margin-left:10px;">Le système tentera des crédits automatiques selon la configuration.</span>
+                <?php endif; ?>
+                <a href="settings.php" class="btn btn-sm btn-secondary" style="margin-left: 10px;">Paramètres Auto-Crédit</a>
+            </div>
+        <?php endif; ?>
+
+        <?php if ($provider_balance > 0 && $provider_balance < $balance_alert_threshold): ?>
+            <div class="alert alert-warning" style="margin-bottom:20px;">
+                🔔 Solde fournisseur faible: <?php echo formatCurrency($provider_balance); ?> (< <?php echo formatCurrency($balance_alert_threshold); ?>)
+                <a href="settings.php" class="btn btn-sm btn-secondary" style="margin-left: 10px;">Configurer le seuil</a>
+            </div>
+        <?php endif; ?>
 
         <!-- Quick Actions -->
         <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-bottom: 30px;">

@@ -146,9 +146,9 @@ $last_sync = getSetting($pdo, 'last_sync', 'Jamais');
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gestion des Services</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../assets/css/main.css">
-    <link rel="stylesheet" href="../assets/css/dashboard.css">
-    <link rel="stylesheet" href="../assets/css/fixes.css">
+    <link rel="stylesheet" href="../assets/css/global/main.css">
+    <link rel="stylesheet" href="../assets/css/dashboard/dashboard.css">
+    <link rel="stylesheet" href="../assets/css/global/fixes.css">
     <style>
         .filters-bar {
             background: white;
@@ -351,11 +351,12 @@ $last_sync = getSetting($pdo, 'last_sync', 'Jamais');
             }
         }
     </style>
+<head>
+    ...existing code...
+    <link rel="stylesheet" href="/smm/assets/css/admin/admin-dashboard.css">
 </head>
-<body class="dashboard-page logged-in">
-    
     <!-- Sidebar -->
-    <?php include 'sidebar.php'; ?>
+    <?php require_once __DIR__ . '/sidebar.php'; ?>
 
     <!-- Main Content -->
     <div class="main-content">
@@ -547,10 +548,10 @@ $last_sync = getSetting($pdo, 'last_sync', 'Jamais');
                                 <td>
                                     <?php
                                     $tier_icons = [
-                                        'budget' => '<?php echo getIcon('budget', true); ?>',
-                                        'standard' => '<?php echo getIcon('standard', true); ?>',
-                                        'premium' => '<?php echo getIcon('premium', true); ?>',
-                                        'ultimate' => '<?php echo getIcon('ultimate', true); ?>'
+                                        'budget' => getIcon('budget', true),
+                                        'standard' => getIcon('standard', true),
+                                        'premium' => getIcon('premium', true),
+                                        'ultimate' => getIcon('ultimate', true)
                                     ];
                                     $tier_classes = [
                                         'budget' => 'tier-budget',
@@ -591,7 +592,7 @@ $last_sync = getSetting($pdo, 'last_sync', 'Jamais');
                                         <input type="hidden" name="action" value="toggle_service">
                                         <input type="hidden" name="service_id" value="<?php echo $service['id']; ?>">
                                         <button type="submit" class="action-btn" style="background: <?php echo $service['is_active'] ? '#ef4444' : '#10b981'; ?>;">
-                                            <?php echo $service['is_active'] ? '<?php echo getIcon('error'); ?>' : '<?php echo getIcon('success'); ?>'; ?>
+                                            <?php echo $service['is_active'] ? getIcon('error') : getIcon('success'); ?>
                                         </button>
                                     </form>
                                 </td>

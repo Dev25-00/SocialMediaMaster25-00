@@ -58,13 +58,14 @@ $tickets = $stmt->fetchAll();
     <meta charset="UTF-8">
     <title>Gestion Tickets</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../assets/css/main.css">
-    <link rel="stylesheet" href="../assets/css/dashboard.css">
-    <link rel="stylesheet" href="../assets/css/fixes.css">
+    <link rel="stylesheet" href="../assets/css/global/main.css">
+    <link rel="stylesheet" href="../assets/css/dashboard/dashboard.css">
+    <link rel="stylesheet" href="../assets/css/global/fixes.css">
+<head>
+    ...existing code...
+    <link rel="stylesheet" href="/smm/assets/css/admin/admin-dashboard.css">
 </head>
-<body class="dashboard-page logged-in">
-    
-    <?php include 'sidebar.php'; ?>
+    <?php require_once __DIR__ . '/sidebar.php'; ?>
 
     <div class="main-content">
         <div class="top-bar">

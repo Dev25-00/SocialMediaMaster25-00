@@ -30,9 +30,10 @@ class AutoCreditSystem {
      * Traiter une commande avec auto-crédit
      * 
      * @param int $order_id ID de la commande
+     * @param array $orderOptions Options supplémentaires (ex: ['runs' => int, 'interval' => int] pour dripfeed)
      * @return array ['success' => bool, 'message' => string, 'order_data' => array]
      */
-    public function processOrder($order_id) {
+    public function processOrder($order_id, array $orderOptions = []) {
         $this->log("Processing order #$order_id with auto-credit system");
         
         try {
@@ -48,10 +49,26 @@ class AutoCreditSystem {
             
             $this->log("Provider balance: $$provider_balance, Required: $$required_amount");
             
-            // 3. Si solde insuffisant → Créditer automatiquement
+            // 3. Si solde insuffisant → selon mode auto-crédit
             if ($provider_balance < $required_amount) {
-                $credit_needed = $required_amount - $provider_balance + 5; // +$5 de marge
-                $this->log("Insufficient balance. Crediting $$credit_needed");
+                $mode = $this->getAutoCreditMode();
+
+                // Mode queue_only: ne tente pas de crédit, met en file d'attente et alerte
+                if ($mode === 'queue_only') {
+                    $this->addToQueue($order_id, $required_amount);
+                    $this->sendAlertEmail('queued_due_to_low_balance', $order_id, 'Insufficient provider balance');
+                    return [
+                        'success' => false,
+                        'message' => 'Provider balance too low. Order queued for later processing.',
+                        'queued' => true
+                    ];
+                }
+
+                // Créditer un montant équivalent au coût de la commande (minimum $10 requis par le fournisseur)
+                $credit_needed = max(10.0, (float)$required_amount);
+                // Arrondir proprement à 2 décimales
+                $credit_needed = round($credit_needed + 0.00001, 2);
+                $this->log("Insufficient balance. Crediting $" . number_format($credit_needed, 2));
                 
                 $credit_result = $this->creditProviderAccount($credit_needed, $order_id);
                 
@@ -70,8 +87,8 @@ class AutoCreditSystem {
                 $this->log("Successfully credited $$credit_needed to provider");
             }
             
-            // 4. Passer la commande chez le fournisseur
-            $provider_order = $this->placeProviderOrder($order);
+            // 4. Passer la commande chez le fournisseur (prend en compte dripfeed si présent)
+            $provider_order = $this->placeProviderOrder($order, $orderOptions);
             
             if (!$provider_order['success']) {
                 throw new Exception("Failed to place order with provider: " . $provider_order['error']);
@@ -312,22 +329,40 @@ class AutoCreditSystem {
     /**
      * Passer la commande chez le fournisseur
      */
-    private function placeProviderOrder($order) {
+    private function placeProviderOrder($order, array $orderOptions = []) {
         try {
+            // Déterminer options dripfeed: priorité aux options passées, sinon à celles stockées sur la commande
+            $options = [];
+            if (!empty($orderOptions)) {
+                if (isset($orderOptions['runs']) && isset($orderOptions['interval'])) {
+                    $options['runs'] = (int)$orderOptions['runs'];
+                    $options['interval'] = (int)$orderOptions['interval'];
+                }
+            } else {
+                if (!empty($order['dripfeed']) && !empty($order['dripfeed_runs']) && !empty($order['dripfeed_interval'])) {
+                    $options['runs'] = (int)$order['dripfeed_runs'];
+                    $options['interval'] = (int)$order['dripfeed_interval'];
+                }
+            }
+
             $result = $this->smmfollows->createOrder(
-                $order['provider_service_id'],
-                $order['link'],
-                $order['quantity']
+                (int)$order['provider_service_id'],
+                (string)$order['link'],
+                (int)$order['quantity'],
+                $options
             );
             
-            if (!$result['success']) {
-                throw new Exception($result['error']);
+            // SMMFollows renvoie { order: <id> } en cas de succès
+            if (isset($result['order'])) {
+                return [
+                    'success' => true,
+                    'order_id' => $result['order']
+                ];
             }
             
-            return [
-                'success' => true,
-                'order_id' => $result['order_id']
-            ];
+            // Si pas d'ID renvoyé, construire message d'erreur
+            $err = isset($result['error']) ? $result['error'] : 'Unknown provider response';
+            throw new Exception($err);
             
         } catch (Exception $e) {
             return [
@@ -391,7 +426,46 @@ class AutoCreditSystem {
                     WHERE id = ?
                 ")->execute([$item['id']]);
                 
-                // Réessayer le crédit
+                $mode = $this->getAutoCreditMode();
+                if ($mode === 'queue_only') {
+                    // En mode queue_only, ne pas tenter de crédit. Vérifier si le solde suffit maintenant.
+                    $provider_balance = $this->smmfollows->getBalance();
+                    $order = $this->getOrderDetails($item['order_id']);
+                    $required_amount = $order ? (float)$order['cost_amount'] : (float)$item['amount_needed'];
+                    if ($provider_balance >= $required_amount) {
+                        // Passer la commande
+                        $place = $this->placeProviderOrder($order);
+                        if ($place['success']) {
+                            $this->pdo->prepare("
+                                UPDATE auto_credit_queue 
+                                SET status = 'completed', completed_at = NOW()
+                                WHERE id = ?
+                            ")->execute([$item['id']]);
+                            $this->updateOrderStatus($item['order_id'], 'processing', $place['order_id']);
+                            $this->log("Queue-only: order #" . $item['order_id'] . " placed successfully after manual top-up");
+                            continue;
+                        } else {
+                            // Si échec de placement, replanifier
+                            $this->pdo->prepare("
+                                UPDATE auto_credit_queue 
+                                SET next_retry = DATE_ADD(NOW(), INTERVAL ? SECOND)
+                                WHERE id = ?
+                            ")->execute([AUTO_CREDIT_RETRY_DELAY, $item['id']]);
+                            $this->log("Queue-only: provider placement failed: " . $place['error']);
+                            continue;
+                        }
+                    } else {
+                        // Solde toujours insuffisant → replanifier
+                        $this->pdo->prepare("
+                            UPDATE auto_credit_queue 
+                            SET next_retry = DATE_ADD(NOW(), INTERVAL ? SECOND)
+                            WHERE id = ?
+                        ")->execute([AUTO_CREDIT_RETRY_DELAY, $item['id']]);
+                        continue;
+                    }
+                }
+                
+                // Réessayer le crédit (mode normal)
                 $result = $this->creditProviderAccount($item['amount_needed'], $item['order_id']);
                 
                 if ($result['success']) {
@@ -444,7 +518,8 @@ class AutoCreditSystem {
         $messages = [
             'credit_failed' => "Failed to credit provider account for order #$order_id.\nError: $error",
             'order_error' => "Error processing order #$order_id.\nError: $error",
-            'max_retries_reached' => "Max retries reached for order #$order_id.\nLast error: $error"
+            'max_retries_reached' => "Max retries reached for order #$order_id.\nLast error: $error",
+            'queued_due_to_low_balance' => "Order #$order_id queued due to low provider balance.\nAction required: Add funds to SMMFollows, the system will retry automatically."
         ];
         
         $body = $messages[$type] ?? "Unknown error type: $type";
@@ -512,6 +587,20 @@ class AutoCreditSystem {
             $stmt->execute([$amount, $method, $order_id, $transaction_id]);
         } catch (PDOException $e) {
             $this->log("Error logging credit transaction: " . $e->getMessage());
+        }
+    }
+
+    /**
+     * Lire le mode auto-crédit: 'normal' (par défaut) ou 'queue_only'
+     */
+    private function getAutoCreditMode() {
+        try {
+            $stmt = $this->pdo->prepare("SELECT key_value FROM settings WHERE key_name = 'auto_credit_mode'");
+            $stmt->execute();
+            $mode = $stmt->fetchColumn();
+            return in_array($mode, ['queue_only', 'normal']) ? $mode : 'normal';
+        } catch (PDOException $e) {
+            return 'normal';
         }
     }
     

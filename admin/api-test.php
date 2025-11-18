@@ -94,9 +94,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($api_key)) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Test API SMMFollows - Admin</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../assets/css/main.css">
-    <link rel="stylesheet" href="../assets/css/dashboard.css">
-    <link rel="stylesheet" href="../assets/css/fixes.css">
+    <link rel="stylesheet" href="../assets/css/global/main.css">
+    <link rel="stylesheet" href="../assets/css/dashboard/dashboard.css">
+    <link rel="stylesheet" href="../assets/css/global/fixes.css">
     <style>
         .test-card {
             background: white;
@@ -131,7 +131,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($api_key)) {
 <body class="dashboard-page logged-in">
     
     <!-- Sidebar -->
-    <?php include 'sidebar.php'; ?>
+    <?php require_once __DIR__ . '/sidebar.php'; ?>
 
     <!-- Main Content -->
     <div class="main-content">

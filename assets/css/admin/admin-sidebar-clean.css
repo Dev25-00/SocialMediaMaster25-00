@@ -1,0 +1,144 @@
+/* SMM Mastery - Sidebar Admin (relocated)
+ * Copied to assets/css/admin/
+ */
+
+.admin-sidepanel {
+    width: 240px;
+    background: #23272f;
+    color: #fff;
+    min-height: 100vh;
+    max-height: 100vh;
+    box-shadow: 2px 0 8px rgba(0, 0, 0, 0.07);
+    font-family: 'Segoe UI', Arial, sans-serif;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: #2e3440 #23272f;
+}
+
+.admin-links {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 1rem 0.5rem;
+}
+
+.sidebar-section {
+    margin-bottom: 1.2rem;
+}
+
+.section-title {
+    font-weight: 600;
+    font-size: 1.05rem;
+    margin-bottom: 0.5rem;
+    color: #a3b1c6;
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
+}
+
+.admin-link {
+    display: flex;
+    align-items: center;
+    gap: 0.7em;
+    padding: 0.5em 0.7em;
+    color: #e3e8f0;
+    text-decoration: none;
+    border-radius: 6px;
+    font-size: 0.98rem;
+    transition: background 0.15s;
+}
+
+.admin-link:hover {
+    background: #2e3440;
+    color: #fff;
+}
+
+.sidebar-icon {
+    font-size: 1.15em;
+    width: 1.5em;
+    text-align: center;
+}
+
+.sidebar-dropdown {
+    background: none;
+    border: none;
+    color: #a3b1c6;
+    font-size: 1.05rem;
+    font-weight: 600;
+    width: 100%;
+    text-align: left;
+    padding: 0.5em 0.7em;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
+    border-radius: 6px;
+    transition: background 0.15s;
+}
+
+.sidebar-dropdown:hover,
+.sidebar-dropdown.open {
+    background: #2e3440;
+    color: #fff;
+}
+
+.dropdown-arrow {
+    margin-left: auto;
+    font-size: 0.9em;
+}
+
+.sidebar-dropdown-content {
+    display: none;
+    flex-direction: column;
+    gap: 0.2em;
+    margin-left: 1em;
+}
+
+.sidebar-dropdown.open+.sidebar-dropdown-content {
+    display: flex;
+}
+
+@media (max-width: 1024px) {
+    .admin-sidepanel {
+        width: 100vw;
+        max-height: 60vh;
+        min-height: auto;
+        position: fixed;
+        left: 0;
+        top: 0;
+        z-index: 100;
+        overflow-y: auto;
+        border-radius: 0 0 12px 12px;
+    }
+}
+
+@media (max-width: 600px) {
+    .admin-sidepanel {
+        width: 100vw;
+        max-height: 70vh;
+        font-size: 0.97em;
+        border-radius: 0 0 18px 18px;
+    }
+
+    .admin-links {
+        padding: 0.7rem 0.2rem;
+    }
+
+    .sidebar-section {
+        margin-bottom: 0.7rem;
+    }
+}
+
+/* Custom scrollbar for Webkit browsers */
+.admin-sidepanel::-webkit-scrollbar {
+    width: 7px;
+}
+
+.admin-sidepanel::-webkit-scrollbar-thumb {
+    background: #2e3440;
+    border-radius: 6px;
+}
+
+.admin-sidepanel::-webkit-scrollbar-track {
+    background: #23272f;
+}

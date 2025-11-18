@@ -46,12 +46,12 @@ $current_dir = basename(dirname($_SERVER['PHP_SELF']));
     <?php echo ICON_CDN; ?>
     
     <!-- CSS -->
-    <link rel="stylesheet" href="<?php echo SITE_URL; ?>/assets/css/main.css">
-    <link rel="stylesheet" href="<?php echo SITE_URL; ?>/assets/css/dashboard.css">
-    <link rel="stylesheet" href="<?php echo SITE_URL; ?>/assets/css/icons.css">
-    <link rel="stylesheet" href="<?php echo SITE_URL; ?>/assets/css/dashboard-responsive.css">
-    <link rel="stylesheet" href="<?php echo SITE_URL; ?>/assets/css/fixes.css">
-    <link rel="stylesheet" href="<?php echo SITE_URL; ?>/assets/css/user-dropdown-fix.css">
+    <link rel="stylesheet" href="<?php echo SITE_URL; ?>/assets/css/global/main.css">
+    <link rel="stylesheet" href="<?php echo SITE_URL; ?>/assets/css/dashboard/dashboard.css">
+    <link rel="stylesheet" href="<?php echo SITE_URL; ?>/assets/css/global/icons.css">
+    <link rel="stylesheet" href="<?php echo SITE_URL; ?>/assets/css/dashboard/dashboard-responsive.css">
+    <link rel="stylesheet" href="<?php echo SITE_URL; ?>/assets/css/global/fixes.css">
+    <link rel="stylesheet" href="<?php echo SITE_URL; ?>/assets/css/global/user-dropdown-fix.css">
     
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">

@@ -66,7 +66,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && !$error) {
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>Réinitialiser le mot de passe - <?php echo SITE_NAME; ?></title>
-    <link rel="stylesheet" href="../assets/css/main.css">
+    <link rel="stylesheet" href="../assets/css/global/main.css">
     <style> .fp-wrap{max-width:480px;margin:40px auto;padding:18px;background:#fff;border-radius:8px;} </style>
 </head>
 <body>

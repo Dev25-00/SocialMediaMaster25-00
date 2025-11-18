@@ -1,5 +1,10 @@
 <?php
 /**
+ * INCLUSION: Sidebar admin navigation
+ * FICHIER: sidebar.php
+ * DOCUMENTATION: DOCS_DEV_TO_PROD/ARCHITECTURE_INCLUDES_VISUELLE.md
+ */
+/**
  * SMM Mastery - Synchronisation Services API V2
  * Date: 13 Octobre 2025
  * Version: 2.0
@@ -214,13 +219,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 ?>
+?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Synchronisation Services V2 - SMM Mastery</title>
-    <link rel="stylesheet" href="../assets/css/main.css">
+    <link rel="stylesheet" href="../assets/css/global/main.css">
+    <link rel="stylesheet" href="../assets/css/dashboard/dashboard.css">
+    <link rel="stylesheet" href="../assets/css/global/fixes.css">
+    <link rel="stylesheet" href="/smm/assets/css/admin/admin-dashboard.css">
     <style>
         .sync-container {
             max-width: 1000px;
@@ -376,6 +385,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </style>
 </head>
 <body>
+    <?php require_once __DIR__ . '/sidebar.php'; ?>
+    <div class="main-content">
     <div class="sync-container">
         <div class="header">
             <h1>🔄 Synchronisation Services</h1>
@@ -480,5 +491,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <a href="dashboard.php" style="color: #94a3b8;">← Tableau de bord</a>
         </div>
     </div>
+    </div>
+    <script src="../assets/js/mobile-menu.js"></script>
 </body>
 </html>

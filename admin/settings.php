@@ -26,6 +26,30 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             'min_deposit' => floatval($_POST['min_deposit'] ?? 5.00),
             'paypal_email' => clean($_POST['paypal_email'] ?? ''),
             'paypal_mode' => clean($_POST['paypal_mode'] ?? 'sandbox'),
+            // Auto-crédit fournisseur
+            'auto_credit_payment_method' => clean($_POST['auto_credit_payment_method'] ?? 'paypal'),
+            'provider_paypal_email' => clean($_POST['provider_paypal_email'] ?? ''),
+            'provider_stripe_account' => clean($_POST['provider_stripe_account'] ?? ''),
+            // Modes et seuils
+            'auto_credit_mode' => in_array(($_POST['auto_credit_mode'] ?? 'normal'), ['normal','queue_only']) ? $_POST['auto_credit_mode'] : 'normal',
+            'provider_balance_alert_threshold' => floatval($_POST['provider_balance_alert_threshold'] ?? 25.00),
+            // Crypto Gateway (multi-provider)
+            'crypto_gateway' => in_array(($_POST['crypto_gateway'] ?? 'nowpayments'), ['coinpayments','coingate','btcpay','nowpayments']) ? $_POST['crypto_gateway'] : 'nowpayments',
+            // CoinPayments
+            'coinpayments_merchant_id' => clean($_POST['coinpayments_merchant_id'] ?? ''),
+            'coinpayments_ipn_secret' => clean($_POST['coinpayments_ipn_secret'] ?? ''),
+            // CoinGate
+            'coingate_api_key' => clean($_POST['coingate_api_key'] ?? ''),
+            'coingate_app_id' => clean($_POST['coingate_app_id'] ?? ''),
+            // BTCPay
+            'btcpay_server_url' => clean($_POST['btcpay_server_url'] ?? ''),
+            'btcpay_store_id' => clean($_POST['btcpay_store_id'] ?? ''),
+            'btcpay_api_key' => clean($_POST['btcpay_api_key'] ?? ''),
+            // NOWPayments
+            'nowpayments_api_key' => clean($_POST['nowpayments_api_key'] ?? ''),
+            'nowpayments_ipn_secret' => clean($_POST['nowpayments_ipn_secret'] ?? ''),
+            // Crypto general
+            'crypto_currency' => clean($_POST['crypto_currency'] ?? 'USDT'),
             'allow_password_preview' => isset($_POST['allow_password_preview']) ? '1' : '0',
         ];
         
@@ -50,14 +74,15 @@ $current_settings = getSiteSettings($pdo);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Paramètres - Admin</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../assets/css/main.css">
-    <link rel="stylesheet" href="../assets/css/dashboard.css">
-    <link rel="stylesheet" href="../assets/css/fixes.css">
+    <link rel="stylesheet" href="../assets/css/global/main.css">
+    <link rel="stylesheet" href="../assets/css/dashboard/dashboard.css">
+    <link rel="stylesheet" href="../assets/css/global/fixes.css">
+<head>
+    ...existing code...
+    <link rel="stylesheet" href="/smm/assets/css/admin/admin-dashboard.css">
 </head>
-<body class="dashboard-page logged-in">
-    
     <!-- Sidebar -->
-    <?php include 'sidebar.php'; ?>
+    <?php require_once __DIR__ . '/sidebar.php'; ?>
 
     <!-- Main Content -->
     <div class="main-content">
@@ -171,6 +196,70 @@ $current_settings = getSiteSettings($pdo);
                 </div>
             </div>
 
+            <!-- Auto-Crédit Fournisseur -->
+            <div class="card" style="margin-bottom: 20px;">
+                <div class="card-header">
+                    <h2>🤖 Auto-Crédit Fournisseur</h2>
+                </div>
+                <div style="padding: 30px;">
+                    <div class="form-group">
+                        <label for="auto_credit_mode">Mode Auto-Crédit</label>
+                        <?php $ac_mode = $current_settings['auto_credit_mode'] ?? 'normal'; ?>
+                        <select id="auto_credit_mode" name="auto_credit_mode">
+                            <option value="normal" <?php echo $ac_mode === 'normal' ? 'selected' : ''; ?>>Normal (tente un crédit auto)</option>
+                            <option value="queue_only" <?php echo $ac_mode === 'queue_only' ? 'selected' : ''; ?>>Queue Only (pas de crédit auto)</option>
+                        </select>
+                        <small>Queue Only: les commandes sont mises en file si le solde fournisseur est insuffisant; vous créditez manuellement puis le système relance.</small>
+                    </div>
+                    <div class="form-group">
+                        <label for="auto_credit_payment_method">Méthode de paiement</label>
+                        <select id="auto_credit_payment_method" name="auto_credit_payment_method">
+                            <?php $ac_method = $current_settings['auto_credit_payment_method'] ?? 'paypal'; ?>
+                            <option value="paypal" <?php echo $ac_method === 'paypal' ? 'selected' : ''; ?>>PayPal (recommandé)</option>
+                            <option value="stripe" <?php echo $ac_method === 'stripe' ? 'selected' : ''; ?>>Stripe (désactivé pour cartes)</option>
+                            <option value="crypto" <?php echo $ac_method === 'crypto' ? 'selected' : ''; ?>>Crypto (à venir)</option>
+                        </select>
+                        <small>Utilisé pour créditer automatiquement le compte du fournisseur quand le solde est insuffisant.</small>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="provider_paypal_email">Email PayPal du fournisseur</label>
+                        <input type="email"
+                               id="provider_paypal_email"
+                               name="provider_paypal_email"
+                               value="<?php echo $current_settings['provider_paypal_email'] ?? ''; ?>"
+                               placeholder="provider@example.com">
+                        <small>Nécessaire si vous utilisez PayPal comme méthode d'auto-crédit.</small>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="provider_stripe_account">Compte Stripe du fournisseur</label>
+                        <input type="text"
+                               id="provider_stripe_account"
+                               name="provider_stripe_account"
+                               value="<?php echo $current_settings['provider_stripe_account'] ?? ''; ?>"
+                               placeholder="acct_1234567890abcdef">
+                        <small>Optionnel. Utilisé si Stripe est sélectionné (non recommandé pour le moment).</small>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="provider_balance_alert_threshold">Seuil d'alerte de solde fournisseur ($)</label>
+                        <input type="number" step="0.01" min="0"
+                               id="provider_balance_alert_threshold"
+                               name="provider_balance_alert_threshold"
+                               value="<?php echo $current_settings['provider_balance_alert_threshold'] ?? '25.00'; ?>">
+                        <small>Quand le solde descend en dessous de ce seuil, affichez une alerte sur le dashboard (email possible à venir).</small>
+                    </div>
+
+                    <div style="background: #fef3c7; padding: 15px; border-radius: 8px; margin-top: 10px;">
+                        <strong style="color: #92400e;">Note :</strong>
+                        <p style="color: #92400e; margin-top: 8px; font-size: 14px;">
+                            Le système créditera un minimum de $10 par contrainte du fournisseur. Si le coût de la commande est supérieur, il créditera le montant exact de la commande.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
             <!-- PayPal -->
             <div class="card" style="margin-bottom: 20px;">
                 <div class="card-header">
@@ -200,6 +289,122 @@ $current_settings = getSiteSettings($pdo);
                     </div>
                 </div>
             </div>
+
+            <!-- Crypto (Multi-Gateway) -->
+            <div class="card" style="margin-bottom: 20px;">
+                <div class="card-header">
+                    <h2><?php echo getIcon('bitcoin'); ?> Crypto (Multi-Gateway)</h2>
+                </div>
+                <div style="padding: 30px;">
+                    <div style="background: #fef3c7; padding: 15px; border-radius: 8px; margin-bottom: 20px;">
+                        <strong style="color: #92400e;">💡 Recommandation :</strong>
+                        <p style="color: #92400e; margin-top: 8px; font-size: 14px;">
+                            <strong>NOWPayments</strong> ou <strong>BTCPay Server</strong> sont recommandés si vous n'avez pas d'entreprise officielle.
+                            Pas de vérification KYC stricte requise pour NOWPayments, et BTCPay est 100% self-hosted (aucun intermédiaire).
+                        </p>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="crypto_gateway">Processeur Crypto</label>
+                        <?php $gw = $current_settings['crypto_gateway'] ?? 'nowpayments'; ?>
+                        <select id="crypto_gateway" name="crypto_gateway" onchange="toggleCryptoFields(this.value)">
+                            <option value="nowpayments" <?php echo $gw === 'nowpayments' ? 'selected' : ''; ?>>✅ NOWPayments (Recommandé - Pas de KYC)</option>
+                            <option value="btcpay" <?php echo $gw === 'btcpay' ? 'selected' : ''; ?>>✅ BTCPay Server (Self-hosted - Aucune vérification)</option>
+                            <option value="coingate" <?php echo $gw === 'coingate' ? 'selected' : ''; ?>>⚠️ CoinGate (KYC léger requis)</option>
+                            <option value="coinpayments" <?php echo $gw === 'coinpayments' ? 'selected' : ''; ?>>❌ CoinPayments (KYC entreprise requis)</option>
+                        </select>
+                        <small>Choisissez le processeur adapté à votre situation (entreprise ou freelance).</small>
+                    </div>
+
+                    <!-- CoinPayments -->
+                    <div id="gw-coinpayments" class="gateway-fields" style="display:none;">
+                        <div class="form-group">
+                            <label for="coinpayments_merchant_id">Merchant ID</label>
+                            <input type="text" id="coinpayments_merchant_id" name="coinpayments_merchant_id" value="<?php echo $current_settings['coinpayments_merchant_id'] ?? ''; ?>" placeholder="Merchant ID">
+                        </div>
+                        <div class="form-group">
+                            <label for="coinpayments_ipn_secret">IPN Secret</label>
+                            <input type="text" id="coinpayments_ipn_secret" name="coinpayments_ipn_secret" value="<?php echo $current_settings['coinpayments_ipn_secret'] ?? ''; ?>" placeholder="IPN Secret">
+                        </div>
+                        <div style="background:#ecfeff; border:1px solid #06b6d4; color:#0e7490; padding:10px; border-radius:6px; font-size:13px;">
+                            IPN URL: <code><?php echo SITE_URL; ?>/payment/crypto-ipn.php</code>
+                        </div>
+                    </div>
+
+                    <!-- CoinGate -->
+                    <div id="gw-coingate" class="gateway-fields" style="display:none;">
+                        <div class="form-group">
+                            <label for="coingate_api_key">API Key</label>
+                            <input type="text" id="coingate_api_key" name="coingate_api_key" value="<?php echo $current_settings['coingate_api_key'] ?? ''; ?>" placeholder="API Key (Sandbox ou Live)">
+                        </div>
+                        <div class="form-group">
+                            <label for="coingate_app_id">App ID (optionnel)</label>
+                            <input type="text" id="coingate_app_id" name="coingate_app_id" value="<?php echo $current_settings['coingate_app_id'] ?? ''; ?>" placeholder="App ID">
+                        </div>
+                        <div style="background:#ecfeff; border:1px solid #06b6d4; color:#0e7490; padding:10px; border-radius:6px; font-size:13px;">
+                            Callback URL: <code><?php echo SITE_URL; ?>/payment/crypto-ipn.php</code>
+                        </div>
+                    </div>
+
+                    <!-- BTCPay Server -->
+                    <div id="gw-btcpay" class="gateway-fields" style="display:none;">
+                        <div class="form-group">
+                            <label for="btcpay_server_url">Server URL</label>
+                            <input type="url" id="btcpay_server_url" name="btcpay_server_url" value="<?php echo $current_settings['btcpay_server_url'] ?? ''; ?>" placeholder="https://votre-btcpay.com">
+                        </div>
+                        <div class="form-group">
+                            <label for="btcpay_store_id">Store ID</label>
+                            <input type="text" id="btcpay_store_id" name="btcpay_store_id" value="<?php echo $current_settings['btcpay_store_id'] ?? ''; ?>" placeholder="Store ID">
+                        </div>
+                        <div class="form-group">
+                            <label for="btcpay_api_key">API Key</label>
+                            <input type="text" id="btcpay_api_key" name="btcpay_api_key" value="<?php echo $current_settings['btcpay_api_key'] ?? ''; ?>" placeholder="API Key (Legacy ou GreenField)">
+                        </div>
+                        <div style="background:#ecfeff; border:1px solid #06b6d4; color:#0e7490; padding:10px; border-radius:6px; font-size:13px;">
+                            Webhook URL: <code><?php echo SITE_URL; ?>/payment/crypto-ipn.php</code>
+                        </div>
+                    </div>
+
+                    <!-- NOWPayments -->
+                    <div id="gw-nowpayments" class="gateway-fields" style="display:none;">
+                        <div class="form-group">
+                            <label for="nowpayments_api_key">API Key</label>
+                            <input type="text" id="nowpayments_api_key" name="nowpayments_api_key" value="<?php echo $current_settings['nowpayments_api_key'] ?? ''; ?>" placeholder="API Key">
+                        </div>
+                        <div class="form-group">
+                            <label for="nowpayments_ipn_secret">IPN Secret</label>
+                            <input type="text" id="nowpayments_ipn_secret" name="nowpayments_ipn_secret" value="<?php echo $current_settings['nowpayments_ipn_secret'] ?? ''; ?>" placeholder="IPN Secret">
+                        </div>
+                        <div style="background:#ecfeff; border:1px solid #06b6d4; color:#0e7490; padding:10px; border-radius:6px; font-size:13px;">
+                            IPN Callback: <code><?php echo SITE_URL; ?>/payment/crypto-ipn.php</code>
+                        </div>
+                    </div>
+
+                    <div class="form-group" style="margin-top:20px;">
+                        <label for="crypto_currency">Devise préférée (par défaut)</label>
+                        <?php $cp_curr = $current_settings['crypto_currency'] ?? 'USDT'; ?>
+                        <select id="crypto_currency" name="crypto_currency">
+                            <option value="USDT" <?php echo $cp_curr === 'USDT' ? 'selected' : ''; ?>>USDT (Stablecoin)</option>
+                            <option value="USDC" <?php echo $cp_curr === 'USDC' ? 'selected' : ''; ?>>USDC (Stablecoin)</option>
+                            <option value="BTC" <?php echo $cp_curr === 'BTC' ? 'selected' : ''; ?>>BTC</option>
+                            <option value="ETH" <?php echo $cp_curr === 'ETH' ? 'selected' : ''; ?>>ETH</option>
+                        </select>
+                        <small>Certains gateways supportent la sélection multi-devises côté utilisateur.</small>
+                    </div>
+                </div>
+            </div>
+
+            <script>
+            function toggleCryptoFields(gateway) {
+                document.querySelectorAll('.gateway-fields').forEach(el => el.style.display = 'none');
+                const sel = document.getElementById('gw-' + gateway);
+                if (sel) sel.style.display = 'block';
+            }
+            document.addEventListener('DOMContentLoaded', function() {
+                const gw = document.getElementById('crypto_gateway').value;
+                toggleCryptoFields(gw);
+            });
+            </script>
 
                     <!-- Security / Dev -->
                     <div class="card" style="margin-bottom: 20px;">

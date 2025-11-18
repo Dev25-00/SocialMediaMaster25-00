@@ -13,6 +13,10 @@ echo "<!DOCTYPE html>
 <head>
     <meta charset='UTF-8'>
     <title>Mise à jour Rôle Admin</title>
+    <link rel='stylesheet' href='../assets/css/global/main.css'>
+    <link rel='stylesheet' href='../assets/css/dashboard/dashboard.css'>
+    <link rel='stylesheet' href='../assets/css/global/fixes.css'>
+    <link rel='stylesheet' href='/smm/assets/css/admin/admin-dashboard.css'>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -69,8 +73,10 @@ echo "<!DOCTYPE html>
         }
     </style>
 </head>
-<body>
-    <div class='box'>
+<body>";
+
+require_once __DIR__ . '/sidebar.php';
+echo "<div class='main-content'><div class='box'>
         <h1>🔧 Mise à jour Rôle Admin</h1>";
 
 try {
@@ -133,5 +139,5 @@ try {
     echo "<div class='error'><strong>❌ Erreur :</strong> " . $e->getMessage() . "</div>";
 }
 
-echo "</div></body></html>";
+echo "</div></div><script src='../assets/js/mobile-menu.js'></script></body></html>";
 ?>

@@ -35,7 +35,7 @@ $platforms = $pdo->query($query)->fetchAll();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Plateformes - SMM Mastery</title>
-    <link rel="stylesheet" href="../assets/css/main.css">
+    <link rel="stylesheet" href="../assets/css/global/main.css">
     <style>
         .platforms-container {
             max-width: 1200px;
@@ -134,7 +134,7 @@ $platforms = $pdo->query($query)->fetchAll();
     </style>
 </head>
 <body>
-    <?php require_once '../admin/sidebar.php'; ?>
+    <?php require_once __DIR__ . '/sidebar.php'; ?>
     
     <div class="platforms-container">
         <h1 style="text-align: center; color: #fff; margin-bottom: 10px;">

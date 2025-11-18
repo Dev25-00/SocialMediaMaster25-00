@@ -115,7 +115,10 @@ $columns = $stmt->fetchAll(PDO::FETCH_COLUMN);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mise à jour BDD - SMM Mastery</title>
-    <link rel="stylesheet" href="../assets/css/main.css">
+    <link rel="stylesheet" href="../assets/css/global/main.css">
+    <link rel="stylesheet" href="../assets/css/dashboard/dashboard.css">
+    <link rel="stylesheet" href="../assets/css/global/fixes.css">
+    <link rel="stylesheet" href="/smm/assets/css/admin/admin-dashboard.css">
     <style>
         .update-container {
             max-width: 900px;
@@ -192,6 +195,8 @@ $columns = $stmt->fetchAll(PDO::FETCH_COLUMN);
     </style>
 </head>
 <body>
+    <?php require_once __DIR__ . '/sidebar.php'; ?>
+    <div class="main-content">
     <div class="update-container">
         <h1 style="text-align: center; color: #fff; margin-bottom: 30px;">
             🗄️ Mise à jour du Schéma BDD
@@ -242,5 +247,7 @@ $columns = $stmt->fetchAll(PDO::FETCH_COLUMN);
             <a href="dashboard.php" style="color: #94a3b8;">← Retour au tableau de bord</a>
         </div>
     </div>
+    </div>
+    <script src="../assets/js/mobile-menu.js"></script>
 </body>
 </html>

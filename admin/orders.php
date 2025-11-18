@@ -151,9 +151,9 @@ $platforms = $pdo->query("SELECT DISTINCT platform FROM services WHERE is_active
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gestion des Commandes</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../assets/css/main.css">
-    <link rel="stylesheet" href="../assets/css/dashboard.css">
-    <link rel="stylesheet" href="../assets/css/fixes.css">
+    <link rel="stylesheet" href="../assets/css/global/main.css">
+    <link rel="stylesheet" href="../assets/css/dashboard/dashboard.css">
+    <link rel="stylesheet" href="../assets/css/global/fixes.css">
     <style>
         .filters-bar {
             background: white;
@@ -296,11 +296,12 @@ $platforms = $pdo->query("SELECT DISTINCT platform FROM services WHERE is_active
             }
         }
     </style>
+<head>
+    ...existing code...
+    <link rel="stylesheet" href="/smm/assets/css/admin/admin-dashboard.css">
 </head>
-<body class="dashboard-page logged-in">
-    
     <!-- Sidebar -->
-    <?php include 'sidebar.php'; ?>
+    <?php require_once __DIR__ . '/sidebar.php'; ?>
 
     <!-- Main Content -->
     <div class="main-content">

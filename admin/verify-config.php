@@ -8,6 +8,9 @@ require_once '../config.php';
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Vérification Configuration</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../assets/css/dashboard/dashboard.css">
+    <link rel="stylesheet" href="../assets/css/global/fixes.css">
+    <link rel="stylesheet" href="/smm/assets/css/admin/admin-dashboard.css">
     <style>
         body {
             font-family: 'Inter', Arial, sans-serif;
@@ -103,6 +106,8 @@ require_once '../config.php';
     </style>
 </head>
 <body>
+    <?php require_once __DIR__ . '/sidebar.php'; ?>
+    <div class="main-content">
     <div class="container">
         <h1>✅ Vérification de la Configuration</h1>
         
@@ -184,5 +189,7 @@ require_once '../config.php';
             </a>
         </div>
     </div>
+    </div>
+    <script src="../assets/js/mobile-menu.js"></script>
 </body>
 </html>

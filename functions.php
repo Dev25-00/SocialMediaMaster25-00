@@ -11,6 +11,10 @@ if (!defined('DB_HOST')) {
 
 // Charger la configuration des icônes (Font Awesome)
 require_once __DIR__ . '/includes/config/icons-config.php';
+// Charger .env si présent
+if (file_exists(__DIR__ . '/env.php')) {
+    require_once __DIR__ . '/env.php';
+}
 
 /**
  * Vérifier si l'utilisateur est connecté
@@ -177,6 +181,11 @@ function getSiteSettings($pdo) {
  * Obtenir une valeur de paramètre
  */
 function getSetting($pdo, $key, $default = '') {
+    // Check environment variables first (convert key to upper snake case)
+    $envKey = strtoupper(preg_replace('/[^A-Z0-9]+/i', '_', $key));
+    $envVal = env($envKey, null);
+    if ($envVal !== null) return $envVal;
+
     $settings = getSiteSettings($pdo);
     return $settings[$key] ?? $default;
 }

@@ -1,5 +1,10 @@
 <?php
 /**
+ * INCLUSION: Sidebar admin navigation
+ * FICHIER: sidebar.php
+ * DOCUMENTATION: DOCS_DEV_TO_PROD/ARCHITECTURE_INCLUDES_VISUELLE.md
+ */
+/**
  * SCRIPT DE CORRECTION DES LIENS
  * 
  * Ce script vérifie et corrige tous les liens dans les pages
@@ -12,6 +17,10 @@ echo "<!DOCTYPE html>
 <head>
     <meta charset='UTF-8'>
     <title>Vérification des Liens</title>
+    <link rel='stylesheet' href='../assets/css/global/main.css'>
+    <link rel='stylesheet' href=''../assets/css/dashboard/dashboard.css'>
+    <link rel='stylesheet' href='../assets/css/global/fixes.css'>
+    <link rel='stylesheet' href='/smm/assets/css/admin/admin-dashboard.css'>
     <style>
         body {
             font-family: 'Inter', Arial, sans-serif;
@@ -108,6 +117,8 @@ echo "<!DOCTYPE html>
     </style>
 </head>
 <body>
+    <?php require_once __DIR__ . '/sidebar.php'; ?>
+    <div class="main-content">
     <div class='box'>
         <h1>🔗 Vérification des Liens</h1>";
 
@@ -222,5 +233,5 @@ echo "<a href='" . SITE_URL . "/dashboard/index.php' class='btn'>Tester Dashboar
 echo "<a href='" . SITE_URL . "/admin/dashboard.php' class='btn' style='background: #059669;'>Tester Admin</a>";
 echo "<a href='" . SITE_URL . "/services/index.php' class='btn' style='background: #7c3aed;'>Tester Services</a>";
 
-echo "</div></body></html>";
+echo "</div></div><script src=\"../assets/js/mobile-menu.js\"></script></body></html>";
 ?>

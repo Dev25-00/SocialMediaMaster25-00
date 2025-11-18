@@ -1,11 +1,19 @@
 <?php
 /**
+ * INCLUSION: Sidebar admin navigation
+ * FICHIER: sidebar.php
+ * DOCUMENTATION: DOCS_DEV_TO_PROD/ARCHITECTURE_INCLUDES_VISUELLE.md
+ */
+/**
  * Vérification des plateformes disponibles
  * Pour debug des filtres
  */
 
 require_once __DIR__ . '/../config.php';
 
+echo "<!DOCTYPE html><html lang='fr'><head><meta charset='UTF-8'><meta name='viewport' content='width=device-width, initial-scale=1.0'><title>Plateformes - Admin</title><link rel=\"stylesheet\" href=\"../assets/css/global/main.css\"><link rel=\"stylesheet\" href=\"../assets/css/dashboard/dashboard.css\"><link rel=\"stylesheet\" href=\"../assets/css/global/fixes.css\"><link rel=\"stylesheet\" href=\"/smm/assets/css/admin/admin-dashboard.css\"></head><body>";
+require_once __DIR__ . '/sidebar.php';
+echo "<div class='main-content' style='padding:20px;'>";
 echo "<h2>Plateformes dans la BDD :</h2>";
 
 $platforms = $pdo->query("
@@ -47,4 +55,5 @@ foreach ($new_platforms as $np) {
     echo "<li><strong>$np</strong> : $status</li>";
 }
 echo "</ul>";
+echo "</div><script src=\"../assets/js/mobile-menu.js\"></script></body></html>";
 ?>

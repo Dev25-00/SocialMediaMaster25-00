@@ -1,5 +1,10 @@
 <?php
 /**
+ * INCLUSION: Sidebar admin navigation
+ * FICHIER: sidebar.php
+ * DOCUMENTATION: DOCS_DEV_TO_PROD/ARCHITECTURE_INCLUDES_VISUELLE.md
+ */
+/**
  * Script de vérification des services - Trouver les prix anormaux
  */
 require_once '../config.php';
@@ -10,6 +15,9 @@ if (!isLoggedIn() || !isAdmin()) {
     die('Accès non autorisé');
 }
 
+echo "<!DOCTYPE html><html lang='fr'><head><meta charset='UTF-8'><meta name='viewport' content='width=device-width, initial-scale=1.0'><title>Analyse Prix - Admin</title><link rel=\"stylesheet\" href=\"../assets/css/global/main.css\"><link rel=\"stylesheet\" href=\"../assets/css/dashboard/dashboard.css\"><link rel=\"stylesheet\" href=\"../assets/css/global/fixes.css\"><link rel=\"stylesheet\" href=\"/smm/assets/css/admin/admin-dashboard.css\"></head><body>";
+require_once __DIR__ . '/sidebar.php';
+echo "<div class='main-content' style='padding:20px;'>";
 echo "<h1>🔍 Analyse des services - Prix anormaux</h1>";
 
 // Chercher les services avec des prix > 1000$
@@ -103,4 +111,5 @@ echo "</ul>";
 echo "<hr>";
 echo "<p><a href='sync-services.php' style='padding: 10px 20px; background: #667eea; color: white; text-decoration: none; border-radius: 5px;'>🔄 Synchroniser les services</a></p>";
 echo "<p><a href='services.php' style='padding: 10px 20px; background: #10b981; color: white; text-decoration: none; border-radius: 5px;'>📋 Voir tous les services</a></p>";
+echo "</div><script src='../assets/js/mobile-menu.js'></script></body></html>";
 ?>
